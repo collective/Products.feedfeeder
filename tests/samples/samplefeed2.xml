@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ <title>Philips Research Eindhoven News</title>
+ <subtitle>General news of Philips Research Eindhoven - for internal use only.</subtitle>
+ <updated>2006-07-24T11:30:15Z</updated>
+ <id>http://resweb2.natlab.research.philips.com/NlwwNews/rss/NlwwNewsAtom.xml</id>
+ <entry>
+  <title>Bicycle service closed 17 July-7 August</title>
+  <id>http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6092&amp;chk=51342</id>
+  <content type="xhtml">
+<div xmlns="http://www.w3.org/1999/xhtml">
+hello bar
+</div>
+  </content>
+  <updated>2006-08-18T12:00:00Z</updated>
+  <author><name>Miriam Mobach</name></author>
+ </entry>
+ <entry>
+  <title>Party!</title>
+  <id>http://myplace.com</id>
+  <content type="xhtml">
+<div xmlns="http://www.w3.org/1999/xhtml">
+boo, I hate parties
+</div>
+  </content>
+  <updated>2006-05-18T12:00:00Z</updated>
+  <author><name>Rocky Burt</name></author>
+ </entry>
+</feed>
