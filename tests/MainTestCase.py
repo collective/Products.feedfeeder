@@ -34,12 +34,6 @@ PRODUCTS.append('feedfeeder')
 
 testcase = PloneTestCase.PloneTestCase
 ##code-section module-before-plone-site-setup #fill in your manual code here
-from Products.Five import zcml
-import Products.Five
-zcml.load_config('meta.zcml', Products.Five)
-zcml.load_config('permissions.zcml', Products.Five)
-import Products.feedfeeder
-zcml.load_config('configure.zcml', Products.feedfeeder)
 ##/code-section module-before-plone-site-setup
 
 PloneTestCase.setupPloneSite(products=PRODUCTS)
