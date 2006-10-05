@@ -29,6 +29,12 @@ class FeedConsumer:
             self._retrieveSingleFeed(feedContainer, url)
 
 
+    def isHTMLEnclosure(self, enclosure):
+        return enclosure.type == u'text/html'
+
+    def makeLink(self, link):
+        return '<a href="%s">More info</a>.' % (link)
+
     def tryRenamingEnclosure(self, enclosure, feeditem):
         newId = enclosure.Title()
         for x in range(1, 10):
@@ -108,7 +114,12 @@ class FeedConsumer:
 
             if hasattr(entry, 'links'):
                 enclosures = [x for x in entry.links if x.rel == 'enclosure']
-                for link in enclosures:
+                html_enclosures = [x for x in enclosures if
+                                   self.isHTMLEnclosure(x)]
+                real_enclosures = [x for x in enclosures if
+                                   not self.isHTMLEnclosure(x)]
+
+                for link in real_enclosures:
                     enclosureSig = md5.new(link.href)
                     enclosureId = enclosureSig.hexdigest()
                     enclosure = obj.addEnclosure(enclosureId)
@@ -116,7 +127,9 @@ class FeedConsumer:
                     updateWithRemoteFile(enclosure, link)
                     if enclosure.Title() != enclosure.getId():
                         self.tryRenamingEnclosure(enclosure, obj)
-
+                for link in html_enclosures:
+                    newtext = obj.getText() + self.makeLink(link.href)
+                    obj.update(text=newtext)
 
 ##code-section module-footer #fill in your manual code here
 import re

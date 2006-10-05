@@ -43,6 +43,8 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   ...     def addEnclosure(self, id):
   ...         self.enclosures[id] = MockFeedEnclosure(id)
   ...         return self.enclosures[id]
+  ...     def getText(self):
+  ...         return self.text
   ...     def manage_renameObject(self, orig_id, new_id):
   ...         if new_id in self.enclosures.keys():
   ...             raise KeyError('Enclosure with %r id already exists' % repr(new_id))
@@ -104,11 +106,12 @@ Now lets use our utilty to build the feed items.
 
   >>> os.chdir(samplesdir)
   >>> samplefiles = [os.path.join(samplesdir, 'samplefeed1.xml'),
-  ...                os.path.join(samplesdir, 'samplefeed2.xml')]
+  ...                os.path.join(samplesdir, 'samplefeed2.xml'),
+  ...                os.path.join(samplesdir, 'samplefeed3.xml')]
   >>> container = MockFeedsContainer(['file://'+x for x in samplefiles])
   >>> consumer.retrieveFeedItems(container)
   >>> len(container.items)
-  4
+  5
 
 Make sure the content all matches up.
 
@@ -143,5 +146,14 @@ kept.
   2
   >>> sorted([x.id for x in duplicate2.enclosures.values()])
   [u'test2.doc', u'test3.xls']
- 
 
+Get our item that talks about the thesis defence of Reinout.
+
+  >>> thesis = container.items['f065f774e8c28bf9f33221f290c4ca6a']
+  >>> thesis.title
+  u'Thesis defence: 15 January 2007 15:00'
+
+Now someone could have added an enclosure that is actually just a link.  We append that link with an "a href" to the text of the item.
+
+  >>> thesis.getText()
+  u'<div>\nGreat news: a final thesis defence date!\n</div><a href="http://vanrees.org/weblog/archive/2006/10/03/defence-date">More info</a>.'
