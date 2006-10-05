@@ -65,5 +65,5 @@ class FeedFolderView(object):
     def item_list(self):
         return [x for x in self.items]
 
-    def __call__(self, *arg, **kwargs):
+    def __call__(self, *args, **kwargs):
         return self.index(template_id='feed-folder.html')
