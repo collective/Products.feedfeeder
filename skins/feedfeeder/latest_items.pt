@@ -4,7 +4,9 @@
       use-macro="context/global_defines/macros/defines">
   
   <body metal:define-macro="body">
-    <h1>Test view showing the latest items from the feeds</h1>
+    <h1 i18n:translate="test_view_title">
+      Test view showing the latest items from the feeds
+    </h1>
 
     <tal:entries tal:repeat="entry context/downloadEntries">
       <h2 tal:content="python:entry['title']"/>
