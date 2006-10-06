@@ -1,9 +1,12 @@
 <metal:block use-macro="here/global_defines/macros/defines" />
 
 <div class="viewlet title"
-         tal:content="context/Title">Title</div>
+     tal:content="context/Title">
+  Title
+</div>
 
 <div tal:repeat="child python:context.getFolderContents({'sort_on': 'getFeedItemUpdated', 'sort_order': 'descending'})[:8]">
-   <span tal:replace="python:child.getFeedItemUpdated.strftime('%d-%m')" />
-   <a tal:attributes="href child/getURL" tal:content="child/Title" />
+  <span tal:replace="python:child.getFeedItemUpdated.strftime('%d-%m')" />
+  <a tal:attributes="href child/getURL" 
+     tal:content="child/Title" />
 </div>
