@@ -38,8 +38,12 @@ class FeedFolderView(object):
         """
         
         listing = self.context.getFolderContents
-        for index, x in enumerate(listing({'sort_on': 'getFeedItemUpdated', 
-                                           'sort_order': 'descending'})):
+        results = listing({'sort_on': 'getFeedItemUpdated', 
+                           'sort_order': 'descending'})
+        if not results and hasattr(self.context, 'queryCatalog'):
+            # Smart folder. This should be handled cleaner.
+            results = self.context.queryCatalog()
+        for index, x in enumerate(results):
             item = dict(updated_date = x.getFeedItemUpdated.strftime('%d-%m'),
                         url = x.getURL(),
                         title = x.Title,

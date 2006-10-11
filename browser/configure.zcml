@@ -20,6 +20,15 @@
       />
 
   <page
+      name="feed-folder.html"
+      for="Products.ATContentTypes.interface.IATTopic"
+      permission="zope2.View"
+      template="feed-folder.pt"
+      allowed_interface="Products.feedfeeder.interfaces.folderview.IFeedfeederFolderView"
+      class=".feed.FeedFolderView"
+      />
+
+  <page
       name="feed-item.html"
       for="Products.feedfeeder.interfaces.item.IFeedItem"
       permission="zope2.View"
