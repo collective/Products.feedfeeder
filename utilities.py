@@ -13,13 +13,13 @@ from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandle
 ##/code-section module-header
 
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
-import zope
+from zope import interface
 
 class FeedConsumer:
     """
     """
     # zope3 interfaces
-    zope.interface.implements(IFeedConsumer)
+    interface.implements(IFeedConsumer)
 
     ##code-section class-header_FeedConsumer #fill in your manual code here
     ##/code-section class-header_FeedConsumer
@@ -43,8 +43,8 @@ class FeedConsumer:
             newId = '%i_%s' % (x, enclosure.Title())
 
 
-    def isHTMLEnclosure(self, enclosure):
-        return enclosure.type == u'text/html'
+    def makeLink(self, link):
+        return '<a href="%s">More info</a>.' % (link)
 
 
     def _retrieveSingleFeed(self, feedContainer, url):
@@ -131,8 +131,8 @@ class FeedConsumer:
                     obj.update(text=newtext)
 
 
-    def makeLink(self, link):
-        return '<a href="%s">More info</a>.' % (link)
+    def isHTMLEnclosure(self, enclosure):
+        return enclosure.type == u'text/html'
 
 
 ##code-section module-footer #fill in your manual code here

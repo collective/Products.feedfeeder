@@ -34,7 +34,6 @@ PRODUCTS += DEPENDENCIES
 PRODUCTS.append('feedfeeder')
 
 testcase = PloneTestCase.PloneTestCase
-
 ##code-section module-before-plone-site-setup #fill in your manual code here
 ##/code-section module-before-plone-site-setup
 

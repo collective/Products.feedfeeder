@@ -6,9 +6,9 @@
 
 
 
-import zope
+from zope import interface
 
-class IFeedfeederFolderView(zope.interface.Interface):
+class IFeedfeederFolderView(interface.Interface):
     ''' '''
 
     ##code-section class-header_IFeedfeederFolderView #fill in your manual code here

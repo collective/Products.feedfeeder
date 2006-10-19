@@ -6,9 +6,9 @@
 
 
 
-import zope
+from zope import interface
 
-class IFeedConsumer(zope.interface.Interface):
+class IFeedConsumer(interface.Interface):
     ''' '''
 
     ##code-section class-header_IFeedConsumer #fill in your manual code here

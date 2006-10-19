@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import *
-import zope
+from zope import interface
 from Products.ATContentTypes.content.folder import ATBTreeFolder
 from Products.feedfeeder.interfaces.container import IFeedsContainer
 from Products.feedfeeder.config import *
@@ -36,9 +36,8 @@ class FeedfeederFolder(ATBTreeFolder):
     """
     """
     security = ClassSecurityInfo()
-    __implements__ = (getattr(ATBTreeFolder,'__implements__',()),)
     # zope3 interfaces
-    zope.interface.implements(IFeedsContainer)
+    interface.implements(IFeedsContainer)
 
     # This name appears in the 'add' box
     archetype_name = 'Feed Folder'

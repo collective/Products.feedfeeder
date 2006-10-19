@@ -6,9 +6,9 @@
 
 
 
-import zope
+from zope import interface
 
-class IFeedItem(zope.interface.Interface):
+class IFeedItem(interface.Interface):
     ''' '''
 
     ##code-section class-header_IFeedItem #fill in your manual code here

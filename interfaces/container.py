@@ -6,9 +6,9 @@
 
 
 
-import zope
+from zope import interface
 
-class IFeedsContainer(zope.interface.Interface):
+class IFeedsContainer(interface.Interface):
     ''' '''
 
     ##code-section class-header_IFeedsContainer #fill in your manual code here

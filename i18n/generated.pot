@@ -31,3 +31,8 @@ msgstr ""
 msgid "feedfeeder_label_feeds"
 msgstr ""
 
+#. Default: "Links"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_links"
+msgstr ""
+

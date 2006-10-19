@@ -3,13 +3,13 @@
 ##/code-section module-header
 
 from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandler
-import zope
+from zope import interface
 
 class StandardContentHandler:
     """
     """
     # zope3 interfaces
-    zope.interface.implements(IFeedItemContentHandler)
+    interface.implements(IFeedItemContentHandler)
 
     ##code-section class-header_StandardContentHandler #fill in your manual code here
     ##/code-section class-header_StandardContentHandler

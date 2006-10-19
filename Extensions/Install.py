@@ -34,7 +34,8 @@ def install(self, reinstall=False):
     for dependency in DEPENDENCIES:
         print >> out, "Installing dependency %s:" % dependency
         quickinstaller.installProduct(dependency)
-        get_transaction().commit(1)
+        import transaction
+        transaction.savepoint(optimistic=True)
 
     classes = listTypes(PROJECTNAME)
     installTypes(self, out,

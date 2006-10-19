@@ -1,5 +1,10 @@
 # -*- coding: utf-8 -*-
 import os, sys
+try:
+    from Products.PloneTestCase.layer import ZCMLLayer
+    USELAYER = True
+except:
+    USELAYER = False
 if __name__ == '__main__':
     execfile(os.path.join(sys.path[0], 'framework.py'))
 
@@ -37,11 +42,13 @@ def test_suite():
 ##/code-section test-suite-in-between
 
 
-    return TestSuite((
-        ZopeDocFileSuite('testDocIntegrationTests.txt',
+    s = ZopeDocFileSuite('testDocIntegrationTests.txt',
                          package='Products.feedfeeder.doc',
-                         test_class=testDocIntegrationTests),
-    ))
+                         test_class=testDocIntegrationTests)
+    if USELAYER:
+        s.layer=ZCMLLayer
+    return TestSuite((s,
+                      ))
 
 ##code-section module-footer #fill in your manual code here
 ##/code-section module-footer
