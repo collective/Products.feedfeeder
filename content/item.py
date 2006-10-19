@@ -120,7 +120,7 @@ class FeedFeederItem(ATFolder):
 
     security.declarePublic('remote_url')
     def remote_url(self):
-        """Compatibility method that makings working with link checkers
+        """Compatibility method that makes working with link checkers
         easier.
         """
 

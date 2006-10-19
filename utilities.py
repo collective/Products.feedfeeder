@@ -71,9 +71,18 @@ class FeedConsumer:
                 continue
 
             obj = addItem(id)
+
+            linkDict = getattr(entry, 'link', None)
+            if linkDict:
+                link = linkDict['href']
+            else:
+                linkDict = getattr(entry, 'links', [{'href': ''}])[0]
+                link = linkDict['href']
+
             obj.update(id=id, title=entry.title,
                        feedItemAuthor=getattr(entry, 'author', ''),
-                       feedItemUpdated=updated)
+                       feedItemUpdated=updated,
+                       link=link)
             if hasattr(entry, 'content'):
                 content = entry.content[0]
                 if content['type'] in ('text/xhtml', 'application/xhtml+xml'):
