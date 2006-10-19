@@ -40,11 +40,11 @@ schema = Schema((
     ),
 
     copied_fields['text'],
-        LinesField(
-        name='links',
-        widget=LinesWidget(
-            label='Links',
-            label_msgid='feedfeeder_label_links',
+        StringField(
+        name='link',
+        widget=StringWidget(
+            label='Link',
+            label_msgid='feedfeeder_label_link',
             i18n_domain='feedfeeder',
         )
     ),
@@ -124,10 +124,7 @@ class FeedFeederItem(ATFolder):
         easier.
         """
 
-        if len(self.getLinks()) > 0:
-            return self.getLinks()[0]
-
-        return None
+        return self.getLink()
     ##/code-section class-header
 
 
