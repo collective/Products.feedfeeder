@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##code-section module-header #fill in your manual code here
 import urllib2
 import os
@@ -12,13 +13,13 @@ from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandle
 ##/code-section module-header
 
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
-from zope import interface
+import zope
 
 class FeedConsumer:
     """
     """
     # zope3 interfaces
-    interface.implements(IFeedConsumer)
+    zope.interface.implements(IFeedConsumer)
 
     ##code-section class-header_FeedConsumer #fill in your manual code here
     ##/code-section class-header_FeedConsumer
@@ -28,12 +29,6 @@ class FeedConsumer:
         for url in feedContainer.getFeeds():
             self._retrieveSingleFeed(feedContainer, url)
 
-
-    def isHTMLEnclosure(self, enclosure):
-        return enclosure.type == u'text/html'
-
-    def makeLink(self, link):
-        return '<a href="%s">More info</a>.' % (link)
 
     def tryRenamingEnclosure(self, enclosure, feeditem):
         newId = enclosure.Title()
@@ -46,6 +41,10 @@ class FeedConsumer:
                 except:
                     pass
             newId = '%i_%s' % (x, enclosure.Title())
+
+
+    def makeLink(self, link):
+        return '<a href="%s">More info</a>.' % (link)
 
 
     def _retrieveSingleFeed(self, feedContainer, url):
@@ -130,6 +129,11 @@ class FeedConsumer:
                 for link in html_enclosures:
                     newtext = obj.getText() + self.makeLink(link.href)
                     obj.update(text=newtext)
+
+
+    def isHTMLEnclosure(self, enclosure):
+        return enclosure.type == u'text/html'
+
 
 ##code-section module-footer #fill in your manual code here
 import re

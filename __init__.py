@@ -1,4 +1,5 @@
-None
+# -*- coding: utf-8 -*-
+
 # There are three ways to inject custom code here:
 #
 #   - To set global configuration variables, create a file AppConfig.py.

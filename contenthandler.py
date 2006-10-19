@@ -1,14 +1,15 @@
+# -*- coding: utf-8 -*-
 ##code-section module-header #fill in your manual code here
 ##/code-section module-header
 
 from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandler
-from zope import interface
+import zope
 
 class StandardContentHandler:
     """
     """
     # zope3 interfaces
-    interface.implements(IFeedItemContentHandler)
+    zope.interface.implements(IFeedItemContentHandler)
 
     ##code-section class-header_StandardContentHandler #fill in your manual code here
     ##/code-section class-header_StandardContentHandler

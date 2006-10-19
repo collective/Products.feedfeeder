@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 ##code-section module-header #fill in your manual code here
 ##/code-section module-header
@@ -5,9 +6,9 @@
 
 
 
-from zope import interface
+import zope
 
-class IFeedfeederFolderView(interface.Interface):
+class IFeedfeederFolderView(zope.interface.Interface):
     ''' '''
 
     ##code-section class-header_IFeedfeederFolderView #fill in your manual code here
@@ -20,8 +21,7 @@ class IFeedfeederFolderView(interface.Interface):
        """
 
        """
-       
-       
+
 
 
 ##code-section module-footer #fill in your manual code here

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 ##code-section module-header #fill in your manual code here
 import unittest
 from zope import component

@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 
 ##code-section module-header #fill in your manual code here
 ##/code-section module-header
@@ -5,9 +6,9 @@
 
 
 
-from zope import interface
+import zope
 
-class IFeedsContainer(interface.Interface):
+class IFeedsContainer(zope.interface.Interface):
     ''' '''
 
     ##code-section class-header_IFeedsContainer #fill in your manual code here

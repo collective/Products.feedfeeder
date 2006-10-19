@@ -1,4 +1,5 @@
-None
+# -*- coding: utf-8 -*-
+
 # Product configuration.
 #
 # The contents of this module will be imported into __init__.py, the

@@ -1,6 +1,7 @@
+# -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import *
-from zope import interface
+import zope
 from Products.ATContentTypes.content.folder import ATBTreeFolder
 from Products.feedfeeder.interfaces.container import IFeedsContainer
 from Products.feedfeeder.config import *
@@ -35,8 +36,9 @@ class FeedfeederFolder(ATBTreeFolder):
     """
     """
     security = ClassSecurityInfo()
+    __implements__ = (getattr(ATBTreeFolder,'__implements__',()),)
     # zope3 interfaces
-    interface.implements(IFeedsContainer)
+    zope.interface.implements(IFeedsContainer)
 
     # This name appears in the 'add' box
     archetype_name = 'Feed Folder'
@@ -88,18 +90,19 @@ class FeedfeederFolder(ATBTreeFolder):
 
     # Methods from Interface IFeedsContainer
 
+    security.declarePublic('getItem')
+    def getItem(self,id):
+        """
+        """
+        if id in self.objectIds():
+            return self[id]
+        return None
+
     security.declarePublic('getFeeds')
     def getFeeds(self):
         """
         """
         return self.feeds
-
-    security.declarePublic('addItem')
-    def addItem(self, id):
-        """
-        """
-        self.invokeFactory('FeedFeederItem', id)
-        return self[id]
 
     security.declarePublic('replaceItem')
     def replaceItem(self,id):
@@ -108,13 +111,12 @@ class FeedfeederFolder(ATBTreeFolder):
         self.manage_delObjects([id])
         return self.addItem(id)
 
-    security.declarePublic('getItem')
-    def getItem(self,id):
+    security.declarePublic('addItem')
+    def addItem(self, id):
         """
         """
-        if id in self.objectIds():
-            return self[id]
-        return None
+        self.invokeFactory('FeedFeederItem', id)
+        return self[id]
 
 
 registerType(FeedfeederFolder, PROJECTNAME)
