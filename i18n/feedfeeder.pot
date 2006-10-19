@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2006-10-06 13:01+0000\n"
+"POT-Creation-Date: 2006-10-19 12:46+0000\n"
 "PO-Revision-Date: Thu Jul 20 09:13:40 2006\n"
 "Last-Translator: Reinout van Rees <reinout@zestsoftware.nl>\n"
 "Language-Team: Reinout van Rees <reinout@zestsoftware.nl>\n"
@@ -29,6 +29,11 @@ msgstr ""
 #. Default: "Feeds"
 #: content/FeedfeederFolder.py
 msgid "feedfeeder_label_feeds"
+msgstr ""
+
+#. Default: "Links"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_link"
 msgstr ""
 
 #. Default: "Test view showing the latest items from the feeds"
