@@ -40,7 +40,16 @@ schema = Schema((
     ),
 
     copied_fields['text'],
+        LinesField(
+        name='links',
+        widget=LinesWidget(
+            label='Links',
+            label_msgid='feedfeeder_label_links',
+            i18n_domain='feedfeeder',
+        )
     ),
+
+),
 )
 
 ##code-section after-local-schema #fill in your manual code here
@@ -107,6 +116,20 @@ class FeedFeederItem(ATFolder):
         """
         self.invokeFactory('File', id)
         return self[id]
+
+    # Manually created methods
+
+    security.declarePublic('remote_url')
+    def remote_url(self):
+        """Compatibility method that makings working with link checkers
+        easier.
+        """
+
+        if len(self.getLinks()) > 0:
+            return self.getLinks()[0]
+
+        return None
+    ##/code-section class-header
 
 
 registerType(FeedFeederItem, PROJECTNAME)

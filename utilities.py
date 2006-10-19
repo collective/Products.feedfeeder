@@ -43,8 +43,8 @@ class FeedConsumer:
             newId = '%i_%s' % (x, enclosure.Title())
 
 
-    def makeLink(self, link):
-        return '<a href="%s">More info</a>.' % (link)
+    def isHTMLEnclosure(self, enclosure):
+        return enclosure.type == u'text/html'
 
 
     def _retrieveSingleFeed(self, feedContainer, url):
@@ -131,8 +131,8 @@ class FeedConsumer:
                     obj.update(text=newtext)
 
 
-    def isHTMLEnclosure(self, enclosure):
-        return enclosure.type == u'text/html'
+    def makeLink(self, link):
+        return '<a href="%s">More info</a>.' % (link)
 
 
 ##code-section module-footer #fill in your manual code here
