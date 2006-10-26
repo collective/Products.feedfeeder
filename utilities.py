@@ -43,10 +43,6 @@ class FeedConsumer:
             newId = '%i_%s' % (x, enclosure.Title())
 
 
-    def makeLink(self, link):
-        return '<a href="%s">More info</a>.' % (link)
-
-
     def _retrieveSingleFeed(self, feedContainer, url):
         # feedparser doesn't understand proper file: url's
         if url.startswith('file://'):
@@ -122,8 +118,6 @@ class FeedConsumer:
 
             if hasattr(entry, 'links'):
                 enclosures = [x for x in entry.links if x.rel == 'enclosure']
-                html_enclosures = [x for x in enclosures if
-                                   self.isHTMLEnclosure(x)]
                 real_enclosures = [x for x in enclosures if
                                    not self.isHTMLEnclosure(x)]
 
@@ -135,9 +129,6 @@ class FeedConsumer:
                     updateWithRemoteFile(enclosure, link)
                     if enclosure.Title() != enclosure.getId():
                         self.tryRenamingEnclosure(enclosure, obj)
-                for link in html_enclosures:
-                    newtext = obj.getText() + self.makeLink(link.href)
-                    obj.update(text=newtext)
 
 
     def isHTMLEnclosure(self, enclosure):

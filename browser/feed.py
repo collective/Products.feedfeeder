@@ -51,6 +51,9 @@ class FeedFolderView(object):
                         author = x.getFeedItemAuthor,
                         )
             obj = x.getObject()
+            url = obj.remote_url()
+            if url:
+                item['url'] = url
             self.extraDecoration(item, obj)
             enclosures = obj.getFolderContents()
 
