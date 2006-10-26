@@ -41,8 +41,8 @@ class FeedFolderView(object):
         results = listing({'sort_on': 'getFeedItemUpdated', 
                            'sort_order': 'descending',
                            'portal_type': 'FeedFeederItem'})
-        if not results and hasattr(self.context, 'queryCatalog'):
-            # Smart folder. This should be handled cleaner.
+        if not results and self.context.portal_type == 'Topic':
+            # Use the queryCatalog of the Topic itself.
             results = self.context.queryCatalog({'portal_type': 'FeedFeederItem'})
         for index, x in enumerate(results):
             item = dict(updated_date = x.getFeedItemUpdated.strftime('%d-%m'),
