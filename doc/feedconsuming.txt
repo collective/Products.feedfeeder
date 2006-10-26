@@ -156,4 +156,4 @@ Get our item that talks about the thesis defence of Reinout.
 Now someone could have added an enclosure that is actually just a link.  We append that link with an "a href" to the text of the item.
 
   >>> thesis.getText()
-  u'<div>\nGreat news: a final thesis defence date!\n</div><a href="http://vanrees.org/weblog/archive/2006/10/03/defence-date">More info</a>.'
+  u'<div>\nGreat news: a final thesis defence date!\n</div>'
