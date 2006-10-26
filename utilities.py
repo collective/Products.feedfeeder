@@ -70,7 +70,9 @@ class FeedConsumer:
 
             linkDict = getattr(entry, 'link', None)
             if linkDict:
-                link = linkDict['href']
+                # Hey, that's not a dict at all; at least not in my test.
+                #link = linkDict['href']
+                link = linkDict
             else:
                 linkDict = getattr(entry, 'links', [{'href': ''}])[0]
                 link = linkDict['href']
