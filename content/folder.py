@@ -5,9 +5,17 @@ from zope import interface
 from Products.ATContentTypes.content.folder import ATBTreeFolder
 from Products.feedfeeder.interfaces.container import IFeedsContainer
 from Products.feedfeeder.config import *
+from Products.CMFCore.utils import getToolByName
 
 ##code-section module-header #fill in your manual code here
 ##/code-section module-header
+
+MESSAGE_PRIORITIES = DisplayList((
+        ('high', 'High Priority'),
+            ('normal', 'Normal Priority'),
+            ('low', 'Low Priority'),
+            ))
+
 
 schema = Schema((
 
@@ -20,6 +28,18 @@ schema = Schema((
         )
     ),
 
+    LinesField(
+        default='low',
+        name='workflow_state',
+        vocabulary='getWorkflowStates',
+        widget=SelectionWidget(
+            format='select',
+            label='Default workflow state on import',
+            label_msgid='feedfeeder_label_feeds',
+            i18n_domain='feedfeeder',
+
+        )
+    ),
 ),
 )
 
@@ -90,6 +110,28 @@ class FeedfeederFolder(ATBTreeFolder):
     # Methods from Interface IFeedsContainer
 
     security.declarePublic('getItem')
+
+    def getWorkflowStates(self):
+        #import pdb; pdb.set_trace()
+
+        wf_tool = getToolByName(self,'portal_workflow')
+        wf = wf_tool.getChainForPortalType('FeedFeederItem')
+        #states = wf_tool[wf].states.objectIds()
+
+        #display_states = []
+        #for state in states:
+        #    dstate = []
+        #    dstate.append(state.getId())
+        #    dstate.append(state.getTitle())
+        #    display_states.append(dstate)
+
+        #return DisplayList(display_states)
+        return DisplayList([('value','name')])
+
+    def getInitialState(self):
+        return 'low'
+        
+
     def getItem(self,id):
         """
         """
