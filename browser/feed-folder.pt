@@ -28,11 +28,13 @@
          <tbody valign="top">
             <tr tal:repeat="child batch">
                <td>
-                  <span tal:replace="child/updated_date"></span>&nbsp; : &nbsp;
+                  <span tal:replace="child/updated_date"></span>&nbsp; &nbsp;
                </td>
                <td>
-                  <a  tal:attributes="href child/url"
-                        tal:content="child/title"></a>
+                  <a tal:attributes="href child/url"
+                     tal:content="child/title"> My Title </a>
+                  <div tal:condition="child/summary"
+                     tal:content="child/summary"> My summary </div>
                </td>
             </tr>
          </tbody>

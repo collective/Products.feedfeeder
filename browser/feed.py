@@ -48,12 +48,14 @@ class FeedFolderView(object):
             item = dict(updated_date = x.getFeedItemUpdated.strftime('%d-%m'),
                         url = x.getURL(),
                         title = x.Title,
+                        summary = x.Description,
                         author = x.getFeedItemAuthor,
                         )
             obj = x.getObject()
-            url = obj.remote_url()
-            if url:
-                item['url'] = url
+            # We need to see if this is really needed.
+            #url = obj.remote_url()
+            #if url:
+            #    item['url'] = url
             self.extraDecoration(item, obj)
             enclosures = obj.getFolderContents()
 

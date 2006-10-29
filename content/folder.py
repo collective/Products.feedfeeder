@@ -46,7 +46,7 @@ schema = Schema((
 ##code-section after-local-schema #fill in your manual code here
 ##/code-section after-local-schema
 
-FeedfeederFolder_schema = getattr(ATBTreeFolder, 'schema', Schema(())).copy() + \
+FeedfeederFolder_schema = ATBTreeFolder.schema.copy() + \
     schema.copy()
 
 ##code-section after-schema #fill in your manual code here
@@ -64,7 +64,7 @@ class FeedfeederFolder(ATBTreeFolder):
 
     meta_type = 'FeedfeederFolder'
     portal_type = 'FeedfeederFolder'
-    allowed_content_types = ['FeedFeederItem'] + list(getattr(ATBTreeFolder, 'allowed_content_types', []))
+    allowed_content_types = ['FeedFeederItem']
     filter_content_types = 1
     global_allow = 1
     #content_icon = 'FeedfeederFolder.gif'
