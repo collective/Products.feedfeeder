@@ -38,6 +38,8 @@ Make sure we got what we wanted.
   >>> test_doc = feeder['30ca408a75537f05d03821c64473289e']
   >>> test_doc.title
   u'Party!'
+  >>> test_doc.Description()
+  'Party on the roof of the Mediterranean Inn'
   >>> test_doc.getText()
   '<div>\nwoo hoo, a party!\n</div>'
 
@@ -131,6 +133,15 @@ feed item.
   'foo'
   >>> items[0]['url']
   'http://nohost/plone/Members/test_user_1_/feeder2/1'
+
+Items with summaries should have summaries. Summaries come from 
+the description field on the content object.
+
+  >>> feeder[id].setDescription('Test Summary')
+  >>> feeder[id].update(title='blatant')
+  >>> items = [x for x in view.items]
+  >>> items[0]['summary']
+  'Test Summary'
 
 Annotated Metadata Handler
 --------------------------

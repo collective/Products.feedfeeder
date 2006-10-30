@@ -9,6 +9,7 @@
   <id>http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6103&amp;chk=6573</id>
   <link type="application/pdf" href="file:test1.pdf" rel="enclosure" length="1000" />
   <updated>2006-07-21T12:00:00Z</updated>
+  <summary>This is a sample summary</summary>
   <author><name>Miriam Mobach</name></author>
  </entry>
  <entry>
@@ -46,6 +47,7 @@ woo hoo, a party!
 </div>
   </content>
   <updated>2006-07-18T12:00:00Z</updated>
+  <summary>Party on the roof of the Mediterranean Inn</summary>
   <author><name>Rocky Burt</name></author>
  </entry>
 </feed>
