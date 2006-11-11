@@ -45,7 +45,7 @@ class FeedFolderView(object):
             # Use the queryCatalog of the Topic itself.
             results = self.context.queryCatalog({'portal_type': 'FeedFeederItem'})
         for index, x in enumerate(results):
-            item = dict(updated_date = x.getFeedItemUpdated.strftime('%d-%m'),
+            item = dict(updated_date = x.getFeedItemUpdated,
                         url = x.getURL(),
                         title = x.Title,
                         summary = x.Description,

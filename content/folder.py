@@ -107,7 +107,7 @@ class FeedfeederFolder(ATBTreeFolder):
     def getAvailableTransitions(self):
         wf_tool = getToolByName(self,'portal_workflow')
         transitions = wf_tool.getTransitionsFor(self)
-        display_trans = [(0, 'Keep initial state'),]
+        display_trans = [('', 'Keep initial state'),]
         for trans in transitions:
              display_trans.append( ( trans['id'], trans['name'] ) )
         return DisplayList(display_trans)
@@ -139,7 +139,7 @@ class FeedfeederFolder(ATBTreeFolder):
         self.invokeFactory('FeedFeederItem', id)
         wf_tool = getToolByName(self,'portal_workflow')
         transition = self.getDefaultTransition()
-        if transition:
+        if transition != '':
             wf_tool.doActionFor(self[id], transition,
                 comment='Automatic transition triggered by FeedFolder')
         return self[id]
