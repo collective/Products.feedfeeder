@@ -45,15 +45,17 @@ class FeedFolderView(object):
             # Use the queryCatalog of the Topic itself.
             results = self.context.queryCatalog({'portal_type': 'FeedFeederItem'})
         for index, x in enumerate(results):
-            item = dict(updated_date = x.getFeedItemUpdated.strftime('%d-%m'),
+            item = dict(updated_date = x.getFeedItemUpdated,
                         url = x.getURL(),
                         title = x.Title,
+                        summary = x.Description,
                         author = x.getFeedItemAuthor,
                         )
             obj = x.getObject()
-            url = obj.remote_url()
-            if url:
-                item['url'] = url
+            # We need to see if this is really needed.
+            #url = obj.remote_url()
+            #if url:
+            #    item['url'] = url
             self.extraDecoration(item, obj)
             enclosures = obj.getFolderContents()
 

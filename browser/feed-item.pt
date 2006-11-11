@@ -101,6 +101,13 @@
       </li>
   </ul>
   </tal:enclosures>
+  
+  <div i18n:translate="source_available"> Source available
+    <a href="#"
+       tal:attributes="href context/remote_url"
+       i18n:attributes="name string:here"
+       i18n:translate="link_here">here</a>
+  </div>
 </div>
 </body>
 </html>

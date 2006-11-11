@@ -73,7 +73,7 @@ class FeedFeederItem(ATFolder):
 
     meta_type = 'FeedFeederItem'
     portal_type = 'FeedFeederItem'
-    allowed_content_types = ['File'] + list(getattr(ATFolder, 'allowed_content_types', []))
+    allowed_content_types = ['File'] 
     filter_content_types = 1
     global_allow = 0
     #content_icon = 'FeedFeederItem.gif'

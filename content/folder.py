@@ -5,6 +5,7 @@ from zope import interface
 from Products.ATContentTypes.content.folder import ATBTreeFolder
 from Products.feedfeeder.interfaces.container import IFeedsContainer
 from Products.feedfeeder.config import *
+from Products.CMFCore.utils import getToolByName
 
 ##code-section module-header #fill in your manual code here
 ##/code-section module-header
@@ -20,13 +21,25 @@ schema = Schema((
         )
     ),
 
+    StringField(
+        name='defaultTransition',
+        vocabulary='getAvailableTransitions',
+        widget=SelectionWidget(
+            format='select',
+            description="When updating this feed's item the transition selected below will be performed.",
+            description_msgid="help_default_transition",
+            label='Default transition',
+            label_msgid='label_default_transition',
+            i18n_domain='feedfeeder',
+        )
+    ),
 ),
 )
 
 ##code-section after-local-schema #fill in your manual code here
 ##/code-section after-local-schema
 
-FeedfeederFolder_schema = getattr(ATBTreeFolder, 'schema', Schema(())).copy() + \
+FeedfeederFolder_schema = ATBTreeFolder.schema.copy() + \
     schema.copy()
 
 ##code-section after-schema #fill in your manual code here
@@ -44,7 +57,7 @@ class FeedfeederFolder(ATBTreeFolder):
 
     meta_type = 'FeedfeederFolder'
     portal_type = 'FeedfeederFolder'
-    allowed_content_types = ['FeedFeederItem'] + list(getattr(ATBTreeFolder, 'allowed_content_types', []))
+    allowed_content_types = ['FeedFeederItem']
     filter_content_types = 1
     global_allow = 1
     #content_icon = 'FeedfeederFolder.gif'
@@ -90,6 +103,15 @@ class FeedfeederFolder(ATBTreeFolder):
     # Methods from Interface IFeedsContainer
 
     security.declarePublic('getItem')
+
+    def getAvailableTransitions(self):
+        wf_tool = getToolByName(self,'portal_workflow')
+        transitions = wf_tool.getTransitionsFor(self)
+        display_trans = [('', 'Keep initial state'),]
+        for trans in transitions:
+             display_trans.append( ( trans['id'], trans['name'] ) )
+        return DisplayList(display_trans)
+        
     def getItem(self,id):
         """
         """
@@ -115,6 +137,11 @@ class FeedfeederFolder(ATBTreeFolder):
         """
         """
         self.invokeFactory('FeedFeederItem', id)
+        wf_tool = getToolByName(self,'portal_workflow')
+        transition = self.getDefaultTransition()
+        if transition != '':
+            wf_tool.doActionFor(self[id], transition,
+                comment='Automatic transition triggered by FeedFolder')
         return self[id]
 
 

@@ -77,7 +77,9 @@ class FeedConsumer:
                 linkDict = getattr(entry, 'links', [{'href': ''}])[0]
                 link = linkDict['href']
 
-            obj.update(id=id, title=entry.title,
+            summary = getattr(entry, 'summary' , '')
+
+            obj.update(id=id, title=entry.title, description=summary, 
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
                        link=link)
