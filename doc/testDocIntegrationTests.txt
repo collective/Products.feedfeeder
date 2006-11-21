@@ -64,6 +64,7 @@ The requirements for how things get linked is as follows:
   link to enclosure
   5) feed item with no text and multiple enclosures: show feed item 
   title and link to feed item
+  6) feed item with a remote url: show remote url
 
 We have to satisfy each of these requirements.  Make sure that a feed 
 item with no text and no enclosures still have the feed item title and 
@@ -142,6 +143,17 @@ the description field on the content object.
   >>> items = [x for x in view.items]
   >>> items[0]['summary']
   'Test Summary'
+
+When we know the remote_url of an item then in the view clicking on
+the item should bring us to that remote url.
+
+  >>> feeder[id].setLink('http://google.com/')
+  >>> items = [x for x in view.items]
+  >>> len(items)
+  1
+  >>> items[0]['url']
+  'http://google.com/'
+
 
 Annotated Metadata Handler
 --------------------------

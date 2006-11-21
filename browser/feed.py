@@ -53,9 +53,13 @@ class FeedFolderView(object):
                         )
             obj = x.getObject()
             # We need to see if this is really needed.
-            #url = obj.remote_url()
-            #if url:
-            #    item['url'] = url
+            # Yes, this is really needed:
+            # x.getURL gets the url of the item in Zope and we need
+            # the url of the original item, which isn't in the brain.
+            # A test for this has now been added.
+            url = obj.remote_url()
+            if url:
+                item['url'] = url
             self.extraDecoration(item, obj)
             enclosures = obj.getFolderContents()
 
