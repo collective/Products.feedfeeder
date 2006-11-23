@@ -1,8 +1,8 @@
 # -*- coding: utf-8 -*-
 import os, sys
 try:
-    from Products.PloneTestCase.layer import ZCMLLayer
-    USELAYER = True
+    from Products.PloneTestCase.PloneTestCase import USELAYER
+    from Products.PloneTestCase.layer import PloneSite
 except:
     USELAYER = False
 if __name__ == '__main__':
@@ -46,7 +46,7 @@ def test_suite():
                          package='Products.feedfeeder.doc',
                          test_class=testDocIntegrationTests)
     if USELAYER:
-        s.layer=ZCMLLayer
+        s.layer=PloneSite
     return TestSuite((s,
                       ))
 
