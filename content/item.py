@@ -114,6 +114,14 @@ class FeedFeederItem(ATFolder):
         """
         """
         self.invokeFactory('File', id)
+        """
+        # This needs a test before I commit it uncommented.  Maurits
+        wf_tool = getToolByName(self,'portal_workflow')
+        transition = self.getDefaultTransition()
+        if transition != '':
+            wf_tool.doActionFor(self[id], transition,
+                comment='Automatic transition triggered by FeedFolder')
+        """
         return self[id]
 
     # Manually created methods
