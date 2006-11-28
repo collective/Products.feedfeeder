@@ -5,6 +5,7 @@ from zope import interface
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.feedfeeder.interfaces.item import IFeedItem
 from Products.feedfeeder.config import *
+from Products.CMFCore.utils import getToolByName
 
 # additional imports from tagged value 'import'
 from Products.ATContentTypes.content.document import ATDocument
@@ -114,14 +115,11 @@ class FeedFeederItem(ATFolder):
         """
         """
         self.invokeFactory('File', id)
-        """
-        # This needs a test before I commit it uncommented.  Maurits
         wf_tool = getToolByName(self,'portal_workflow')
         transition = self.getDefaultTransition()
         if transition != '':
             wf_tool.doActionFor(self[id], transition,
                 comment='Automatic transition triggered by FeedFolder')
-        """
         return self[id]
 
     # Manually created methods
