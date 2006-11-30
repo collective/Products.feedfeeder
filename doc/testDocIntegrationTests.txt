@@ -53,6 +53,7 @@ Using Updating View
   update FeedFolders.
 
   >>> self.setRoles('Manager')
+  >>> feeder.setDefaultTransition('publish')
   >>> view = feeder.restrictedTraverse('@@update_feed_items')
   >>> view.update()
   >>> self.setRoles('')
@@ -69,6 +70,16 @@ Make sure we got what we wanted.
   'Party on the roof of the Mediterranean Inn'
   >>> test_doc.getText()
   '<div>\nwoo hoo, a party!\n</div>'
+
+And did the automatic transition work?
+
+  >>> chain = wf_tool.getChainFor(test_doc)
+  >>> status = wf_tool.getStatusOf(chain[0], test_doc)
+  >>> status['review_state']
+  'published'
+  >>> status['comments']
+  'Automatic transition triggered by FeedFolder'
+
 
 Folder Listing
 --------------
