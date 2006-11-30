@@ -23,22 +23,27 @@ Setup some feeds.
   ...                os.path.join(samplesdir, 'samplefeed2.xml')]
   >>> feeder.setFeeds(['file://'+x for x in samplefiles])
 
-See what transitions we have.
+
+Available Transitions
+---------------------
+
+Feed items that are added during an update can be automatically
+transitioned.  See what transitions we have available.
 
   >>> feeder.getAvailableTransitions()
   <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit')] at ...>
   >>> self.setRoles('Manager')
-  >>> feeder.getAvailableTransitions()
-  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit'), ('publish', 'Publish')] at ...>
+  >>> [trans for trans in feeder.getAvailableTransitions()]
+  ['', 'hide', 'submit', 'publish']
 
   >>> from Products.CMFCore.utils import getToolByName
   >>> wf_tool = getToolByName(folder,'portal_workflow')
-  >>> wf_tool.doActionFor(feeder, 'publish', comment='blah')
-  >>> feeder.getAvailableTransitions()
-  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit'), ('publish', 'Publish')] at ...>
+  >>> wf_tool.doActionFor(feeder, 'publish')
+  >>> [trans for trans in feeder.getAvailableTransitions()]
+  ['', 'hide', 'submit', 'publish']
   >>> self.setRoles('')
-  >>> feeder.getAvailableTransitions()
-  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit')] at ...>
+  >>> [trans for trans in feeder.getAvailableTransitions()]
+  ['', 'hide', 'submit']
 
 
 Using Updating View

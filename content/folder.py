@@ -105,6 +105,8 @@ class FeedfeederFolder(ATBTreeFolder):
     security.declarePublic('getItem')
 
     def getAvailableTransitions(self):
+        # Create a temporary object so we can ask what transitions are
+        # available for it.
         id = 'temp_zest_temp'
         self.invokeFactory('FeedFeederItem', id)
         wf_tool = getToolByName(self,'portal_workflow')
@@ -112,6 +114,7 @@ class FeedfeederFolder(ATBTreeFolder):
         display_trans = [('', 'Keep initial state'),]
         for trans in transitions:
              display_trans.append( ( trans['id'], trans['name'] ) )
+        # Unindex and remove the temporary object
         self[id].unindexObject()
         self._delOb(id)
         return DisplayList(display_trans)
@@ -141,9 +144,9 @@ class FeedfeederFolder(ATBTreeFolder):
         """
         """
         self.invokeFactory('FeedFeederItem', id)
-        wf_tool = getToolByName(self,'portal_workflow')
         transition = self.getDefaultTransition()
         if transition != '':
+            wf_tool = getToolByName(self,'portal_workflow')
             wf_tool.doActionFor(self[id], transition,
                 comment='Automatic transition triggered by FeedFolder')
         return self[id]
