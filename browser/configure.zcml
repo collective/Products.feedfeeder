@@ -7,7 +7,7 @@
       class=".feed.UpdateFeedItems"
       for="Products.feedfeeder.interfaces.container.IFeedsContainer"
       allowed_interface=".feed.IUpdateFeedItems"
-      permission="cmf.ModifyPortalContent"
+      permission="cmf.ManagePortal"
       />
 
   <page

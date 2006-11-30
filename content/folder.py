@@ -105,11 +105,15 @@ class FeedfeederFolder(ATBTreeFolder):
     security.declarePublic('getItem')
 
     def getAvailableTransitions(self):
+        id = 'temp_zest_temp'
+        self.invokeFactory('FeedFeederItem', id)
         wf_tool = getToolByName(self,'portal_workflow')
-        transitions = wf_tool.getTransitionsFor(self)
+        transitions = wf_tool.getTransitionsFor(self[id])
         display_trans = [('', 'Keep initial state'),]
         for trans in transitions:
              display_trans.append( ( trans['id'], trans['name'] ) )
+        self[id].unindexObject()
+        self._delOb(id)
         return DisplayList(display_trans)
         
     def getItem(self,id):

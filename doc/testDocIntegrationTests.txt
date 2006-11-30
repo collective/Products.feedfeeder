@@ -23,12 +23,34 @@ Setup some feeds.
   ...                os.path.join(samplesdir, 'samplefeed2.xml')]
   >>> feeder.setFeeds(['file://'+x for x in samplefiles])
 
+See what transitions we have.
+
+  >>> feeder.getAvailableTransitions()
+  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit')] at ...>
+  >>> self.setRoles('Manager')
+  >>> feeder.getAvailableTransitions()
+  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit'), ('publish', 'Publish')] at ...>
+
+  >>> from Products.CMFCore.utils import getToolByName
+  >>> wf_tool = getToolByName(folder,'portal_workflow')
+  >>> wf_tool.doActionFor(feeder, 'publish', comment='blah')
+  >>> feeder.getAvailableTransitions()
+  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit'), ('publish', 'Publish')] at ...>
+  >>> self.setRoles('')
+  >>> feeder.getAvailableTransitions()
+  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit')] at ...>
+
 
 Using Updating View
 -------------------
 
+  By default only Managers (with the ManagePortal permission) can
+  update FeedFolders.
+
+  >>> self.setRoles('Manager')
   >>> view = feeder.restrictedTraverse('@@update_feed_items')
   >>> view.update()
+  >>> self.setRoles('')
 
 Make sure we got what we wanted.
 
@@ -162,8 +184,10 @@ values.  Lets make sure that works.
   ...                          name=u'definition-list-metadata')
   
   >>> feeder.setFeeds(['file://'+os.path.join(samplesdir, 'samplefeed1.xml')])
+  >>> self.setRoles('Manager')
   >>> view = feeder.restrictedTraverse('@@update_feed_items')
   >>> view.update()
+  >>> self.setRoles('')
 
 Now that we've retrieved the items, lets make sure the metadata we expect
 is present.
