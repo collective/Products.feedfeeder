@@ -118,7 +118,12 @@ class FeedFeederItem(ATFolder):
         transition = self.getDefaultTransition()
         if transition != '':
             wf_tool = getToolByName(self,'portal_workflow')
-            wf_tool.doActionFor(self[id], transition,
+            # The default transition should be valid for a
+            # FeedFolderItem, but our File might not have the same
+            # transitions available.  So check this.
+            transitions = wf_tool.getTransitionsFor(self[id])
+            if transition in transitions:
+                wf_tool.doActionFor(self[id], transition,
                 comment='Automatic transition triggered by FeedFolder')
         return self[id]
 
