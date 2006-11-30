@@ -70,8 +70,12 @@ Make sure we got what we wanted.
   'Party on the roof of the Mediterranean Inn'
   >>> test_doc.getText()
   '<div>\nwoo hoo, a party!\n</div>'
+  >>> enclosure = test_doc.objectValues()[0]
+  >>> enclosure
+  <ATFile at ...>
 
 And did the automatic transition work?
+For the FeedFeederItem:
 
   >>> chain = wf_tool.getChainFor(test_doc)
   >>> status = wf_tool.getStatusOf(chain[0], test_doc)
@@ -79,6 +83,16 @@ And did the automatic transition work?
   'published'
   >>> status['comments']
   'Automatic transition triggered by FeedFolder'
+
+For the enclosure:
+
+  >>> chain = wf_tool.getChainFor(enclosure)
+  >>> status = wf_tool.getStatusOf(chain[0], enclosure)
+  >>> status['review_state']
+  'published'
+  >>> status['comments']
+  'Automatic transition triggered by FeedFolder'
+
 
 
 Folder Listing

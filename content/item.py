@@ -122,7 +122,8 @@ class FeedFeederItem(ATFolder):
             # FeedFolderItem, but our File might not have the same
             # transitions available.  So check this.
             transitions = wf_tool.getTransitionsFor(self[id])
-            if transition in transitions:
+            transition_ids = [trans['id'] for trans in transitions]
+            if transition in transition_ids:
                 wf_tool.doActionFor(self[id], transition,
                 comment='Automatic transition triggered by FeedFolder')
         return self[id]
