@@ -7,9 +7,11 @@ import tempfile
 from xml.dom import minidom
 import feedparser
 from zope import component
+from zope import event
 from DateTime import DateTime
 from Products.feedfeeder.interfaces.container import IFeedsContainer
 from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandler
+from Products.feedfeeder.events import FeedItemConsumedEvent
 ##/code-section module-header
 
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
@@ -134,6 +136,8 @@ class FeedConsumer:
                     if enclosure.Title() != enclosure.getId():
                         self.tryRenamingEnclosure(enclosure, obj)
 
+            if obj is not None:
+                event.notify(FeedItemConsumedEvent(obj))
 
     def isHTMLEnclosure(self, enclosure):
         return enclosure.type == u'text/html'

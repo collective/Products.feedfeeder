@@ -1,31 +1,17 @@
 # -*- coding: utf-8 -*-
 
-##code-section module-header #fill in your manual code here
-##/code-section module-header
-
-
-
-
 from zope import interface
+from zope.app.event import interfaces as evtifaces
 
 class IFeedItem(interface.Interface):
-    ''' '''
-
-    ##code-section class-header_IFeedItem #fill in your manual code here
-    ##/code-section class-header_IFeedItem
-
-
-
+    """
+    """
 
     def addEnclosure(id):
+       """Add an enclosure.
        """
 
-       """
-
-
-
-##code-section module-footer #fill in your manual code here
-##/code-section module-footer
-
-
-
+class IFeedItemConsumedEvent(evtifaces.IObjectModifiedEvent):
+    """Intended to be fired after a new feed item has been successfully
+    consumed.
+    """

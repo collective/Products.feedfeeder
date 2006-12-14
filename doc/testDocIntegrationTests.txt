@@ -237,3 +237,41 @@ the dl with the extra data is gone.
   True
   >>> 'the real text body here' in text
   True
+
+Events
+------
+
+After a feed item has been consumed it fires an appropriate event to
+signify this.  First lets clean up the feeder.
+
+  >>> feeder.manage_delObjects([x for x in feeder.objectIds()])
+
+Make sure that event is being properly fired and handled.
+
+  >>> class Handler:
+  ...     event_obj = None
+  ...     event_evt = None
+  ...     def handle(self, event, obj):
+  ...         self.event_obj = event
+  ...         self.event_evt = obj
+  >>> handler = Handler()
+
+  >>> from zope import component
+  >>> from Products.feedfeeder.interfaces.item import IFeedItemConsumedEvent
+  >>> component.provideHandler(handler.handle,
+  ...                          (IFeedItem, IFeedItemConsumedEvent))
+
+Now that the event handler has been setup, parse in some entries and
+make sure the handler is getting to handle them.
+
+  >>> self.setRoles('Manager')
+  >>> view = feeder.restrictedTraverse('@@update_feed_items')
+  >>> view.update()
+  >>> self.setRoles('')
+
+  >>> handler.event_evt
+  <Products.feedfeeder.events.FeedItemConsumedEvent ...>
+  >>> handler.event_obj
+  <FeedFeederItem ...>
+
+
