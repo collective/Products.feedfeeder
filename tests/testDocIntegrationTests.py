@@ -1,57 +1,28 @@
 # -*- coding: utf-8 -*-
-import os, sys
-try:
-    from Products.PloneTestCase.PloneTestCase import USELAYER
-    from Products.PloneTestCase.layer import PloneSite
-except:
-    USELAYER = False
-if __name__ == '__main__':
-    execfile(os.path.join(sys.path[0], 'framework.py'))
-
-##code-section module-header #fill in your manual code here
-##/code-section module-header
-
-#
-# Test-cases for class(es) 
-#
-
+import os
+import sys
+import unittest
 from Testing import ZopeTestCase
 from Products.feedfeeder.tests.MainTestCase import MainTestCase
 
-# Import the tested classes
+try:
+    from Products.PloneTestCase.layer import PloneSite as test_layer
+except:
+    test_layer = None
 
-
-class testDocIntegrationTests(MainTestCase):
-    """Test-cases for class(es) ."""
-
-    ##code-section class-header_testDocIntegrationTests #fill in your manual code here
-    ##/code-section class-header_testDocIntegrationTests
-
-    def afterSetUp(self):
-        """
-        """
-        pass
-    # Manually created methods
-
+if __name__ == '__main__':
+    execfile(os.path.join(sys.path[0], 'framework.py'))
 
 def test_suite():
-    from unittest import TestSuite
     from Testing.ZopeTestCase.zopedoctest import ZopeDocFileSuite
 
-    ##code-section test-suite-in-between #fill in your manual code here
-##/code-section test-suite-in-between
+    suite = ZopeDocFileSuite('feedfeeder-integration.txt',
+                             package='Products.feedfeeder.doc',
+                             test_class=MainTestCase)
+    if test_layer is not None:
+        suite.layer = test_layer
 
-
-    s = ZopeDocFileSuite('testDocIntegrationTests.txt',
-                         package='Products.feedfeeder.doc',
-                         test_class=testDocIntegrationTests)
-    if USELAYER:
-        s.layer=PloneSite
-    return TestSuite((s,
-                      ))
-
-##code-section module-footer #fill in your manual code here
-##/code-section module-footer
+    return unittest.TestSuite((suite,))
 
 if __name__ == '__main__':
     framework()
