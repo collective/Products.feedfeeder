@@ -6,6 +6,18 @@
  <index name="getFeedItemUpdated" meta_type="DateIndex">
   <property name="index_naive_time_as_local">True</property>
  </index>
+ <index name="getHasBody" meta_type="FieldIndex">
+  <indexed_attr value="getHasBody"/>
+ </index>
+ <index name="getLink" meta_type="FieldIndex">
+  <indexed_attr value="getLink"/>
+ </index>
+ <index name="getObjectids" meta_type="FieldIndex">
+  <indexed_attr value="getObjectids"/>
+ </index>
  <column value="getFeedItemAuthor"/>
  <column value="getFeedItemUpdated"/>
+ <column value="getLink"/>
+ <column value="getHasBody"/>
+ <column value="getObjectids"/>
 </object>
