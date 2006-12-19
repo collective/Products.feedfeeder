@@ -43,6 +43,7 @@ schema = Schema((
     copied_fields['text'],
     StringField(
         name='link',
+        index="FieldIndex:brains",
         widget=StringWidget(
             label='Link',
             label_msgid='feedfeeder_label_link',
