@@ -41,11 +41,31 @@ schema = Schema((
     ),
 
     copied_fields['text'],
-        StringField(
+    StringField(
         name='link',
         widget=StringWidget(
             label='Link',
             label_msgid='feedfeeder_label_link',
+            i18n_domain='feedfeeder',
+        )
+    ),
+
+    ComputedField(
+        name='objectids',
+        index="FieldIndex:brains",
+        widget=ComputedWidget(
+            label='Object Ids',
+            label_msgid='feedfeeder_label_objectids',
+            i18n_domain='feedfeeder',
+        )
+    ),
+
+    ComputedField(
+        name='hasBody',
+        index="FieldIndex:brains",
+        widget=ComputedWidget(
+            label='Has body text',
+            label_msgid='feedfeeder_label_hasbody',
             i18n_domain='feedfeeder',
         )
     ),
@@ -115,6 +135,7 @@ class FeedFeederItem(ATFolder):
         """
         """
         self.invokeFactory('File', id)
+        self.reindexObject()
         transition = self.getDefaultTransition()
         if transition != '':
             wf_tool = getToolByName(self,'portal_workflow')
@@ -135,8 +156,22 @@ class FeedFeederItem(ATFolder):
         """Compatibility method that makes working with link checkers
         easier.
         """
-
         return self.getLink()
+
+    security.declarePublic('getObjectids')
+    def getObjectids(self):
+        """Return the ids of enclosed objects.
+        """
+        return self.objectIds()
+
+    security.declarePublic('getHasBody')
+    def getHasBody(self):
+        """Return True if the object has body text.
+        """
+        if bool(self.getText()):
+            return 1
+        return 0
+
     ##/code-section class-header
 
 

@@ -159,6 +159,7 @@ If there is no text in the feed item and there is one and only one
 enclosure, then the feed item title and enclosure url should be used.
 
   >>> feeder[id].setText('')
+  >>> feeder[id].reindexObject()
   >>> len(feeder[id].getFolderContents())
   1
   >>> items = [x for x in view.items]

@@ -51,25 +51,17 @@ class FeedFolderView(object):
                         summary = x.Description,
                         author = x.getFeedItemAuthor,
                         )
-            obj = x.getObject()
-            # We need to see if this is really needed.
-            #url = obj.remote_url()
-            #if url:
-            #    item['url'] = url
-            self.extraDecoration(item, obj)
-            enclosures = obj.getFolderContents()
+            self.extraDecoration(item, x)
+            enclosures = x.getObjectids
 
-            if (not obj.getText()) and len(enclosures) == 1:
+            if len(enclosures) == 1:
                 # only one enclosure? return item title but return link
-                # to sole enclosure
-                enclosure = enclosures[0]
-                enc = dict(item)
-                enc['url'] = enclosure.getURL()
-                yield enc
-            else:
-                yield item
+                # to sole enclosure, unless there is some body text.
+                if not int(x.getHasBody):
+                    item['url'] = item['url'] + '/' + enclosures[0]
+            yield item
 
-    def extraDecoration(self, item, obj):
+    def extraDecoration(self, item, brain):
         pass
 
     def item_list(self):
