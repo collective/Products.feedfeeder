@@ -54,7 +54,7 @@ class FeedFolderView(object):
             self.extraDecoration(item, x)
             enclosures = x.getObjectids
 
-            if len(enclosures) == 1:
+            if enclosures and enclosures is not None and len(enclosures) == 1:
                 # only one enclosure? return item title but return link
                 # to sole enclosure, unless there is some body text.
                 if not int(x.getHasBody):
