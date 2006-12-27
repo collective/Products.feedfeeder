@@ -69,14 +69,3 @@ class FeedFolderView(object):
 
     def __call__(self, *args, **kwargs):
         return self.index(template_id='feed-folder.html')
-
-    def yesterday_viewlet_list(self):
-        # TEMPORARY HACK
-        # WILL BE REMOVED WEDNESDAY 27 DECEMBER
-        
-        # View items of today and yesterday (last workday).
-        # On Monday, show from Friday till Monday.
-
-        items = self.item_list()
-        return items[:5] # just the first 5
-    
