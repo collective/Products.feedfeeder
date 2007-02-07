@@ -2,8 +2,10 @@ from zope import interface
 from zope import component
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 
+
 class IUpdateFeedItems(interface.Interface):
     def update(): pass
+
 
 class UpdateFeedItems(object):
     """A view for updating the feed items in a feed folder.
@@ -21,8 +23,11 @@ class UpdateFeedItems(object):
 
     def __call__(self):
         self.update()
-        self.request.response.redirect(self.context.absolute_url()
-                                       +"?portal_status_message=Feed+items+updated")
+        self.request.response.redirect(
+            self.context.absolute_url()
+            +"?portal_status_message=Feed+items+updated")
+
+
 class FeedFolderView(object):
     """A view for feed folders.
     """
@@ -33,8 +38,10 @@ class FeedFolderView(object):
 
     @property
     def items(self):
-        """All feed items.  Currently implemented as a generator since
-        there could theoretically be tens of thousands of items.
+        """Return all feed items.
+
+        Currently implemented as a generator since there could
+        theoretically be tens of thousands of items.
         """
         
         listing = self.context.getFolderContents
@@ -43,7 +50,8 @@ class FeedFolderView(object):
                            'portal_type': 'FeedFeederItem'})
         if not results and self.context.portal_type == 'Topic':
             # Use the queryCatalog of the Topic itself.
-            results = self.context.queryCatalog({'portal_type': 'FeedFeederItem'})
+            results = self.context.queryCatalog(
+                {'portal_type': 'FeedFeederItem'})
         for index, x in enumerate(results):
             item = dict(updated_date = x.getFeedItemUpdated,
                         url = x.getURL(),
@@ -54,7 +62,8 @@ class FeedFolderView(object):
             self.extraDecoration(item, x)
             enclosures = x.getObjectids
 
-            if enclosures and enclosures is not None and len(enclosures) == 1:
+            if (enclosures and enclosures is not None and
+                len(enclosures) == 1):
                 # only one enclosure? return item title but return link
                 # to sole enclosure, unless there is some body text.
                 if not int(x.getHasBody):
