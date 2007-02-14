@@ -1,19 +1,15 @@
 # -*- coding: utf-8 -*-
-##code-section module-header #fill in your manual code here
-##/code-section module-header
 
 from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandler
+from persistent.dict import PersistentDict
 from zope import interface
+from zope.app.annotation.interfaces import IAttributeAnnotatable, IAnnotations
+
 
 class StandardContentHandler:
     """
     """
-    # zope3 interfaces
     interface.implements(IFeedItemContentHandler)
-
-    ##code-section class-header_StandardContentHandler #fill in your manual code here
-    ##/code-section class-header_StandardContentHandler
-
 
     def __init__(self, context):
         self.context = context
@@ -21,11 +17,6 @@ class StandardContentHandler:
     def apply(self, contentNode):
         self.context.update(text=contentNode.toxml())
 
-
-##code-section module-footer #fill in your manual code here
-
-from zope.app.annotation.interfaces import IAttributeAnnotatable, IAnnotations
-from persistent.dict import PersistentDict
 
 class AnnotationContentHandler(object):
     """A content handler that parses definition list entries to apply
@@ -67,6 +58,5 @@ class AnnotationContentHandler(object):
                     definition = self._extractText(el)
                     metadata[term] = definition
 
-##/code-section module-footer
 
 
