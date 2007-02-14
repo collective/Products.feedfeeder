@@ -135,6 +135,10 @@ class FeedConsumer:
                     updateWithRemoteFile(enclosure, link)
                     if enclosure.Title() != enclosure.getId():
                         self.tryRenamingEnclosure(enclosure, obj)
+                    # At this moment in time, the
+                    # rename-after-creation magic might have changed
+                    # the ID of the file. So we recatalog the object.
+                    obj.reindexObject()
 
             if obj is not None:
                 event.notify(FeedItemConsumedEvent(obj))
