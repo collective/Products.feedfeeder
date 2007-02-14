@@ -7,12 +7,9 @@ from Products.feedfeeder.interfaces.item import IFeedItem
 from Products.feedfeeder.config import *
 from Products.CMFCore.utils import getToolByName
 
-# additional imports from tagged value 'import'
 from Products.ATContentTypes.content.document import ATDocument
 from DateTime import DateTime
 
-##code-section module-header #fill in your manual code here
-##/code-section module-header
 
 copied_fields = {}
 copied_fields['text'] = ATDocument.schema['text'].copy()
@@ -74,14 +71,9 @@ schema = Schema((
 ),
 )
 
-##code-section after-local-schema #fill in your manual code here
-##/code-section after-local-schema
-
 FeedFeederItem_schema = getattr(ATFolder, 'schema', Schema(())).copy() + \
     schema.copy()
 
-##code-section after-schema #fill in your manual code here
-##/code-section after-schema
 
 class FeedFeederItem(ATFolder):
     """
@@ -124,12 +116,6 @@ class FeedFeederItem(ATFolder):
 
     schema = FeedFeederItem_schema
 
-    ##code-section class-header #fill in your manual code here
-    ##/code-section class-header
-
-    # Methods
-
-    # Methods from Interface IFeedItem
 
     security.declarePublic('addEnclosure')
     def addEnclosure(self,id):
@@ -149,8 +135,6 @@ class FeedFeederItem(ATFolder):
                 wf_tool.doActionFor(self[id], transition,
                 comment='Automatic transition triggered by FeedFolder')
         return self[id]
-
-    # Manually created methods
 
     security.declarePublic('remote_url')
     def remote_url(self):
@@ -173,14 +157,4 @@ class FeedFeederItem(ATFolder):
             return 1
         return 0
 
-    ##/code-section class-header
-
-
 registerType(FeedFeederItem, PROJECTNAME)
-# end of class FeedFeederItem
-
-##code-section module-footer #fill in your manual code here
-##/code-section module-footer
-
-
-
