@@ -56,6 +56,7 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   ...     def setFeedItemUpdated(self, x): self.feedItemUpdated = x
   ...     def getFeedItemAuthor(self): return self.feedItemAuthor
   ...     def setFeedItemAuthor(self, x): self.feedItemAuthor = x
+  ...     def reindexObject(self): pass
 
   >>> class MockFeedEnclosure(object):
   ...     def __init__(self, id):
