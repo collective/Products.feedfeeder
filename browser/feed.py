@@ -53,15 +53,17 @@ class FeedFolderView(object):
             results = self.context.queryCatalog(
                 {'portal_type': 'FeedFeederItem'})
         for index, x in enumerate(results):
+            content_url = x.getURL()
             item = dict(updated_date = x.getFeedItemUpdated,
-                        url = x.getURL(),
+                        url = content_url,
+                        content_url = content_url,
                         title = x.Title,
                         summary = x.Description,
                         author = x.getFeedItemAuthor,
                         )
             self.extraDecoration(item, x)
             enclosures = x.getObjectids
-
+            
             if (enclosures and enclosures is not None and
                 len(enclosures) == 1):
                 # only one enclosure? return item title but return link
