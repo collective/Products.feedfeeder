@@ -60,6 +60,8 @@ class FeedFolderView(object):
                         title = x.Title,
                         summary = x.Description,
                         author = x.getFeedItemAuthor,
+                        has_text = x.getHasBody,
+                        target_link = x.getLink,
                         )
             self.extraDecoration(item, x)
             enclosures = x.getObjectids
