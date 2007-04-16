@@ -55,6 +55,9 @@ class FeedConsumer:
         for entry in parsed.entries:
             sig = md5.new(entry.id)
             id = sig.hexdigest()
+            updated = entry.get('updated')
+            if updated is None:
+                continue
             updated = DateTime(entry.updated)
             prev = feedContainer.getItem(id)
 
