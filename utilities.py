@@ -92,7 +92,13 @@ class FeedConsumer:
                     # string, not a unicode one, so we need to
                     # encode it first.
                     # http://evanjones.ca/python-utf8.html
-                    doc = minidom.parseString(content['value'].encode('utf-8'))
+                    try:
+                        doc = minidom.parseString(content['value'].encode('utf-8'))
+                    except:
+                        # Might be an ExpatError, but that is
+                        # somewhere in a .so file, so we cannot
+                        # specifically catch only that error.
+                        continue
                     if len(doc.childNodes) > 0 and doc.firstChild.hasAttributes():
                         handler = None
                         top = doc.firstChild
