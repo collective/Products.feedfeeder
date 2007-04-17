@@ -51,7 +51,7 @@ class FeedFolderView(object):
         if not results and self.context.portal_type == 'Topic':
             # Use the queryCatalog of the Topic itself.
             results = self.context.queryCatalog(
-                {'portal_type': 'FeedFeederItem'})
+                portal_type='FeedFeederItem')
         for index, x in enumerate(results):
             content_url = x.getURL()
             item = dict(updated_date = x.getFeedItemUpdated,
