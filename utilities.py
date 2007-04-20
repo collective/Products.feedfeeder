@@ -53,7 +53,11 @@ class FeedConsumer:
                 raise IOError("Couldn't locate %r" % url)
         parsed = feedparser.parse(url)
         for entry in parsed.entries:
-            sig = md5.new(entry.id)
+            try:
+                sig = md5.new(entry.id)
+            except:
+                sig = md5.new(entry.link)
+                
             id = sig.hexdigest()
             updated = entry.get('updated')
             if updated is None:
