@@ -61,8 +61,10 @@ class FeedConsumer:
             id = sig.hexdigest()
             updated = entry.get('updated')
             if updated is None:
-                continue
-            updated = DateTime(entry.updated)
+                updated = DateTime()
+            else:
+                updated = DateTime(entry.updated)
+                
             prev = feedContainer.getItem(id)
 
             if prev is None:
