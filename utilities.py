@@ -84,6 +84,10 @@ class FeedConsumer:
 
             summary = getattr(entry, 'summary' , '')
 
+            published = entry.get('published', None)
+            if published is not None:
+                published = DateTime(entry.published)
+                obj.setEffectiveDate(published)
             obj.update(id=id, title=entry.title, description=summary, 
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
