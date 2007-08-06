@@ -56,6 +56,7 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   ...     def setFeedItemUpdated(self, x): self.feedItemUpdated = x
   ...     def getFeedItemAuthor(self): return self.feedItemAuthor
   ...     def setFeedItemAuthor(self, x): self.feedItemAuthor = x
+  ...     def setEffectiveDate(self, x): pass
   ...     def reindexObject(self): pass
 
   >>> class MockFeedEnclosure(object):
@@ -108,11 +109,12 @@ Now lets use our utilty to build the feed items.
   >>> os.chdir(samplesdir)
   >>> samplefiles = [os.path.join(samplesdir, 'samplefeed1.xml'),
   ...                os.path.join(samplesdir, 'samplefeed2.xml'),
-  ...                os.path.join(samplesdir, 'samplefeed3.xml')]
+  ...                os.path.join(samplesdir, 'samplefeed3.xml'),
+  ...                os.path.join(samplesdir, 'samplefeed4.xml')]
   >>> container = MockFeedsContainer(['file://'+x for x in samplefiles])
   >>> consumer.retrieveFeedItems(container)
   >>> len(container.items)
-  5
+  6
 
 Make sure the content all matches up.
 

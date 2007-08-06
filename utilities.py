@@ -55,10 +55,20 @@ class FeedConsumer:
         for entry in parsed.entries:
             sig = md5.new(entry.id)
             id = sig.hexdigest()
+
             updated = entry.get('updated')
+            published = entry.get('published')
+
+            if updated == '':
+                # property may be blank if never item has never
+                # been updated -- use published date
+                updated = published
+
             if updated is None:
                 continue
-            updated = DateTime(entry.updated)
+
+            updated = DateTime(updated)
+            
             prev = feedContainer.getItem(id)
 
             if prev is None:
@@ -84,9 +94,8 @@ class FeedConsumer:
 
             summary = getattr(entry, 'summary' , '')
 
-            published = entry.get('published', None)
             if published is not None:
-                published = DateTime(entry.published)
+                published = DateTime(published)
                 obj.setEffectiveDate(published)
             obj.update(id=id, title=entry.title, description=summary, 
                        feedItemAuthor=getattr(entry, 'author', ''),
