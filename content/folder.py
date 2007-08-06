@@ -60,7 +60,7 @@ class FeedfeederFolder(ATBTreeFolder):
     allowed_content_types = ['FeedFeederItem']
     filter_content_types = 1
     global_allow = 1
-    content_icon = 'feed.gif'
+    content_icon = 'feed_icon.gif'
     immediate_view = 'feed-folder.html'
     default_view = 'feed-folder.html'
     suppl_views = ()
