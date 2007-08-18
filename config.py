@@ -25,7 +25,8 @@ else:
     HAS_PLONE21 = True
 
 # Permissions
-DEFAULT_ADD_CONTENT_PERMISSION = "Add portal content"
+#DEFAULT_ADD_CONTENT_PERMISSION = "Add portal content"
+DEFAULT_ADD_CONTENT_PERMISSION = "%s: Add" % PROJECTNAME
 setDefaultRoles(DEFAULT_ADD_CONTENT_PERMISSION, ('Manager', 'Owner'))
 
 product_globals = globals()
