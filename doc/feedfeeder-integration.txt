@@ -31,19 +31,19 @@ Feed items that are added during an update can be automatically
 transitioned.  See what transitions we have available.
 
   >>> feeder.getAvailableTransitions()
-  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit')] at ...>
+  <DisplayList [('', 'Keep initial state'), ('submit', 'Submit for publication')] at ...>
   >>> self.setRoles('Manager')
   >>> [trans for trans in feeder.getAvailableTransitions()]
-  ['', 'hide', 'submit', 'publish']
+  ['', 'submit', 'publish']
 
   >>> from Products.CMFCore.utils import getToolByName
   >>> wf_tool = getToolByName(folder,'portal_workflow')
   >>> wf_tool.doActionFor(feeder, 'publish')
   >>> [trans for trans in feeder.getAvailableTransitions()]
-  ['', 'hide', 'submit', 'publish']
+  ['', 'submit', 'publish']
   >>> self.setRoles('')
   >>> [trans for trans in feeder.getAvailableTransitions()]
-  ['', 'hide', 'submit']
+  ['', 'submit']
 
 
 Using Updating View
@@ -78,13 +78,15 @@ And did the automatic transition work?
 For the FeedFeederItem:
 
   >>> chain = wf_tool.getChainFor(test_doc)
+  >>> chain
+  ('simple_publication_workflow',)
   >>> status = wf_tool.getStatusOf(chain[0], test_doc)
   >>> status['review_state']
   'published'
   >>> status['comments']
   'Automatic transition triggered by FeedFolder'
 
-For the enclosure:
+For the enclosure: XXX this fails, and I have no clue what happens here.
 
   >>> chain = wf_tool.getChainFor(enclosure)
   >>> status = wf_tool.getStatusOf(chain[0], enclosure)
@@ -92,8 +94,6 @@ For the enclosure:
   'published'
   >>> status['comments']
   'Automatic transition triggered by FeedFolder'
-
-
 
 Folder Listing
 --------------
