@@ -3,7 +3,7 @@
 from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandler
 from persistent.dict import PersistentDict
 from zope import interface
-from zope.app.annotation.interfaces import IAttributeAnnotatable, IAnnotations
+from zope.annotation.interfaces import IAttributeAnnotatable, IAnnotations
 
 
 class StandardContentHandler:
