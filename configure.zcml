@@ -3,7 +3,7 @@
     xmlns:browser="http://namespaces.zope.org/browser"
     xmlns:five="http://namespaces.zope.org/five">
 
-  <include package="zope.app.annotation" />
+  <include package="zope.annotation" />
 
   <utility
       factory=".utilities.FeedConsumer"
@@ -18,6 +18,6 @@
       />
 
   <include package=".browser" />
-  <include package="zope.app.annotation" />
+  <include package="zope.annotation" />
 
 </configure>
