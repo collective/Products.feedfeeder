@@ -53,7 +53,12 @@ class FeedConsumer:
                 raise IOError("Couldn't locate %r" % url)
         parsed = feedparser.parse(url)
         for entry in parsed.entries:
-            sig = md5.new(entry.id)
+            try:
+                sig = md5.new(entry.id)
+            except AttributeError:
+                """ sometimes,
+                gruik rss providers send items without guid element """
+                sig = md5.new(entry.link)
             id = sig.hexdigest()
 
             updated = entry.get('updated')
