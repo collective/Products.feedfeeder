@@ -10,13 +10,13 @@ class IUpdateFeedItems(interface.Interface):
 class UpdateFeedItems(object):
     """A view for updating the feed items in a feed folder.
     """
-    
+
     interface.implements(IUpdateFeedItems)
-    
+
     def __init__(self, context, request):
         self.context = context
         self.request = request
-    
+
     def update(self):
         consumer = component.getUtility(IFeedConsumer)
         consumer.retrieveFeedItems(self.context)
@@ -31,7 +31,7 @@ class UpdateFeedItems(object):
 class FeedFolderView(object):
     """A view for feed folders.
     """
-    
+
     def __init__(self, context, request):
         self.context = context
         self.request = request
@@ -43,9 +43,9 @@ class FeedFolderView(object):
         Currently implemented as a generator since there could
         theoretically be tens of thousands of items.
         """
-        
+
         listing = self.context.getFolderContents
-        results = listing({'sort_on': 'getFeedItemUpdated', 
+        results = listing({'sort_on': 'getFeedItemUpdated',
                            'sort_order': 'descending',
                            'portal_type': 'FeedFeederItem'})
         if not results and self.context.portal_type == 'Topic':
@@ -65,7 +65,7 @@ class FeedFolderView(object):
                         )
             self.extraDecoration(item, x)
             enclosures = x.getObjectids
-            
+
             if (enclosures and enclosures is not None and
                 len(enclosures) == 1):
                 # only one enclosure? return item title but return link
