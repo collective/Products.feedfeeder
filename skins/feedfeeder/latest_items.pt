@@ -2,7 +2,7 @@
       lang="en-US"
       i18n:domain="feedfeeder"
       use-macro="context/global_defines/macros/defines">
-  
+
   <body metal:define-macro="body">
     <h1 i18n:translate="test_view_title">
       Test view showing the latest items from the feeds
@@ -11,7 +11,7 @@
     <tal:entries tal:repeat="entry context/downloadEntries">
       <h2 tal:content="python:entry['title']"/>
       <p class="description"
-         tal:content="python:entry.get('summary', None)"/>
+         tal:content="structure python:entry.get('summary', None)"/>
       <tal:content tal:repeat="content python:entry.get('content', [])">
         <div tal:content="structure python:content.get('value', None)"/>
       </tal:content>
@@ -19,4 +19,3 @@
 
   </body>
 </html>
-

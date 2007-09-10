@@ -11,18 +11,18 @@
                   Batch python:modules['Products.CMFPlone'].Batch;
                   b_size request/b_size|python:20;b_start python:0;b_start request/b_start | b_start;
                   batch python:Batch(results, b_size, int(b_start), orphan=1);">
-   
+
       <div metal:use-macro="context/document_actions/macros/document_actions"></div>
-      
+
       <h1 tal:content="context/title_or_id"></h1>
-      
+
       <div metal:use-macro="context/document_byline/macros/byline"></div>
-      
+
       <p class="documentDescription"
          tal:content="context/Description"
          tal:condition="context/Description"></p>
-      
-         
+
+
       <table cellpadding="0"
                    class="FeedListing">
          <tbody valign="top">
@@ -34,7 +34,7 @@
                   <a tal:attributes="href child/url"
                      tal:content="child/title"> My Title </a>
                   <div tal:condition="child/summary"
-                     tal:content="child/summary"> My summary </div>
+                     tal:content="structure child/summary"> My summary </div>
                </td>
             </tr>
          </tbody>

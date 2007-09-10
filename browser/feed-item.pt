@@ -13,7 +13,7 @@
       <div metal:use-macro="context/document_actions/macros/document_actions"></div>
 
       <h1 tal:content="context/title_or_id"></h1>
-      
+
       <div class="documentByLine">
         <img src="" alt=""
              title="This document is locked."
@@ -76,7 +76,7 @@
       </div>
 
       <p class="documentDescription"
-         tal:content="context/Description"
+         tal:content="structure context/Description"
          tal:condition="context/Description"></p>
 
       <p tal:condition="python: not text and is_editable"
@@ -101,7 +101,7 @@
           </li>
         </ul>
       </tal:enclosures>
-      
+
       <div i18n:translate="source_available"
            class="feed-source-link">
         Source available
