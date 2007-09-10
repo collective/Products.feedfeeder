@@ -118,7 +118,7 @@ class FeedfeederFolder(ATBTreeFolder):
         self[id].unindexObject()
         self._delOb(id)
         return DisplayList(display_trans)
-        
+
     def getItem(self,id):
         """
         """
@@ -157,6 +157,3 @@ registerType(FeedfeederFolder, PROJECTNAME)
 
 ##code-section module-footer #fill in your manual code here
 ##/code-section module-footer
-
-
-
