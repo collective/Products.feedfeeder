@@ -12,7 +12,7 @@
 
       <div metal:use-macro="context/document_actions/macros/document_actions"></div>
 
-      <h1 tal:content="context/title_or_id"></h1>
+      <h1 tal:content="structure context/title_or_id"></h1>
 
       <div class="documentByLine">
         <img src="" alt=""

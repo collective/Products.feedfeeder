@@ -32,7 +32,7 @@
                </td>
                <td>
                   <a tal:attributes="href child/url"
-                     tal:content="child/title"> My Title </a>
+                     tal:content="structure child/title"> My Title </a>
                   <div tal:condition="child/summary"
                      tal:content="structure child/summary"> My summary </div>
                </td>

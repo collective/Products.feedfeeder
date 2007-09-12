@@ -9,7 +9,7 @@
     </h1>
 
     <tal:entries tal:repeat="entry context/downloadEntries">
-      <h2 tal:content="python:entry['title']"/>
+      <h2 tal:content="structure python:entry['title']"/>
       <p class="description"
          tal:content="structure python:entry.get('summary', None)"/>
       <tal:content tal:repeat="content python:entry.get('content', [])">
