@@ -2,6 +2,7 @@
     * hacked date/time parsing as DateTime() apparently
 	  does not parse EDT
 	* munge titles and summaries to remove XML entities
+	* more munging: quot and img tags
 
 2007-08-26 seletz <stefan.eletzhofer@inquant.de>
 	* created branch for adding plone 3.0 fixes

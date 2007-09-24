@@ -98,10 +98,25 @@ class FeedConsumer:
                 published = DateTime(published.replace("EDT","EST"))
                 obj.setEffectiveDate(published)
 
-            def munge(s):
-                return s.replace("&amp;","&").replace("&mdash;"," -- ")
+            def strip_imgtag(s):
+                import re
+                return re.sub("<img.*>","",s)
 
-            obj.update(id=id, title=munge(entry.title), description=munge(summary), 
+            def munge_xml(s):
+                reps = {
+                        "&amp;": "&",
+                        "&mdash;": " -- ",
+                        "&quot;": "'",
+                }
+                for sr,rp in reps.items():
+                    s.replace(sr,rp)
+
+                return s
+
+            title = strip_imgtag(munge_xml(entry.title))
+            desc  = strip_imgtag(munge_xml(summary))
+
+            obj.update(id=id, title=title, description=desc,
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
                        link=link)
