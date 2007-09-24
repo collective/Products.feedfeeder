@@ -67,7 +67,7 @@ class FeedConsumer:
             if updated is None:
                 continue
 
-            updated = DateTime(updated)
+            updated = DateTime(updated.replace("EDT","EST"))
             
             prev = feedContainer.getItem(id)
 
@@ -95,8 +95,9 @@ class FeedConsumer:
             summary = getattr(entry, 'summary' , '')
 
             if published is not None:
-                published = DateTime(published)
+                published = DateTime(published.replace("EDT","EST"))
                 obj.setEffectiveDate(published)
+
             obj.update(id=id, title=entry.title, description=summary, 
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
