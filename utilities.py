@@ -98,7 +98,10 @@ class FeedConsumer:
                 published = DateTime(published.replace("EDT","EST"))
                 obj.setEffectiveDate(published)
 
-            obj.update(id=id, title=entry.title, description=summary, 
+            def munge(s):
+                return s.replace("&amp;","&").replace("&mdash;"," -- ")
+
+            obj.update(id=id, title=munge(entry.title), description=munge(summary), 
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
                        link=link)
