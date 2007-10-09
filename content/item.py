@@ -68,6 +68,16 @@ schema = Schema((
         )
     ),
 
+    StringField(
+        name='feedTitle',
+        index="FieldIndex:brains",
+        widget=StringWidget(
+            label='Feed Title',
+            label_msgid='feedfeeder_label_feedTitle',
+            i18n_domain='feedfeeder',
+        )
+    ),
+
 ),
 )
 

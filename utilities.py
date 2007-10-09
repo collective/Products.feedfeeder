@@ -102,10 +102,14 @@ class FeedConsumer:
             if published is not None:
                 published = DateTime(published)
                 obj.setEffectiveDate(published)
-            obj.update(id=id, title=entry.title, description=summary, 
+            obj.update(id=id,
+                       title=entry.title,
+                       description=summary,
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
-                       link=link)
+                       link=link,
+                       feedTitle=parsed['feed'].get('title', ''),
+                       )
             if hasattr(entry, 'content'):
                 content = entry.content[0]
                 if content['type'] in ('text/xhtml', 'application/xhtml+xml'):

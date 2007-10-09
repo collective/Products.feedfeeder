@@ -56,6 +56,8 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   ...     def setFeedItemUpdated(self, x): self.feedItemUpdated = x
   ...     def getFeedItemAuthor(self): return self.feedItemAuthor
   ...     def setFeedItemAuthor(self, x): self.feedItemAuthor = x
+  ...     def getFeedTitle(self): return self.feedTitle
+  ...     def setFeedTitle(self, x): self.feedTitle = x
   ...     def setEffectiveDate(self, x): pass
   ...     def reindexObject(self): pass
 
@@ -121,6 +123,8 @@ Make sure the content all matches up.
   >>> test_doc = container.items['0cfbced08adbdc1f3bf30b4120371b7d']
   >>> test_doc.title
   u'Philips Nieuws 24 juli'
+  >>> test_doc.getFeedTitle()
+  u'Philips Research Eindhoven News (Special)'
   >>> len(test_doc.enclosures)
   1
   >>> test_doc.enclosures.values()[0].size()
