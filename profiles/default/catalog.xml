@@ -15,9 +15,6 @@
  <index name="getObjectids" meta_type="FieldIndex">
   <indexed_attr value="getObjectids"/>
  </index>
- <index name="getFeedTitle" meta_type="FieldIndex">
-  <indexed_attr value="getFeedTitle"/>
- </index>
  <column value="getFeedTitle"/>
  <column value="getFeedItemAuthor"/>
  <column value="getFeedItemUpdated"/>

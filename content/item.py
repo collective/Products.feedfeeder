@@ -70,7 +70,6 @@ schema = Schema((
 
     StringField(
         name='feedTitle',
-        index=":brains",
         widget=StringWidget(
             label='Feed Title',
             label_msgid='feedfeeder_label_feedTitle',
