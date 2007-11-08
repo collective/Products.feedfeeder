@@ -18,7 +18,6 @@ schema = Schema((
 
     StringField(
         name='feedItemAuthor',
-        index="FieldIndex:brains",
         widget=StringWidget(
             label='Feeditemauthor',
             label_msgid='feedfeeder_label_feedItemAuthor',
@@ -29,7 +28,6 @@ schema = Schema((
     DateTimeField(
         name='feedItemUpdated',
         default=DateTime('2000/01/01'),
-        index="DateIndex:brains",
         widget=CalendarWidget(
             label='Feeditemupdated',
             label_msgid='feedfeeder_label_feedItemUpdated',
@@ -40,7 +38,6 @@ schema = Schema((
     copied_fields['text'],
     StringField(
         name='link',
-        index="FieldIndex:brains",
         widget=StringWidget(
             label='Link',
             label_msgid='feedfeeder_label_link',
@@ -50,7 +47,6 @@ schema = Schema((
 
     ComputedField(
         name='objectids',
-        index="FieldIndex:brains",
         widget=ComputedWidget(
             label='Object Ids',
             label_msgid='feedfeeder_label_objectids',
@@ -60,7 +56,6 @@ schema = Schema((
 
     ComputedField(
         name='hasBody',
-        index="FieldIndex:brains",
         widget=ComputedWidget(
             label='Has body text',
             label_msgid='feedfeeder_label_hasbody',
