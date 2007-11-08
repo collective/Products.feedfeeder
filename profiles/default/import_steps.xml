@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<import-steps>
+  <import-step id="feedfeeder_various"
+               version="20071108-01"
+               handler="Products.feedfeeder.setuphandlers.importVarious"
+               title="feedfeeder: miscellaneous import steps">
+    Import steps that couldn't be mapped to other handlers.
+  </import-step>
+</import-steps>
