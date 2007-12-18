@@ -147,8 +147,11 @@ class FeedfeederFolder(ATBTreeFolder):
         transition = self.getDefaultTransition()
         if transition != '':
             wf_tool = getToolByName(self,'portal_workflow')
-            wf_tool.doActionFor(self[id], transition,
-                comment='Automatic transition triggered by FeedFolder')
+            transitions = wf_tool.getTransitionsFor(self[id])
+            transition_ids = [trans['id'] for trans in transitions]
+            if transition in transition_ids:
+	        wf_tool.doActionFor(self[id], transition,
+                            comment='Automatic transition triggered by FeedFolder')
         return self[id]
 
 
