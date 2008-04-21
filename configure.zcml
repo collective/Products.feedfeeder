@@ -1,9 +1,18 @@
 <configure
     xmlns="http://namespaces.zope.org/zope"
     xmlns:browser="http://namespaces.zope.org/browser"
-    xmlns:five="http://namespaces.zope.org/five">
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
 
-  <include package="zope.annotation" />
+  <!-- zope.annotation is used in Zope 2.10 -->
+  <include
+      zcml:condition="installed zope.annotation"
+      package="zope.annotation" />
+  <!-- zope.app.annotation is used in Zope 2.9
+       We know that zope.app.annotation.tests is only installed there. -->
+  <include
+      zcml:condition="installed zope.app.annotation.tests"
+      package="zope.app.annotation" />
 
   <utility
       factory=".utilities.FeedConsumer"
@@ -18,6 +27,5 @@
       />
 
   <include package=".browser" />
-  <include package="zope.annotation" />
 
 </configure>

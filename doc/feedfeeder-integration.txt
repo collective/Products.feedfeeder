@@ -223,7 +223,10 @@ values.  Lets make sure that works.
 Now that we've retrieved the items, lets make sure the metadata we expect
 is present.
 
-  >>> from zope.annotation import IAnnotations
+  >>> try:
+  ...     from zope.annotation import IAnnotations
+  ... except ImportError:
+  ...     from zope.app.annotation import IAnnotations
   >>> annotations = IAnnotations(feeder['649c8553c458001dbbb9b15957d58a92'])
   >>> metadata = annotations[AnnotationContentHandler.ANNO_KEY]
   >>> dict(metadata)
