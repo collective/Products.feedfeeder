@@ -1,6 +1,8 @@
 1.0 beta 3 (unreleased)
 -----------------------
 
+- Remove semicolon in page template that broke in Plone 3.  [maurits]
+
 - Fix imports so they work in Plone 3 as well, without deprecation
   warnings.  [derstappenit]
 

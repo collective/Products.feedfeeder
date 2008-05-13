@@ -27,7 +27,7 @@
                    class="FeedListing">
          <tbody valign="top">
             <tr tal:repeat="child batch">
-               <td tal:content="python:toLocalizedTime(child['updated_date'],long_format=0);"
+               <td tal:content="python:toLocalizedTime(child['updated_date'], long_format=0)"
                   class="feed-date">
                    2006-11-10
                </td>
