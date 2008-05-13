@@ -28,10 +28,20 @@ Available Transitions
 ---------------------
 
 Feed items that are added during an update can be automatically
-transitioned.  See what transitions we have available.
+transitioned.
+
+Between Plone 2.5 and 3.0 there were some changes to the workflows
+which make it tricky to have tests here that pass in both cases.  We
+explicitly set the workflow chain for FeedFeederItems to
+plone_workflow, as that is what the default for Plone 2.5.  And we do
+the same for Files, as we use them for enclosures::
+
+  >>> portal.portal_workflow.setChainForPortalTypes(['FeedFeederItem', 'File'], 'plone_workflow')
+
+See what transitions we have available::
 
   >>> feeder.getAvailableTransitions()
-  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit')] at ...>
+  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit...>
   >>> self.setRoles('Manager')
   >>> [trans for trans in feeder.getAvailableTransitions()]
   ['', 'hide', 'submit', 'publish']
