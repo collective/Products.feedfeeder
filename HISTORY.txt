@@ -1,5 +1,5 @@
-1.0 beta 3 (unreleased)
------------------------
+1.0 beta 3 (13 May 2008)
+------------------------
 
 - In the tests, use plone_workflow explicitly, so it is easier to test
   on both Plone 2.5 and 3.0.  [maurits]
