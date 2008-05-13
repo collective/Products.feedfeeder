@@ -1,6 +1,9 @@
 1.0 beta 3 (unreleased)
 -----------------------
 
+- Make update_feed_items available in the object_buttons for Plone 3,
+  using new small @@is_feedcontainer as condition.  [maurits]
+
 - Avoid deprecation warnings for events and interfaces.  [maurits]
 
 - Remove semicolon in page template that broke in Plone 3.  [maurits]

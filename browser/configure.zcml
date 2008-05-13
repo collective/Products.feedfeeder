@@ -11,6 +11,14 @@
       />
 
   <page
+      name="is_feedcontainer"
+      class=".feed.IsFeedContainer"
+      for="*"
+      attribute="is_feedcontainer"
+      permission="zope2.View"
+      />
+
+  <page
       name="feed-folder.html"
       for="Products.feedfeeder.interfaces.container.IFeedsContainer"
       permission="zope2.View"
