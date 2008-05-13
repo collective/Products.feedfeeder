@@ -1,0 +1,9 @@
+1.0 beta 3 (unreleased)
+-----------------------
+
+- Fix imports so they work in Plone 3 as well, without deprecation
+  warnings.  [derstappenit]
+
+
+1.0 beta 2 (2 January 2008)
+---------------------------
