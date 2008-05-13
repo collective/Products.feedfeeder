@@ -1,6 +1,8 @@
 1.0 beta 3 (unreleased)
 -----------------------
 
+- Avoid deprecation warnings for events and interfaces.  [maurits]
+
 - Remove semicolon in page template that broke in Plone 3.  [maurits]
 
 - Fix imports so they work in Plone 3 as well, without deprecation
