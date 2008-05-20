@@ -69,14 +69,15 @@ Scheduled updates for feed folders
 
 Zope can be configured to periodically trigger a url call.
 In zope.conf you can use the <clock-server> directive to define a schedule and url
-with the following data.
-<clock-server>
-   method /path_to_feedfolder/update_feed_items
-   period 3600 # seconds
-   user admin
-   password 123
-   host localhost:8080
-</clock-server>
+with the following data::
+
+  <clock-server>
+     method /path_to_feedfolder/update_feed_items
+     period 3600 # seconds
+     user admin
+     password 123
+     host localhost:8080
+  </clock-server>
 
 
 Tests

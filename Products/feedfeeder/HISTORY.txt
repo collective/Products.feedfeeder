@@ -1,12 +1,12 @@
 1.0 beta 4 (20 May 2008)
------------------------
+------------------------
 
 - Eggification: you can now install it as the Products.feedfeeder
   egg.  [maurits]
 
 
 1.0 beta 3 (13 May 2008)
-------------------------
+-------------------------
 
 - In the tests, use plone_workflow explicitly, so it is easier to test
   on both Plone 2.5 and 3.0.  [maurits]
