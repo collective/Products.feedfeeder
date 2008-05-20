@@ -1,0 +1,52 @@
+# ArchGenXML generated POT File
+# Reinout van Rees <reinout@zestsoftware.nl>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: feedfeeder\n"
+"POT-Creation-Date: 2006-10-19 12:46+0000\n"
+"PO-Revision-Date: Thu Jul 20 09:13:40 2006\n"
+"Last-Translator: Reinout van Rees <reinout@zestsoftware.nl>\n"
+"Language-Team: Reinout van Rees <reinout@zestsoftware.nl>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: en\n"
+"Language-Name: English\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: feedfeeder\n"
+
+#. Default: "Feeditemauthor"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_feedItemAuthor"
+msgstr ""
+
+#. Default: "Feeditemupdated"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_feedItemUpdated"
+msgstr ""
+
+#. Default: "Feeds"
+#: content/FeedfeederFolder.py
+msgid "feedfeeder_label_feeds"
+msgstr ""
+
+#. Default: "Links"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_link"
+msgstr ""
+
+#. Default: "Test view showing the latest items from the feeds"
+#: skins/feedfeeder/latest_items.pt
+msgid "test_view_title"
+msgstr ""
+
+#. 'Default transition'
+#: content/folder.py
+msgid "label_default_transition"
+msgstr ""
+
+#. "When updating this feed's item the transition selected below will be performed."
+#: content/folder.py
+msgid "help_default_transition"
+msgstr ""

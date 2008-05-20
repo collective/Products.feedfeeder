@@ -1,0 +1,31 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five"
+    xmlns:zcml="http://namespaces.zope.org/zcml">
+
+  <!-- zope.annotation is used in Zope 2.10 -->
+  <include
+      zcml:condition="installed zope.annotation"
+      package="zope.annotation" />
+  <!-- zope.app.annotation is used in Zope 2.9
+       We know that zope.app.annotation.tests is only installed there. -->
+  <include
+      zcml:condition="installed zope.app.annotation.tests"
+      package="zope.app.annotation" />
+
+  <utility
+      factory=".utilities.FeedConsumer"
+      permission="cmf.ModifyPortalContent"
+      provides=".interfaces.consumer.IFeedConsumer"
+      />
+
+  <adapter
+      for=".interfaces.item.IFeedItem"
+      provides=".interfaces.contenthandler.IFeedItemContentHandler"
+      factory=".contenthandler.StandardContentHandler"
+      />
+
+  <include package=".browser" />
+
+</configure>

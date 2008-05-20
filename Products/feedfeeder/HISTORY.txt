@@ -1,0 +1,26 @@
+1.0 beta 4 (unreleased)
+-----------------------
+
+- Eggification: you can now install it as the Products.feedfeeder
+  egg.  [maurits]
+
+
+1.0 beta 3 (13 May 2008)
+------------------------
+
+- In the tests, use plone_workflow explicitly, so it is easier to test
+  on both Plone 2.5 and 3.0.  [maurits]
+
+- Make update_feed_items available in the object_buttons for Plone 3,
+  using new small @@is_feedcontainer as condition.  [maurits]
+
+- Avoid deprecation warnings for events and interfaces.  [maurits]
+
+- Remove semicolon in page template that broke in Plone 3.  [maurits]
+
+- Fix imports so they work in Plone 3 as well, without deprecation
+  warnings.  [derstappenit]
+
+
+1.0 beta 2 (2 January 2008)
+---------------------------

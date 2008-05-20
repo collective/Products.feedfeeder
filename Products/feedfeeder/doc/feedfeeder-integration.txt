@@ -1,0 +1,291 @@
+Feedfeeder Integration
+======================
+
+Feedfeeder uses feedparser to read in Atom feeds and to create new
+documents or files if there are new items in that feed. Those new
+items are created inside the feedfeederfolder itself, as it is a
+folderish type.
+
+Lets begin by creating our feeder.
+
+  >>> id = folder.invokeFactory('FeedfeederFolder', 'feeder')
+  >>> feeder = folder.feeder
+  
+Setup some feeds.
+
+  >>> import os
+  >>> import Products.feedfeeder
+
+  >>> samplesdir = os.path.dirname(Products.feedfeeder.__file__)
+  >>> samplesdir = os.path.join(samplesdir, 'tests', 'samples')
+  >>> os.chdir(samplesdir)
+  >>> samplefiles = [os.path.join(samplesdir, 'samplefeed1.xml'),
+  ...                os.path.join(samplesdir, 'samplefeed2.xml')]
+  >>> feeder.setFeeds(['file://'+x for x in samplefiles])
+
+
+Available Transitions
+---------------------
+
+Feed items that are added during an update can be automatically
+transitioned.
+
+Between Plone 2.5 and 3.0 there were some changes to the workflows
+which make it tricky to have tests here that pass in both cases.  We
+explicitly set the workflow chain for FeedFeederItems to
+plone_workflow, as that is what the default for Plone 2.5.  And we do
+the same for Files, as we use them for enclosures::
+
+  >>> portal.portal_workflow.setChainForPortalTypes(['FeedFeederItem', 'File'], 'plone_workflow')
+
+See what transitions we have available::
+
+  >>> feeder.getAvailableTransitions()
+  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit...>
+  >>> self.setRoles('Manager')
+  >>> [trans for trans in feeder.getAvailableTransitions()]
+  ['', 'hide', 'submit', 'publish']
+
+  >>> from Products.CMFCore.utils import getToolByName
+  >>> wf_tool = getToolByName(folder,'portal_workflow')
+  >>> wf_tool.doActionFor(feeder, 'publish')
+  >>> [trans for trans in feeder.getAvailableTransitions()]
+  ['', 'hide', 'submit', 'publish']
+  >>> self.setRoles('')
+  >>> [trans for trans in feeder.getAvailableTransitions()]
+  ['', 'hide', 'submit']
+
+
+Using Updating View
+-------------------
+
+  By default only Managers (with the ManagePortal permission) can
+  update FeedFolders.
+
+  >>> self.setRoles('Manager')
+  >>> feeder.setDefaultTransition('publish')
+  >>> view = feeder.restrictedTraverse('@@update_feed_items')
+  >>> view.update()
+  >>> self.setRoles('')
+
+Make sure we got what we wanted.
+
+  >>> sorted([x for x in feeder.objectIds()])
+  ['0cfbced08adbdc1f3bf30b4120371b7d', '30ca408a75537f05d03821c64473289e', '649c8553c458001dbbb9b15957d58a92', 'c17db5a7fa227e2e34193c71a173dbb1']
+
+  >>> test_doc = feeder['30ca408a75537f05d03821c64473289e']
+  >>> test_doc.title
+  u'Party!'
+  >>> test_doc.Description()
+  'Party on the roof of the Mediterranean Inn'
+  >>> test_doc.getText()
+  '<div>\nwoo hoo, a party!\n</div>'
+  >>> enclosure = test_doc.objectValues()[0]
+  >>> enclosure
+  <ATFile at ...>
+
+And did the automatic transition work?
+For the FeedFeederItem:
+
+  >>> chain = wf_tool.getChainFor(test_doc)
+  >>> status = wf_tool.getStatusOf(chain[0], test_doc)
+  >>> status['review_state']
+  'published'
+  >>> status['comments']
+  'Automatic transition triggered by FeedFolder'
+
+For the enclosure:
+
+  >>> chain = wf_tool.getChainFor(enclosure)
+  >>> status = wf_tool.getStatusOf(chain[0], enclosure)
+  >>> status['review_state']
+  'published'
+  >>> status['comments']
+  'Automatic transition triggered by FeedFolder'
+
+
+
+Folder Listing
+--------------
+
+We need to make sure the items listed by the folder listing view match
+up with appropriate logic.
+
+  >>> id = folder.invokeFactory('FeedfeederFolder', 'feeder2')
+  >>> feeder = folder.feeder2
+  >>> view = feeder.restrictedTraverse('@@feed-folder.html')
+
+The requirements for how things get linked is as follows:
+
+  1) feed item with no text and no enclosures: show feed item title and 
+  link to feed item
+  2) feed item with text: show feed item title and link to feed item
+  3) feed item with text and one enclosure: show feed item title and 
+  link to feed item
+  4) feed item with no text and one enclosure: show feed item title and 
+  link to enclosure
+  5) feed item with no text and multiple enclosures: show feed item 
+  title and link to feed item
+
+We have to satisfy each of these requirements.  Make sure that a feed 
+item with no text and no enclosures still have the feed item title and 
+feed item url.
+
+  >>> id = feeder.invokeFactory('FeedFeederItem', '1')
+  >>> feeder[id].update(title='foo')
+  >>> items = [x for x in view.items]
+  >>> len(items)
+  1
+  >>> items[0]['title']
+  'foo'
+  >>> items[0]['url']
+  'http://nohost/plone/Members/test_user_1_/feeder2/1'
+
+A feed item with text should have it's title and url displayed.
+
+  >>> feeder[id].setText('abcdef')
+  >>> items = [x for x in view.items]
+  >>> len(items)
+  1
+  >>> items[0]['title']
+  'foo'
+  >>> items[0]['url']
+  'http://nohost/plone/Members/test_user_1_/feeder2/1'
+
+Even if the feed item has an enclosure, as long as it has text the
+feed item title and url should be used.
+
+  >>> obj = feeder[id].addEnclosure('1.1')
+  >>> obj.update(title='foo.bar')
+  >>> items = [x for x in view.items]
+  >>> len(items)
+  1
+  >>> items[0]['title']
+  'foo'
+  >>> items[0]['url']
+  'http://nohost/plone/Members/test_user_1_/feeder2/1'
+
+If there is no text in the feed item and there is one and only one 
+enclosure, then the feed item title and enclosure url should be used.
+
+  >>> feeder[id].setText('')
+  >>> feeder[id].reindexObject()
+  >>> len(feeder[id].getFolderContents())
+  1
+  >>> items = [x for x in view.items]
+  >>> len(items)
+  1
+  >>> items[0]['title']
+  'foo'
+  >>> items[0]['url']
+  'http://nohost/plone/Members/test_user_1_/feeder2/1/1.1'
+
+If there is no text in the feed item and there is more than one
+enclosure, we should go back to simply using the title and url of the 
+feed item.
+
+  >>> feeder[id].setText('')
+  >>> obj = feeder[id].addEnclosure('1.2')
+  >>> obj.update(title='foo.hello')
+  >>> len(feeder[id].getFolderContents()) > 1
+  True
+  >>> items = [x for x in view.items]
+  >>> len(items)
+  1
+  >>> items[0]['title']
+  'foo'
+  >>> items[0]['url']
+  'http://nohost/plone/Members/test_user_1_/feeder2/1'
+
+Items with summaries should have summaries. Summaries come from 
+the description field on the content object.
+
+  >>> feeder[id].setDescription('Test Summary')
+  >>> feeder[id].update(title='blatant')
+  >>> items = [x for x in view.items]
+  >>> items[0]['summary']
+  'Test Summary'
+
+Annotated Metadata Handler
+--------------------------
+
+Feedfeeder comes with an unregistered zope3 annotations based metadata
+handler adapter.  Essentially it scans the content of an atom entry
+for a toplevel DL entry and saves the DT/DD items as annotation
+values.  Lets make sure that works.
+
+  >>> from zope import component
+  >>> from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandler
+  >>> from Products.feedfeeder.contenthandler import AnnotationContentHandler
+  >>> from Products.feedfeeder.interfaces.item import IFeedItem
+
+  >>> component.provideAdapter(AnnotationContentHandler,
+  ...                          adapts=(IFeedItem,),
+  ...                          provides=IFeedItemContentHandler,
+  ...                          name=u'definition-list-metadata')
+  
+  >>> feeder.setFeeds(['file://'+os.path.join(samplesdir, 'samplefeed1.xml')])
+  >>> self.setRoles('Manager')
+  >>> view = feeder.restrictedTraverse('@@update_feed_items')
+  >>> view.update()
+  >>> self.setRoles('')
+
+Now that we've retrieved the items, lets make sure the metadata we expect
+is present.
+
+  >>> try:
+  ...     from zope.annotation import IAnnotations
+  ... except ImportError:
+  ...     from zope.app.annotation import IAnnotations
+  >>> annotations = IAnnotations(feeder['649c8553c458001dbbb9b15957d58a92'])
+  >>> metadata = annotations[AnnotationContentHandler.ANNO_KEY]
+  >>> dict(metadata)
+  {u'date': u'2006-03-23'}
+
+Also make sure that the normal content is still available, but that
+the dl with the extra data is gone.
+
+  >>> item = feeder['649c8553c458001dbbb9b15957d58a92']
+  >>> text = item.getText()
+  >>> 'definition-list-metadata' not in text
+  True
+  >>> 'the real text body here' in text
+  True
+
+Events
+------
+
+After a feed item has been consumed it fires an appropriate event to
+signify this.  First lets clean up the feeder.
+
+  >>> feeder.manage_delObjects([x for x in feeder.objectIds()])
+
+Make sure that event is being properly fired and handled.
+
+  >>> class Handler:
+  ...     event_obj = None
+  ...     event_evt = None
+  ...     def handle(self, event, obj):
+  ...         self.event_obj = event
+  ...         self.event_evt = obj
+  >>> handler = Handler()
+
+  >>> from zope import component
+  >>> from Products.feedfeeder.interfaces.item import IFeedItemConsumedEvent
+  >>> component.provideHandler(handler.handle,
+  ...                          (IFeedItem, IFeedItemConsumedEvent))
+
+Now that the event handler has been setup, parse in some entries and
+make sure the handler is getting to handle them.
+
+  >>> self.setRoles('Manager')
+  >>> view = feeder.restrictedTraverse('@@update_feed_items')
+  >>> view.update()
+  >>> self.setRoles('')
+
+  >>> handler.event_evt
+  <Products.feedfeeder.events.FeedItemConsumedEvent ...>
+  >>> handler.event_obj
+  <FeedFeederItem ...>
+
+

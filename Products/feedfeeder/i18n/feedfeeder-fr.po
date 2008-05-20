@@ -1,0 +1,53 @@
+# ArchGenXML generated POT File
+# Reinout van Rees <reinout@zestsoftware.nl>, 2006.
+msgid ""
+msgstr ""
+"Project-Id-Version: feedfeeder\n"
+"POT-Creation-Date: 2006-10-19 12:46+0000\n"
+"PO-Revision-Date: Jul 11 09:13:40 2007\n"
+"Last-Translator: Thomas Desvenain <thomas.desvenain@ingeniweb.com>\n"
+"Language-Team: Ingeniweb <thomas.desvenain@ingeniweb.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: fr\n"
+"Language-Name: French\n"
+"Preferred-Encodings: utf-8\n"
+"Domain: feedfeeder\n"
+
+#. Default: "Feeditemauthor"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_feedItemAuthor"
+msgstr "Auteur du flux"
+
+#. Default: "Feeditemupdated"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_feedItemUpdated"
+msgstr "Flux Rss rafraîchi"
+
+#. Default: "Feeds"
+#: content/FeedfeederFolder.py
+msgid "feedfeeder_label_feeds"
+msgstr "Flux"
+
+#. 'Default transition'
+#: content/folder.py
+msgid "label_default_transition"
+msgstr "Transition par défaut"
+
+#. "When updating this feed's item the transition selected below will be performed."
+#: content/folder.py
+msgid "help_default_transition"
+msgstr "La transition effectuée lorsque vous mettez à jour ce flux"
+
+#. Default: "Links"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_link"
+msgstr "Liens"
+
+#. Default: "Test view showing the latest items from the feeds"
+#: skins/feedfeeder/latest_items.pt
+msgid "test_view_title"
+msgstr "Vue affichant les derniers items du flux"
+

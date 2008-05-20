@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ <title>Philips Research Eindhoven News</title>
+ <subtitle>General news of Philips Research Eindhoven - for internal use only.</subtitle>
+ <updated>2007-07-30T23:32:36Z</updated>
+ <id>http://resweb2.natlab.research.philips.com/NlwwNews/rss/NlwwNewsAtom.xml</id>
+ <entry>
+  <title>An entry that has never been updated!</title>
+  <id>oldnews</id>
+  <content type="xhtml">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      Old news: Some posts are never updated.
+    </div>
+  </content>
+  <updated></updated>
+  <published>2007-07-30T23:32:36Z</published>
+  <author><name>Reinout van Rees</name></author>
+ </entry>
+</feed>

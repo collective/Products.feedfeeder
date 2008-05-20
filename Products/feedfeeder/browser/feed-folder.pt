@@ -1,0 +1,48 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/@@standard_macros/view"
+      i18n:domain="feedfeeder">
+
+   <body>
+   <div metal:fill-slot="body"
+      tal:define="results view/item_list;
+                  Batch python:modules['Products.CMFPlone'].Batch;
+                  b_size request/b_size|python:20;b_start python:0;b_start request/b_start | b_start;
+                  batch python:Batch(results, b_size, int(b_start), orphan=1);">
+
+      <div metal:use-macro="context/document_actions/macros/document_actions"></div>
+
+      <h1 tal:content="context/title_or_id"></h1>
+
+      <div metal:use-macro="context/document_byline/macros/byline"></div>
+
+      <p class="documentDescription"
+         tal:content="context/Description"
+         tal:condition="context/Description"></p>
+
+
+      <table cellpadding="0"
+                   class="FeedListing">
+         <tbody valign="top">
+            <tr tal:repeat="child batch">
+               <td tal:content="python:toLocalizedTime(child['updated_date'], long_format=0)"
+                  class="feed-date">
+                   2006-11-10
+               </td>
+               <td>
+                  <a tal:attributes="href child/url"
+                     tal:content="structure child/title"> My Title </a>
+                  <div tal:condition="child/summary"
+                     tal:content="structure child/summary"> My summary </div>
+               </td>
+            </tr>
+         </tbody>
+      </table>
+
+      <!-- Navigation -->
+      <div metal:use-macro="here/batch_macros/macros/navigation" />
+   </div>
+   </body>
+</html>

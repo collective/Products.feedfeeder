@@ -1,0 +1,46 @@
+<configure
+    xmlns="http://namespaces.zope.org/browser"
+    >
+
+  <page
+      name="update_feed_items"
+      class=".feed.UpdateFeedItems"
+      for="Products.feedfeeder.interfaces.container.IFeedsContainer"
+      allowed_interface=".feed.IUpdateFeedItems"
+      permission="cmf.ManagePortal"
+      />
+
+  <page
+      name="is_feedcontainer"
+      class=".feed.IsFeedContainer"
+      for="*"
+      attribute="is_feedcontainer"
+      permission="zope2.View"
+      />
+
+  <page
+      name="feed-folder.html"
+      for="Products.feedfeeder.interfaces.container.IFeedsContainer"
+      permission="zope2.View"
+      template="feed-folder.pt"
+      allowed_interface="Products.feedfeeder.interfaces.folderview.IFeedfeederFolderView"
+      class=".feed.FeedFolderView"
+      />
+
+  <page
+      name="feed-folder.html"
+      for="Products.ATContentTypes.interface.IATTopic"
+      permission="zope2.View"
+      template="feed-folder.pt"
+      allowed_interface="Products.feedfeeder.interfaces.folderview.IFeedfeederFolderView"
+      class=".feed.FeedFolderView"
+      />
+
+  <page
+      name="feed-item.html"
+      for="Products.feedfeeder.interfaces.item.IFeedItem"
+      permission="zope2.View"
+      template="feed-item.pt"
+      />
+
+</configure>

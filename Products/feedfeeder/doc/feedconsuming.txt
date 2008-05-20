@@ -1,0 +1,166 @@
+Consuming Feeds
+===============
+
+The basic premise here is that there is a global utility available that
+is capable of taking an object that either implements or adapts to
+the IFeedsContainer interface.  And with that object, it can retrieve
+feed items and store them within the object ... typically as
+(but not restricted to) child items in a folderish container.
+
+Mock Container
+~~~~~~~~~~~~~~
+
+The requirements for getting feed information and populating feed items
+are pretty minimal.  The class merely has to implement IFeedsContainer.
+
+  >>> from Products.feedfeeder.interfaces.container import IFeedsContainer
+  >>> from Products.feedfeeder.interfaces.item import IFeedItem
+  >>> import zope.interface
+
+  >>> class MockFeedsContainer(object):
+  ...     zope.interface.implements(IFeedsContainer)
+  ...     def __init__(self, feeds):
+  ...         self.items = {}
+  ...         self.feeds = feeds
+  ...     def getFeeds(self):
+  ...         return self.feeds
+  ...     def addItem(self, id):
+  ...         item = MockFeedItem()
+  ...         self.items[id] = item
+  ...         return item
+  ...     def replaceItem(self, id):
+  ...         return self.addItem(id)
+  ...     def getItem(self,id):
+  ...         return self.items.get(id, None)
+  
+  >>> class MockFeedItem(object):
+  ...     zope.interface.implements(IFeedItem)
+  ...     def __init__(self):
+  ...         self.enclosures = {}
+  ...     def update(self, **kwargs):
+  ...         for key, value in kwargs.items():
+  ...             setattr(self, key, value)
+  ...     def addEnclosure(self, id):
+  ...         self.enclosures[id] = MockFeedEnclosure(id)
+  ...         return self.enclosures[id]
+  ...     def getText(self):
+  ...         return self.text
+  ...     def manage_renameObject(self, orig_id, new_id):
+  ...         if new_id in self.enclosures.keys():
+  ...             raise KeyError('Enclosure with %r id already exists' % repr(new_id))
+  ...         self.enclosures[new_id] = self.enclosures[orig_id]
+  ...         del self.enclosures[orig_id]
+  ...         self.enclosures[new_id].id = new_id
+  ...     def objectIds(self): return self.enclosures.keys()
+  ...     def getFeedItemUpdated(self): return self.feedItemUpdated
+  ...     def setFeedItemUpdated(self, x): self.feedItemUpdated = x
+  ...     def getFeedItemAuthor(self): return self.feedItemAuthor
+  ...     def setFeedItemAuthor(self, x): self.feedItemAuthor = x
+  ...     def getFeedTitle(self): return self.feedTitle
+  ...     def setFeedTitle(self, x): self.feedTitle = x
+  ...     def setEffectiveDate(self, x): pass
+  ...     def reindexObject(self): pass
+
+  >>> class MockFeedEnclosure(object):
+  ...     def __init__(self, id):
+  ...         self.id = id
+  ...     def getId(self):
+  ...         return self.id
+  ...     def Title(self):
+  ...         return getattr(self, 'title', '')
+  ...     def update(self, **kwargs):
+  ...         for key, value in kwargs.items():
+  ...             setattr(self, key, value)
+  ...     def size(self):
+  ...         if hasattr(self, 'text'):
+  ...             return len(self.text)
+  ...         return len(getattr(self, 'data', ''))
+  ...     def update_data(self, data, mime_type):
+  ...         self.data = data
+  ...         if hasattr(data, 'read'):
+  ...             self.data = data.read()
+  ...         self.mime_type = mime_type
+  ...     def __str__(self):
+  ...         return '<MockFeedEnclosure id=%s>' % self.id
+  ...     __repr__ = __str__
+
+Using The Utility
+~~~~~~~~~~~~~~~~~
+
+Lets begin by getting the proper path to our example atom feed and setting
+up our mock feedscontainer.
+
+  >>> import os
+  >>> import Products.feedfeeder
+  >>> samplesdir = os.path.dirname(Products.feedfeeder.__file__)
+  >>> samplesdir = os.path.join(samplesdir, 'tests', 'samples')
+
+Make sure the feed consumer tells us if it has been given a bad file
+path.
+
+  >>> from Products.feedfeeder import utilities
+  >>> consumer = utilities.FeedConsumer()
+  >>> container = MockFeedsContainer(['file:///foobar.xml'])
+  >>> consumer.retrieveFeedItems(container)
+  Traceback (most recent call last):
+  ...
+  IOError: Couldn't locate '/foobar.xml'
+
+Now lets use our utilty to build the feed items.
+
+  >>> os.chdir(samplesdir)
+  >>> samplefiles = [os.path.join(samplesdir, 'samplefeed1.xml'),
+  ...                os.path.join(samplesdir, 'samplefeed2.xml'),
+  ...                os.path.join(samplesdir, 'samplefeed3.xml'),
+  ...                os.path.join(samplesdir, 'samplefeed4.xml')]
+  >>> container = MockFeedsContainer(['file://'+x for x in samplefiles])
+  >>> consumer.retrieveFeedItems(container)
+  >>> len(container.items)
+  6
+
+Make sure the content all matches up.
+
+  >>> test_doc = container.items['0cfbced08adbdc1f3bf30b4120371b7d']
+  >>> test_doc.title
+  u'Philips Nieuws 24 juli'
+  >>> test_doc.getFeedTitle()
+  u'Philips Research Eindhoven News (Special)'
+  >>> len(test_doc.enclosures)
+  1
+  >>> test_doc.enclosures.values()[0].size()
+  1000
+  
+Lets check out the document's feed item metadata.
+
+  >>> test_doc.getFeedItemAuthor()
+  u'Miriam Mobach'
+  >>> test_doc.getFeedItemUpdated()
+  DateTime('2006/07/21 12:00:00 GMT+0')
+ 
+There are duplicate entries in both feed1 and feed2.  In the case of the
+first duplicate, feed2's entry is later and thus should be the one we have.
+
+  >>> duplicate1 = container.items['649c8553c458001dbbb9b15957d58a92']
+  >>> duplicate1.text
+  u'<div>\nhello bar\n</div>'
+  
+For the second duplicate, the first entry is the latest and should be
+kept.
+  >>> duplicate2 = container.items['30ca408a75537f05d03821c64473289e']
+  >>> duplicate2.text
+  u'<div>\nwoo hoo, a party!\n</div>'
+  >>> len(duplicate2.enclosures)
+  2
+  >>> sorted([x.id for x in duplicate2.enclosures.values()])
+  [u'test2.doc', u'test3.xls']
+
+Get our item that talks about the thesis defence of Reinout.
+
+  >>> thesis = container.items['f065f774e8c28bf9f33221f290c4ca6a']
+  >>> thesis.title
+  u'Thesis defence: 15 January 2007 15:00'
+
+Now someone could have added an enclosure that is actually just a link.  We append that link with an "a href" to the text of the item.
+
+  >>> thesis.getText()
+  u'<div>\nGreat news: a final thesis defence date!\n</div>'

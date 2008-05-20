@@ -1,0 +1,9 @@
+<?xml version="1.0"?>
+<object name="portal_catalog" meta_type="Pluggable Plone Catalog Tool">
+ <column value="getFeedTitle"/>
+ <column value="getFeedItemAuthor"/>
+ <column value="getFeedItemUpdated"/>
+ <column value="getLink"/>
+ <column value="getHasBody"/>
+ <column value="getObjectids"/>
+</object>

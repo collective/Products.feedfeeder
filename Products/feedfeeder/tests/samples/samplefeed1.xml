@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ <title>Philips Research Eindhoven News (Special)</title>
+ <subtitle>General news of Philips Research Eindhoven - for internal use only.</subtitle>
+ <updated>2006-07-24T11:30:15Z</updated>
+ <id>http://resweb2.natlab.research.philips.com/NlwwNews/rss/NlwwNewsAtom.xml</id>
+ <entry>
+  <title>Philips Nieuws 24 juli</title>
+  <id>http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6103&amp;chk=6573</id>
+  <link type="application/pdf" href="file:test1.pdf" rel="enclosure" length="1000" />
+  <updated>2006-07-21T12:00:00Z</updated>
+  <summary>This is a sample summary</summary>
+  <author><name>Miriam Mobach</name></author>
+ </entry>
+ <entry>
+  <title>PR-Europa Nieuws, 21 juli</title>
+  <id>http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6100&amp;chk=232342</id>
+  <link type="application/pdf" href="file:badfile.pdf" rel="enclosure" length="1000" />
+  <updated>2006-07-21T12:00:00Z</updated>
+  <author><name>Nelleke Tops</name></author>
+ </entry>
+ <entry>
+  <title>Bicycle service closed 17 July-7 August</title>
+  <id>http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6092&amp;chk=51342</id>
+  <content type="xhtml">
+<div xmlns="http://www.w3.org/1999/xhtml" class="definition-list-metadata">
+    <dl>
+        <dt>date</dt>
+        <dd>2006-03-23</dd>
+    </dl>
+    <div>
+      the real text body here
+    </div>
+</div>
+  </content>
+  <updated>2006-07-18T12:00:00Z</updated>
+  <author><name>Miriam Mobach</name></author>
+ </entry>
+ <entry>
+  <title>Party!</title>
+  <id>http://myplace.com</id>
+  <link type="application/pdf" href="file:test2.doc" rel="enclosure" length="737" />
+  <link type="application/pdf" href="file:test3.xls" rel="enclosure" length="693" />
+  <content type="xhtml">
+<div xmlns="http://www.w3.org/1999/xhtml">
+woo hoo, a party!
+</div>
+  </content>
+  <updated>2006-07-18T12:00:00Z</updated>
+  <summary>Party on the roof of the Mediterranean Inn</summary>
+  <author><name>Rocky Burt</name></author>
+ </entry>
+</feed>

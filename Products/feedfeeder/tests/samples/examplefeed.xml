@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<?xml-stylesheet href="http://nlww.natlab.research.philips.com:8020/css/rssnlww.css" type="text/css" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ <title>Philips Research Eindhoven News</title>
+ <subtitle>General news of Philips Research Eindhoven - for internal use only.</subtitle>
+ <link href="http://nlww.natlab.research.philips.com:8080/" />
+ <link href="http://resweb2.natlab.research.philips.com/NlwwNews/rss/NlwwNewsAtom.xml" rel="self" />
+ <updated>2006-07-24T11:30:15Z</updated>
+ <id>http://resweb2.natlab.research.philips.com/NlwwNews/rss/NlwwNewsAtom.xml</id>
+ <entry>
+  <title>Philips Nieuws 24 juli</title>
+  <id>http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6103&amp;chk=6573</id>
+  <link type="application/pdf" href="file:test1.pdf" rel="enclosure" length="1000" />
+  <updated>2006-07-21T12:00:00Z</updated>
+  <author><name>Miriam Mobach</name></author>
+ </entry>
+ <entry>
+  <title>PR-Europe News, July 21</title>
+  <id>http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6101&amp;chk=144024</id>
+  <link type="application/pdf" href="http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6101&amp;chk=144024" rel="enclosure" length="1000" />
+  <updated>2006-07-21T12:00:00Z</updated>
+  <author><name>Nelleke Tops</name></author>
+ </entry>
+ <entry>
+  <title>PR-Europa Nieuws, 21 juli</title>
+  <id>http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6100&amp;chk=232342</id>
+  <link type="application/pdf" href="http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6100&amp;chk=232342" rel="enclosure" length="1000" />
+  <updated>2006-07-21T12:00:00Z</updated>
+  <author><name>Nelleke Tops</name></author>
+ </entry>
+ <entry>
+  <title>Bicycle service closed 17 July-7 August</title>
+  <id>http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6092&amp;chk=51342</id>
+  <content type="xhtml">
+   <div xmlns="http://www.w3.org/1999/xhtml">
+<div>
+<p align="center"><font face="Helv" size="2"><strong><font face="Helv" size="4">Bicycle service closed 17 July-7 August</font></strong></font></p>
+
+<p align="left"><font face="Helv" size="2">The bicycle service in building WD-k-116 will be closed from&#160;17 July&#160;until 7 August.</font></p>
+
+<div align="center"><font face="Helv" size="2"><strong><font face="Helv" size="4">Fietsservice gesloten van 17 juli-7 augustus</font></strong></font></div>
+
+<p><font face="Helv" size="2">De fietsservice in&#160;gebouw&#160;WD-k-116&#160;is gesloten van&#160;17 juli tot 7 augustus.</font></p>
+
+<p><font face="Helv" size="2">Louis Stravens,<br />
+tel. 44499</font></p>
+</div>
+
+   </div>
+  </content>
+  <updated>2006-07-18T12:00:00Z</updated>
+  <author><name>Miriam Mobach</name></author>
+ </entry>
+ <entry>
+  <title>Philips Nieuws, 17 juli</title>
+  <id>http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6090&amp;chk=438107</id>
+  <link type="application/pdf" href="http://resweb2.natlab.research.philips.com/NlwwNews/NlwwViewNews.asp?NewsId=6090&amp;chk=438107" rel="enclosure" length="1000" />
+  <updated>2006-07-17T12:00:00Z</updated>
+  <author><name>Nelleke Tops</name></author>
+ </entry>
+</feed>
