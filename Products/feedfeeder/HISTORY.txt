@@ -1,4 +1,4 @@
-1.0 beta 4 (unreleased)
+1.0 beta 4 (20 May 2008)
 -----------------------
 
 - Eggification: you can now install it as the Products.feedfeeder

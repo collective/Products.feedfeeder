@@ -1,8 +1,7 @@
 from setuptools import setup, find_packages
 import os
 
-version = '1.0beta4'
-
+version = open(os.path.join("Products", "feedfeeder", "version.txt")).read()
 readme = open(os.path.join("Products", "feedfeeder", "README.txt")).read()
 history = open(os.path.join("Products", "feedfeeder", "HISTORY.txt")).read()
 
