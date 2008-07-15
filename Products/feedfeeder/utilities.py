@@ -97,14 +97,12 @@ class FeedConsumer:
                 linkDict = getattr(entry, 'links', [{'href': ''}])[0]
                 link = linkDict['href']
 
-            summary = getattr(entry, 'summary' , '')
-
             if published is not None:
                 published = DateTime(published)
                 obj.setEffectiveDate(published)
             obj.update(id=id,
-                       title=entry.title,
-                       description=summary,
+                       title=getattr(entry, 'title' , ''),
+                       description=getattr(entry, 'summary' , ''),
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
                        link=link,
