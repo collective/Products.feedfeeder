@@ -1,20 +1,23 @@
-1.0 beta 5 (unreleased)
------------------------
+History of feedfeeder
+=====================
 
-- Accepts entries without a title, which is allowed in rss.
+1.0 rc 1 (2008-07-15)
+---------------------
+
+- Accept entries without a title, which is allowed in rss.
   See http://cyber.law.harvard.edu/rss/rss.html#hrelementsOfLtitemgt
   [maurits]
 
 
-1.0 beta 4 (20 May 2008)
-------------------------
+1.0 beta 4 (2008-05-20)
+-----------------------
 
 - Eggification: you can now install it as the Products.feedfeeder
   egg.  [maurits]
 
 
-1.0 beta 3 (13 May 2008)
--------------------------
+1.0 beta 3 (2008-05-13)
+-----------------------
 
 - In the tests, use plone_workflow explicitly, so it is easier to test
   on both Plone 2.5 and 3.0.  [maurits]
@@ -30,7 +33,7 @@
   warnings.  [derstappenit]
 
 
-1.0 beta 2 (2 January 2008)
----------------------------
+1.0 beta 2 (2008-01-02)
+-----------------------
 
 - History begins.
