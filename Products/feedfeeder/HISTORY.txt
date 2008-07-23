@@ -1,10 +1,11 @@
 History of feedfeeder
 =====================
 
-1.0 rc 2 (unreleased)
+1.0 rc 2 (2008-07-23)
 ---------------------
 
-- nothing yet
+- Re-release of rc1: rc1 was missing all .txt files, making install impossible
+  as setup.py reads version.txt. [reinout]
 
 
 1.0 rc 1 (2008-07-15)
