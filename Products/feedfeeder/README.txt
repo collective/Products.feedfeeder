@@ -80,6 +80,12 @@ with the following data::
   </clock-server>
 
 
+Dependencies
+------------
+
+- Works with Plone 2.5, 3.0 or 3.1.
+
+
 Tests
 -----
 
