@@ -89,10 +89,10 @@ Dependencies
 Tests
 -----
 
-The look-here-first test is the doctest at 'doc/testDocIntegrationTests.txt'.
+The look-here-first test is the doctest at 'doc/feedfeeder-integration.txt'.
 
-Testing is best done with zope's zopectl. 'instancemanager
-<projectname> --test feedfeeder' will do that for you if you've set
-up instancemanager. Otherwise 'bin/zopectl test -s
-Products.feedfeeder'.
+Testing is best done with zope's zopectl. ::
+
+  bin/zopectl test -s Products.feedfeeder'.
+
 
