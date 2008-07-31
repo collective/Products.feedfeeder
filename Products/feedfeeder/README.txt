@@ -5,7 +5,7 @@ Feedfeeder has just a few things it needs to do:
 
 - Read in a few ATOM feeds (not too many).
 
-- Create FeedfeederItems out of the entries pulled from the ATOM feeds.
+- Create FeedFeederItems out of the entries pulled from the ATOM feeds.
   Any feed items that contain enclosures will have the enclosures
   pulled down and added as File items to the feed item.
 
@@ -48,7 +48,7 @@ fancy.
 
 The feedfeeder's content types are: 
   - folder.FeedfeederFolder
-  - item.FeedfeederItem
+  - item.FeedFeederItem
 
 
 How it works
