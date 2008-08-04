@@ -1773,13 +1773,7 @@ def _open_resource(url_file_stream_or_string, etag, modified, agent, referrer, h
     if url_file_stream_or_string == '-':
         return sys.stdin
 
-    # urllib does not support the 'feed' scheme -- replace with 'http'
-    if url_file_stream_or_string.startswith('feed://'):
-        url_file_stream_or_string = url_file_stream_or_string.replace('feed://', 'http://', 1)
-        
-    scheme = urlparse.urlparse(url_file_stream_or_string)[0]
-
-    if scheme in ('http', 'https', 'ftp'):
+    if urlparse.urlparse(url_file_stream_or_string)[0] in ('http', 'https', 'ftp'):
         if not agent:
             agent = USER_AGENT
         # test for inline user:password for basic auth

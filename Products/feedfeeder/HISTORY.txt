@@ -4,7 +4,9 @@ History of feedfeeder
 1.0 rc 3 (unreleased)
 ---------------------
 
-- Nothing yet.
+- Moved fix for feeds starting with 'feed:' instead of 'http:' from
+  feedparser.py to utilities.py, so we use an unchanged feedparser.py
+  again.  [maurits]
 
 
 1.0 rc 2 (2008-07-23)

@@ -51,6 +51,9 @@ class FeedConsumer:
             url = url[7:]
             if not os.path.exists(url):
                 raise IOError("Couldn't locate %r" % url)
+        # urllib does not support the 'feed' scheme -- replace with 'http'
+        if url.startswith('feed://'):
+            url = url.replace('feed://', 'http://', 1)
         parsed = feedparser.parse(url)
         for entry in parsed.entries:
             try:
