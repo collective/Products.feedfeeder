@@ -27,6 +27,7 @@ setup(name='Products.feedfeeder',
       zip_safe=False,
       install_requires=[
           'setuptools',
+          'FeedParser',
           # -*- Extra requirements: -*-
       ],
       entry_points="""

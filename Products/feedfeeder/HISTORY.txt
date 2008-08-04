@@ -4,6 +4,9 @@ History of feedfeeder
 1.0 rc 3 (unreleased)
 ---------------------
 
+- Removed own feedparser.py.  Instead added an install_requires
+  dependency on FeedParser in setup.py.  [maurits]
+
 - Moved fix for feeds starting with 'feed:' instead of 'http:' from
   feedparser.py to utilities.py, so we use an unchanged feedparser.py
   again.  [maurits]
