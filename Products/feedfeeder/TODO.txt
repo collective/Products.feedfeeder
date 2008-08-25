@@ -1,0 +1,2 @@
+- Make updated date available for Collections in
+  profiles/default/portal_atct.xml
