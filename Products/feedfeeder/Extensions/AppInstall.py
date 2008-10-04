@@ -12,12 +12,12 @@ def applyGenericSetupProfile(site, out):
     """
 
     setup_tool = getToolByName(site, 'portal_setup')
-    setup_tool.setImportContext('profile-feedfeeder:default')
     print >> out, "Applying the generic setup profile for feedfeeder..."
-    setup_tool.runAllImportSteps(purge_old=False)
     try:
+        setup_tool.runAllImportStepsFromProfile('profile-feedfeeder:default')
+    except:
+        # BBB for Plone 2.5
+        setup_tool.setImportContext('profile-feedfeeder:default')
+        setup_tool.runAllImportSteps(purge_old=False)
         setup_tool.setImportContext('profile-CMFPlone:plone')
-    except KeyError:
-        # Plone 3.0 has a different profile name
-        setup_tool.setImportContext('profile-Products.CMFPlone:plone')
     print >> out, "Applied the generic setup profile for feedfeeder"

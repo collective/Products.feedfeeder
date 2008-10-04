@@ -4,6 +4,10 @@ History of feedfeeder
 1.0 rc 3 (unreleased)
 ---------------------
 
+- Extensions/AppInstall.py: first try installing our own profile in
+  the Plone 3 way and when that fails try the Plone 2.5 way.
+  [maurits]
+
 - Removed own feedparser.py.  Instead added an install_requires
   dependency on FeedParser in setup.py.  [maurits]
 
