@@ -5,24 +5,12 @@
 
 from Testing import ZopeTestCase
 from Products.PloneTestCase import PloneTestCase
-from Products.feedfeeder.config import PRODUCT_DEPENDENCIES
-from Products.feedfeeder.config import DEPENDENCIES
-
-PRODUCT_DEPENDENCIES.append('feedfeeder')
-
-# Install all (product-) dependencies
-for dependency in PRODUCT_DEPENDENCIES + DEPENDENCIES:
-    ZopeTestCase.installProduct(dependency)
 
 ZopeTestCase.installProduct('feedfeeder')
 
-PRODUCTS = list()
-PRODUCTS += DEPENDENCIES
-PRODUCTS.append('feedfeeder')
-
 testcase = PloneTestCase.PloneTestCase
 
-PloneTestCase.setupPloneSite(products=PRODUCTS)
+PloneTestCase.setupPloneSite(products='feedfeeder')
 
 
 class MainTestCase(testcase):
