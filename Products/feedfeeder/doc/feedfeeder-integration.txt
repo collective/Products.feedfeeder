@@ -289,3 +289,15 @@ make sure the handler is getting to handle them.
   <FeedFeederItem ...>
 
 
+Collections
+-----------
+
+Plone has Collections (a.k.a. Smart Folders, a.k.a. Topics).  The
+feedItemUpdated field is available as metadata there (you can select
+on it) and as index (you can sort on it)::
+
+  >>> smart_folder_tool = getToolByName(portal, 'portal_atct')
+  >>> 'getFeedItemUpdated' in smart_folder_tool.getIndexes(enabledOnly=True)
+  True
+  >>> 'getFeedItemUpdated' in smart_folder_tool.getAllMetadata(enabledOnly=True)
+  True

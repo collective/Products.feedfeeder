@@ -4,6 +4,9 @@ History of feedfeeder
 1.0 rc 3 (unreleased)
 ---------------------
 
+- Made feed item updated date available for Collections/Smart Folders.
+  [maurits]
+
 - Extensions/AppInstall.py: first try installing our own profile in
   the Plone 3 way and when that fails try the Plone 2.5 way.
   [maurits]

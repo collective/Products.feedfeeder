@@ -1,0 +1,22 @@
+<?xml version="1.0"?>
+<!-- For Plone 2.5 compatibility this is also done in
+     setuphandlers.py:createFeedUpdatedCriterion  -->
+<atcttool
+    xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+  <topic_indexes i18n:domain="plone">
+    <index name="getFeedItemUpdated"
+           description="Date that the FeedItem was last updated."
+           enabled="True"
+           friendlyName="FeedItem Updated">
+      <criteria>ATFriendlyDateCriteria</criteria>
+      <criteria>ATDateRangeCriterion</criteria>
+    </index>
+  </topic_indexes>
+  <topic_metadata>
+    <metadata
+        name="getFeedItemUpdated"
+        description="Date that the FeedItem was last updated."
+        enabled ="True"
+        />
+  </topic_metadata>
+</atcttool>
