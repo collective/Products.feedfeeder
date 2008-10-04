@@ -1,21 +1,25 @@
 # -*- coding: utf-8 -*-
-##code-section module-header #fill in your manual code here
-import urllib2
-import os
-import md5
-import tempfile
 from xml.dom import minidom
+import md5
+import os
+import re
+import tempfile
+import urllib2
+
 import feedparser
+from DateTime import DateTime
 from zope import component
 from zope import event
-from DateTime import DateTime
-from Products.feedfeeder.interfaces.container import IFeedsContainer
-from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandler
-from Products.feedfeeder.events import FeedItemConsumedEvent
-##/code-section module-header
-
-from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from zope import interface
+
+from Products.feedfeeder.interfaces.container import IFeedsContainer
+from Products.feedfeeder.interfaces.contenthandler import \
+    IFeedItemContentHandler
+from Products.feedfeeder.events import FeedItemConsumedEvent
+from Products.feedfeeder.interfaces.consumer import IFeedConsumer
+
+RE_FILENAME = re.compile('filename *= *(.*)')
+
 
 class FeedConsumer:
     """
@@ -23,14 +27,10 @@ class FeedConsumer:
     # zope3 interfaces
     interface.implements(IFeedConsumer)
 
-    ##code-section class-header_FeedConsumer #fill in your manual code here
-    ##/code-section class-header_FeedConsumer
-
     def retrieveFeedItems(self, container):
         feedContainer = IFeedsContainer(container)
         for url in feedContainer.getFeeds():
             self._retrieveSingleFeed(feedContainer, url)
-
 
     def tryRenamingEnclosure(self, enclosure, feeditem):
         newId = enclosure.Title()
@@ -43,7 +43,6 @@ class FeedConsumer:
                 except:
                     pass
             newId = '%i_%s' % (x, enclosure.Title())
-
 
     def _retrieveSingleFeed(self, feedContainer, url):
         # feedparser doesn't understand proper file: url's
@@ -76,7 +75,7 @@ class FeedConsumer:
                 continue
 
             updated = DateTime(updated)
-            
+
             prev = feedContainer.getItem(id)
 
             if prev is None:
@@ -104,8 +103,8 @@ class FeedConsumer:
                 published = DateTime(published)
                 obj.setEffectiveDate(published)
             obj.update(id=id,
-                       title=getattr(entry, 'title' , ''),
-                       description=getattr(entry, 'summary' , ''),
+                       title=getattr(entry, 'title', ''),
+                       description=getattr(entry, 'summary', ''),
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
                        link=link,
@@ -119,23 +118,24 @@ class FeedConsumer:
                     # encode it first.
                     # http://evanjones.ca/python-utf8.html
                     try:
-                        doc = minidom.parseString(content['value'].encode('utf-8'))
+                        doc = minidom.parseString(
+                            content['value'].encode('utf-8'))
                     except:
                         # Might be an ExpatError, but that is
                         # somewhere in a .so file, so we cannot
                         # specifically catch only that error.
                         continue
-                    if len(doc.childNodes) > 0 and doc.firstChild.hasAttributes():
+                    if len(doc.childNodes) > 0 and \
+                            doc.firstChild.hasAttributes():
                         handler = None
                         top = doc.firstChild
                         cls = top.getAttribute('class')
                         if cls:
-                            handler = component.queryAdapter(obj,
-                                                             IFeedItemContentHandler,
-                                                             name=cls)
+                            handler = component.queryAdapter(
+                                obj, IFeedItemContentHandler, name=cls)
                         if handler is None:
-                            handler = component.queryAdapter(obj,
-                                                             IFeedItemContentHandler)
+                            handler = component.queryAdapter(
+                                obj, IFeedItemContentHandler)
 
                         if handler is None:
                             obj.update(text=content['value'])
@@ -179,10 +179,6 @@ class FeedConsumer:
         return enclosure.type == u'text/html'
 
 
-##code-section module-footer #fill in your manual code here
-import re
-RE_FILENAME = re.compile('filename *= *(.*)')
-
 def updateWithRemoteFile(obj, link):
     file = tempfile.TemporaryFile('w+b')
     try:
@@ -225,7 +221,3 @@ def updateWithRemoteFile(obj, link):
         # well, if we cannot retrieve the data, the file object will
         # remain empty
         pass
-
-##/code-section module-footer
-
-

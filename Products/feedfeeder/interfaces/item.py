@@ -13,8 +13,9 @@ class IFeedItem(interface.Interface):
     """
 
     def addEnclosure(id):
-       """Add an enclosure.
-       """
+        """Add an enclosure.
+        """
+
 
 class IFeedItemConsumedEvent(IObjectModifiedEvent):
     """Intended to be fired after a new feed item has been successfully

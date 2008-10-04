@@ -2,6 +2,7 @@ from Products.CMFCore.utils import getToolByName
 # Check for Plone 3.0 or above
 try:
     from Products.CMFPlone.migrations import v3_0
+    v3_0 # pyflakes
 except ImportError:
     PLONE30 = 0
 else:

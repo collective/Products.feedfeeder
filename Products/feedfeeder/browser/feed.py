@@ -1,11 +1,14 @@
 from zope import interface
 from zope import component
+
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.interfaces.container import IFeedsContainer
 
-class IUpdateFeedItems(interface.Interface):
-    def update(): pass
 
+class IUpdateFeedItems(interface.Interface):
+
+    def update():
+        pass
 
 
 class IsFeedContainer(object):

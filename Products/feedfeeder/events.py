@@ -3,6 +3,7 @@
 from zope import interface
 try:
     from zope.lifecycleevent import ObjectModifiedEvent
+    ObjectModifiedEvent # pyflakes
 except ImportError:
     # BBB for Zope 2.9
     from zope.app.event.objectevent import ObjectModifiedEvent

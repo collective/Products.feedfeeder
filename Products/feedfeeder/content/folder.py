@@ -3,12 +3,10 @@ from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import *
 from zope import interface
 from Products.ATContentTypes.content.folder import ATBTreeFolder
-from Products.feedfeeder.interfaces.container import IFeedsContainer
-from Products.feedfeeder.config import *
 from Products.CMFCore.utils import getToolByName
 
-##code-section module-header #fill in your manual code here
-##/code-section module-header
+from Products.feedfeeder.interfaces.container import IFeedsContainer
+from Products.feedfeeder.config import PROJECTNAME
 
 schema = Schema((
 
@@ -36,14 +34,9 @@ schema = Schema((
 ),
 )
 
-##code-section after-local-schema #fill in your manual code here
-##/code-section after-local-schema
-
 FeedfeederFolder_schema = ATBTreeFolder.schema.copy() + \
     schema.copy()
 
-##code-section after-schema #fill in your manual code here
-##/code-section after-schema
 
 class FeedfeederFolder(ATBTreeFolder):
     """
@@ -68,26 +61,23 @@ class FeedfeederFolder(ATBTreeFolder):
     typeDescMsgId = 'description_edit_feedfeederfolder'
 
 
-    actions =  (
-
+    actions = (
 
        {'action': "string:${object_url}/update_feed_items",
         'category': "object_buttons",
         'id': 'update_feed_items',
         'name': 'Update Feed Items',
-        'permissions': ("View",),
-        'condition': 'python:1'
+        'permissions': ("View", ),
+        'condition': 'python:1',
        },
-
 
        {'action': "string:$object_url/feed-folder.html",
         'category': "object",
         'id': 'view',
         'name': 'view',
-        'permissions': ("View",),
-        'condition': 'python:1'
+        'permissions': ("View", ),
+        'condition': 'python:1',
        },
-
 
     )
 
@@ -95,31 +85,24 @@ class FeedfeederFolder(ATBTreeFolder):
 
     schema = FeedfeederFolder_schema
 
-    ##code-section class-header #fill in your manual code here
-    ##/code-section class-header
-
-    # Methods
-
-    # Methods from Interface IFeedsContainer
-
-    security.declarePublic('getItem')
-
     def getAvailableTransitions(self):
         # Create a temporary object so we can ask what transitions are
         # available for it.
         id = 'temp_zest_temp'
         self.invokeFactory('FeedFeederItem', id)
-        wf_tool = getToolByName(self,'portal_workflow')
+        wf_tool = getToolByName(self, 'portal_workflow')
         transitions = wf_tool.getTransitionsFor(self[id])
-        display_trans = [('', 'Keep initial state'),]
+        display_trans = [('', 'Keep initial state'), ]
         for trans in transitions:
-             display_trans.append( ( trans['id'], trans['name'] ) )
+            display_trans.append((trans['id'], trans['name']))
         # Unindex and remove the temporary object
         self[id].unindexObject()
         self._delOb(id)
         return DisplayList(display_trans)
 
-    def getItem(self,id):
+    security.declarePublic('getItem')
+
+    def getItem(self, id):
         """
         """
         if id in self.objectIds():
@@ -127,26 +110,29 @@ class FeedfeederFolder(ATBTreeFolder):
         return None
 
     security.declarePublic('getFeeds')
+
     def getFeeds(self):
         """
         """
         return self.feeds
 
     security.declarePublic('replaceItem')
-    def replaceItem(self,id):
+
+    def replaceItem(self, id):
         """
         """
         self.manage_delObjects([id])
         return self.addItem(id)
 
     security.declarePublic('addItem')
+
     def addItem(self, id):
         """
         """
         self.invokeFactory('FeedFeederItem', id)
         transition = self.getDefaultTransition()
         if transition != '':
-            wf_tool = getToolByName(self,'portal_workflow')
+            wf_tool = getToolByName(self, 'portal_workflow')
             wf_tool.doActionFor(self[id], transition,
                 comment='Automatic transition triggered by FeedFolder')
         return self[id]

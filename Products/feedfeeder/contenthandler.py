@@ -1,12 +1,16 @@
 # -*- coding: utf-8 -*-
 
-from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandler
+from Products.feedfeeder.interfaces.contenthandler import \
+    IFeedItemContentHandler
 from persistent.dict import PersistentDict
 from zope import interface
 try:
-    from zope.annotation.interfaces import IAttributeAnnotatable, IAnnotations
+    from zope.annotation.interfaces import IAttributeAnnotatable
+    from zope.annotation.interfaces import IAnnotations
+    IAttributeAnnotatable, IAnnotations # pyflakes
 except ImportError:
-    from zope.app.annotation.interfaces import IAttributeAnnotatable, IAnnotations
+    from zope.app.annotation.interfaces import IAttributeAnnotatable
+    from zope.app.annotation.interfaces import IAnnotations
 
 
 class StandardContentHandler:
@@ -60,6 +64,3 @@ class AnnotationContentHandler(object):
                 elif el.nodeName == 'dd':
                     definition = self._extractText(el)
                     metadata[term] = definition
-
-
-

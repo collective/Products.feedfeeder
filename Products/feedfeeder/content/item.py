@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
-from Products.Archetypes.atapi import *
-from zope import interface
-from Products.ATContentTypes.content.folder import ATFolder
-from Products.feedfeeder.interfaces.item import IFeedItem
-from Products.feedfeeder.config import *
-from Products.CMFCore.utils import getToolByName
-
-from Products.ATContentTypes.content.document import ATDocument
 from DateTime import DateTime
+from Products.ATContentTypes.content.document import ATDocument
+from Products.ATContentTypes.content.folder import ATFolder
+from Products.Archetypes.atapi import *
+from Products.CMFCore.utils import getToolByName
+from zope import interface
 
+from Products.feedfeeder.interfaces.item import IFeedItem
+from Products.feedfeeder.config import PROJECTNAME
 
 copied_fields = {}
 copied_fields['text'] = ATDocument.schema['text'].copy()
@@ -91,7 +90,7 @@ class FeedFeederItem(ATFolder):
 
     meta_type = 'FeedFeederItem'
     portal_type = 'FeedFeederItem'
-    allowed_content_types = ['File'] 
+    allowed_content_types = ['File']
     filter_content_types = 1
     global_allow = 0
     #content_icon = 'FeedFeederItem.gif'
@@ -102,15 +101,15 @@ class FeedFeederItem(ATFolder):
     typeDescMsgId = 'description_edit_feedfeederitem'
 
 
-    actions =  (
+    actions = (
 
 
        {'action': "string:${object_url}/feed-item.html",
         'category': "object",
         'id': 'view',
         'name': 'view',
-        'permissions': ("View",),
-        'condition': 'python:1'
+        'permissions': ("View", ),
+        'condition': 'python:1',
        },
 
 
@@ -122,14 +121,15 @@ class FeedFeederItem(ATFolder):
 
 
     security.declarePublic('addEnclosure')
-    def addEnclosure(self,id):
+
+    def addEnclosure(self, id):
         """
         """
         self.invokeFactory('File', id)
         self.reindexObject()
         transition = self.getDefaultTransition()
         if transition != '':
-            wf_tool = getToolByName(self,'portal_workflow')
+            wf_tool = getToolByName(self, 'portal_workflow')
             # The default transition should be valid for a
             # FeedFolderItem, but our File might not have the same
             # transitions available.  So check this.
@@ -141,6 +141,7 @@ class FeedFeederItem(ATFolder):
         return self[id]
 
     security.declarePublic('remote_url')
+
     def remote_url(self):
         """Compatibility method that makes working with link checkers
         easier.
@@ -148,12 +149,14 @@ class FeedFeederItem(ATFolder):
         return self.getLink()
 
     security.declarePublic('getObjectids')
+
     def getObjectids(self):
         """Return the ids of enclosed objects.
         """
         return self.objectIds()
 
     security.declarePublic('getHasBody')
+
     def getHasBody(self):
         """Return True if the object has body text.
         """
