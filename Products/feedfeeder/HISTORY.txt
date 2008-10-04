@@ -4,6 +4,9 @@ History of feedfeeder
 1.0 rc 3 (unreleased)
 ---------------------
 
+- In the Extensions/ dir: removed Install.py and renamed AppInstall.py
+  to install.py.  [maurits]
+
 - Made feed item updated date available for Collections/Smart Folders.
   [maurits]
 
