@@ -1,8 +1,8 @@
 History of feedfeeder
 =====================
 
-1.0 rc 3 (unreleased)
----------------------
+1.0rc3 (2008-10-04)
+-------------------
 
 - Moved profile definition from python to GenericSetup.  Profile is
   now not 'profile-feedfeeder:default' but
