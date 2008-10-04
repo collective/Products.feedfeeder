@@ -10,7 +10,7 @@ ZopeTestCase.installProduct('feedfeeder')
 
 testcase = PloneTestCase.PloneTestCase
 
-PloneTestCase.setupPloneSite(products='feedfeeder')
+PloneTestCase.setupPloneSite(products=['feedfeeder'])
 
 
 class MainTestCase(testcase):
