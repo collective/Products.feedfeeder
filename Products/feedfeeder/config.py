@@ -10,22 +10,11 @@
 # in this file if found.
 
 from Products.CMFCore.permissions import setDefaultRoles
-##code-section config-head #fill in your manual code here
-##/code-section config-head
 
 
 PROJECTNAME = "feedfeeder"
 
-# Check for Plone 2.1
-try:
-    from Products.CMFPlone.migrations import v2_1
-except ImportError:
-    HAS_PLONE21 = False
-else:
-    HAS_PLONE21 = True
-
 # Permissions
-#DEFAULT_ADD_CONTENT_PERMISSION = "Add portal content"
 DEFAULT_ADD_CONTENT_PERMISSION = "%s: Add" % PROJECTNAME
 setDefaultRoles(DEFAULT_ADD_CONTENT_PERMISSION, ('Manager', 'Owner'))
 
@@ -39,20 +28,5 @@ DEPENDENCIES = []
 # override in custom configuration
 PRODUCT_DEPENDENCIES = []
 
-# You can overwrite these two in an AppConfig.py:
-# STYLESHEETS = [{'id': 'my_global_stylesheet.css'},
-#                {'id': 'my_contenttype.css',
-#                 'expression': 'python:object.getTypeInfo().getId() == "MyType"'}]
-# You can do the same with JAVASCRIPTS.
 STYLESHEETS = []
 JAVASCRIPTS = []
-
-##code-section config-bottom #fill in your manual code here
-##/code-section config-bottom
-
-
-# Load custom configuration not managed by ArchGenXML
-try:
-    from Products.feedfeeder.AppConfig import *
-except ImportError:
-    pass

@@ -12,18 +12,12 @@ if __name__ == '__main__':
 
 from Testing import ZopeTestCase
 from Products.PloneTestCase import PloneTestCase
-from Products.feedfeeder.config import HAS_PLONE21
 from Products.feedfeeder.config import PRODUCT_DEPENDENCIES
 from Products.feedfeeder.config import DEPENDENCIES
 
-# Add common dependencies
-if not HAS_PLONE21:
-    DEPENDENCIES.append('Archetypes')
-    PRODUCT_DEPENDENCIES.append('MimetypesRegistry')
-    PRODUCT_DEPENDENCIES.append('PortalTransforms')
 PRODUCT_DEPENDENCIES.append('feedfeeder')
 
-# Install all (product-) dependencies, install them too
+# Install all (product-) dependencies
 for dependency in PRODUCT_DEPENDENCIES + DEPENDENCIES:
     ZopeTestCase.installProduct(dependency)
 
