@@ -4,6 +4,10 @@ History of feedfeeder
 1.0 rc 3 (unreleased)
 ---------------------
 
+- Moved profile definition from python to GenericSetup.  Profile is
+  now not 'profile-feedfeeder:default' but
+  'profile-Products.feedfeeder:default'.  [maurits]
+
 - In the Extensions/ dir: removed Install.py and renamed AppInstall.py
   to install.py.  [maurits]
 

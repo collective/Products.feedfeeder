@@ -17,10 +17,6 @@ DirectoryView.registerDirectory('skins', product_globals)
 DirectoryView.registerDirectory('skins/feedfeeder',
                                     product_globals)
 
-from Products.GenericSetup import EXTENSION
-from Products.GenericSetup import profile_registry
-import Products.CMFPlone.interfaces
-
 
 def initialize(context):
     # imports packages and types for registration
@@ -47,12 +43,3 @@ def initialize(context):
         extra_constructors = constructors,
         fti = ftis,
         ).initialize(context)
-
-    profile_registry.registerProfile(
-        name='default',
-        title='Feedfeeder',
-        description='Profile for Feedfeeder',
-        path='profiles/default',
-        product='feedfeeder',
-        profile_type=EXTENSION,
-        for_=Products.CMFPlone.interfaces.IPloneSiteRoot)
