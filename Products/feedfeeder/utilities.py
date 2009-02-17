@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+import logging
 from xml.dom import minidom
 import md5
 import os
@@ -19,6 +20,7 @@ from Products.feedfeeder.events import FeedItemConsumedEvent
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 
 RE_FILENAME = re.compile('filename *= *(.*)')
+logger = logging.getLogger("feedfeeder")
 
 
 class FeedConsumer:
@@ -74,7 +76,13 @@ class FeedConsumer:
             if updated is None:
                 continue
 
-            updated = DateTime(updated)
+            try:
+                updated = DateTime(updated)
+            except DateTime.SyntaxError:
+                logger.warn("SyntaxError while parsing %r as DateTime for "
+                            "the 'updated' field of entry %s",
+                            updated, getattr(entry, 'title', ''))
+                continue
 
             prev = feedContainer.getItem(id)
 
@@ -100,7 +108,13 @@ class FeedConsumer:
                 link = linkDict['href']
 
             if published is not None:
-                published = DateTime(published)
+                try:
+                    published = DateTime(published)
+                except DateTime.SyntaxError:
+                    logger.warn("SyntaxError while parsing %r as DateTime for "
+                                "the 'published' field of entry %s",
+                                published, getattr(entry, 'title', ''))
+                    continue
                 obj.setEffectiveDate(published)
             obj.update(id=id,
                        title=getattr(entry, 'title', ''),

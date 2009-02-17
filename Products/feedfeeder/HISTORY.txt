@@ -4,9 +4,15 @@ History of feedfeeder
 1.0rc4 (unreleased)
 -------------------
 
-- Avoid swallowing too much exceptions when applying our GenericSetup
-  profile.  [maurits]
+- Catch DateTime.SyntaxError when parsing the updated and published
+  dates of an entry and continue with the next entry.
+  Fixes http://plone.org/products/feedfeeder/issues/18
+  [maurits]
 
+- Avoid swallowing too much exceptions when applying our GenericSetup
+  profile.
+  Fixes http://plone.org/products/feedfeeder/issues/19
+  [maurits]
 
 1.0rc3 (2008-10-04)
 -------------------
