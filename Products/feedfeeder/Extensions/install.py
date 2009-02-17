@@ -16,7 +16,7 @@ def applyGenericSetupProfile(site, out):
     print >> out, "Applying the generic setup profile for feedfeeder..."
     try:
         setup_tool.runAllImportStepsFromProfile(our_profile)
-    except:
+    except AttributeError:
         # BBB for Plone 2.5
         setup_tool.setImportContext(our_profile)
         setup_tool.runAllImportSteps(purge_old=False)

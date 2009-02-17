@@ -4,7 +4,8 @@ History of feedfeeder
 1.0rc4 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Avoid swallowing too much exceptions when applying our GenericSetup
+  profile.  [maurits]
 
 
 1.0rc3 (2008-10-04)
