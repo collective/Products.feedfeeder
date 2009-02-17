@@ -60,8 +60,7 @@ class FeedConsumer:
             try:
                 sig = md5.new(entry.id)
             except AttributeError:
-                """ sometimes,
-                gruik rss providers send items without guid element """
+                # Sometimes, rss providers send items without guid element.
                 sig = md5.new(entry.link)
             id = sig.hexdigest()
 
@@ -69,7 +68,7 @@ class FeedConsumer:
             published = entry.get('published')
 
             if updated == '':
-                # property may be blank if never item has never
+                # property may be blank never item has never
                 # been updated -- use published date
                 updated = published
 
