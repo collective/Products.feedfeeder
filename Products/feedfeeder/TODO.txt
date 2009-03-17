@@ -1,1 +1,4 @@
-- No plans yet.
+- Get rid of extendeddatetime.py hack; but this needs a very difficult
+  fix in zope DateTime, so this could take a while.  See:
+  http://new.plone.org/products/feedfeeder/issues/20 and
+  https://bugs.launchpad.net/zope2/+bug/142148
