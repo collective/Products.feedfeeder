@@ -18,10 +18,10 @@ from Products.feedfeeder.interfaces.contenthandler import \
     IFeedItemContentHandler
 from Products.feedfeeder.events import FeedItemConsumedEvent
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
+from Products.feedfeeder.extendeddatetime import extendedDateTime
 
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
-
 
 class FeedConsumer:
     """
@@ -76,7 +76,7 @@ class FeedConsumer:
                 continue
 
             try:
-                updated = DateTime(updated)
+                updated = extendedDateTime(updated)
             except DateTime.SyntaxError:
                 logger.warn("SyntaxError while parsing %r as DateTime for "
                             "the 'updated' field of entry %s",
@@ -108,7 +108,7 @@ class FeedConsumer:
 
             if published is not None:
                 try:
-                    published = DateTime(published)
+                    published = extendedDateTime(published)
                 except DateTime.SyntaxError:
                     logger.warn("SyntaxError while parsing %r as DateTime for "
                                 "the 'published' field of entry %s",

@@ -1,0 +1,22 @@
+DateTime parser implementation does not know about several of the important
+daylight saving time zone variants in US. 
+
+   >>> hard_time = 'Fri, 13 Mar 2009 10:30:00 EDT'
+   >>> easy_time = 'Fri, 13 Mar 2009 10:30:00 EST'
+   >>> from DateTime import DateTime
+   >>> some_time = DateTime(easy_time)
+   >>> bad_time = DateTime(hard_time)
+   Traceback (most recent call last):
+       ...
+   SyntaxError: Fri, 13 Mar 2009 10:30:00 EDT
+   
+It would be nice to fix DateTime, but that's going to take a while, 
+and this is one of those areas where we will always need a workaround to
+something, so let's test our wrapper! 
+
+   >>> from Products.feedfeeder.extendeddatetime import extendedDateTime
+   >>> good_time = extendedDateTime(hard_time)
+   >>> print good_time
+   2009/03/13 10:30:00 GMT-4
+   
+Nice.

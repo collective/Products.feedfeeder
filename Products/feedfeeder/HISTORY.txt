@@ -4,6 +4,12 @@ History of feedfeeder
 1.0rc4 (unreleased)
 -------------------
 
+- DateTime.SyntaxError is thrown with some very common US 
+  Daylight Saving zones, such as EDT. We now wrap the DateTime parsing
+  of feeds, to try to recognise those zones before politely giving up, using 
+  maurits' fix, below.
+  [russf]
+  
 - Catch DateTime.SyntaxError when parsing the updated and published
   dates of an entry and continue with the next entry.
   Fixes http://plone.org/products/feedfeeder/issues/18
