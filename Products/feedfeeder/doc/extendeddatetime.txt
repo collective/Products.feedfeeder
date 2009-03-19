@@ -9,10 +9,16 @@ daylight saving time zone variants in US.
    Traceback (most recent call last):
        ...
    SyntaxError: Fri, 13 Mar 2009 10:30:00 EDT
-   
-It would be nice to fix DateTime, but that's going to take a while, 
-and this is one of those areas where we will always need a workaround to
-something, so let's test our wrapper! 
+
+NOTE: if the above Exception is no longer thrown, then your underlying
+Zope has probably been brought up-to-date.  At that point, 
+extendeddatetime is relegated to helping to maintain functionality in older 
+Zope versions.
+
+Although it would be nice to fix DateTime, that's going to take a while, 
+and this is one of those areas where due to the many "dodgy" RSS formats 
+out there, we will always need a workaround to something, so let's get on 
+and test our wrapper! 
 
    >>> from Products.feedfeeder.extendeddatetime import extendedDateTime
    >>> good_time = extendedDateTime(hard_time)
