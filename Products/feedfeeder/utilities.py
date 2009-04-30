@@ -125,7 +125,8 @@ class FeedConsumer:
                        )
             if hasattr(entry, 'content'):
                 content = entry.content[0]
-                if content['type'] in ('text/xhtml', 'application/xhtml+xml'):
+                ctype=content.get('type') # sometimes no type on linux prsr.
+                if ctype in ('text/xhtml', 'application/xhtml+xml'):
                     # Warning: minidom.parseString needs a byte
                     # string, not a unicode one, so we need to
                     # encode it first.
