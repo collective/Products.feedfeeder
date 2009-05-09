@@ -36,3 +36,12 @@ msgstr ""
 msgid "feedfeeder_label_link"
 msgstr ""
 
+#. 'Default transition'
+#: content/folder.py
+msgid "label_default_transition"
+msgstr ""
+
+#. "When updating this feed's item the transition selected below will be performed."
+#: content/folder.py
+msgid "help_default_transition"
+msgstr ""

@@ -3,10 +3,10 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2006-10-19 12:46+0000\n"
+"POT-Creation-Date: 2009-05-09 21:38+0000\n"
 "PO-Revision-Date: 2006-10-19 14:47+0200\n"
 "Last-Translator: Reinout van Rees <reinout@zestsoftware.nl>\n"
-"Language-Team: Reinout van Rees <reinout@zestsoftware.nl>\n"
+"Language-Team: Zest Software <info@zestsoftware.nl>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,8 +36,18 @@ msgstr "URLs der Feeds"
 msgid "feedfeeder_label_link"
 msgstr "URL des Originals"
 
+#. "When updating this feed's item the transition selected below will be performed."
+#: content/folder.py
+msgid "help_default_transition"
+msgstr ""
+
+#. 'Default transition'
+#: content/folder.py
+msgid "label_default_transition"
+msgstr ""
+
 #. Default: "Test view showing the latest items from the feeds"
-#: skins/feedfeeder/latest_items.pt
+#: skins/feedfeeder/latest_items.pt:7
 msgid "test_view_title"
 msgstr "Die aktuelste einträge der Feeds (nur als Test)"
 
