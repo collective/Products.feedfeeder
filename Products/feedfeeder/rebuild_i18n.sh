@@ -3,9 +3,9 @@ PRODUCTNAME=feedfeeder
 I18NDOMAIN=$PRODUCTNAME
 
 # Synchronise the .pot with the templates.
-# Also merge it with generated.pot, which includes the items
-# from schema.py
-i18ndude rebuild-pot --pot i18n/${PRODUCTNAME}.pot --create ${I18NDOMAIN} --merge i18n/generated.pot skins/${PRODUCTNAME}
+# Also merge it with handmade.pot, which includes some items
+# that are not picked up by i18ndude
+i18ndude rebuild-pot --pot i18n/${PRODUCTNAME}.pot --create ${I18NDOMAIN} --merge i18n/handmade.pot skins/${PRODUCTNAME}
 
 # Synchronise the resulting .pot with the .po files
 i18ndude sync --pot i18n/${PRODUCTNAME}.pot i18n/${PRODUCTNAME}-*.po
