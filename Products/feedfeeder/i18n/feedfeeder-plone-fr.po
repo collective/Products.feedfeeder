@@ -2,7 +2,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
 "POT-Creation-Date: 2006-10-19 12:46+0000\n"
-"PO-Revision-Date: Jul 11 09:13:40 2007\n"
+"PO-Revision-Date: 2007-07-11 09:13+0200\n"
 "Last-Translator: Thomas Desvenain <thomas.desvenain@ingeniweb.com>\n"
 "Language-Team: Ingeniweb <thomas.desvenain@ingeniweb.com>\n"
 "MIME-Version: 1.0\n"
@@ -14,12 +14,9 @@ msgstr ""
 "Preferred-Encodings: utf-8\n"
 "Domain: plone\n"
 
+msgid "Feed Item"
+msgstr "Element Rss"
+
 msgid "Feed folder"
 msgstr "Dossier de Flux Rss"
 
-
-msgid "Feed Folder"
-msgstr "Dossier de Flux Rss"
-
-msgid "Feed Item"
-msgstr "Element Rss"
