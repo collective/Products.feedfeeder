@@ -5,6 +5,7 @@ from Products.ATContentTypes.content.document import ATDocument
 from Products.ATContentTypes.content.folder import ATFolder
 from Products.Archetypes.atapi import *
 from Products.CMFCore.utils import getToolByName
+from Products.CMFPlone.utils import base_hasattr
 from zope import interface
 
 from Products.feedfeeder.interfaces.item import IFeedItem
@@ -163,5 +164,43 @@ class FeedFeederItem(ATFolder):
         if bool(self.getText()):
             return 1
         return 0
+
+    def _get_feed_tags(self):
+        """Get the tags from the feed item.
+
+        tags/keywords/categories
+
+        We store this in the _feed_tags attribute.  Old items may not
+        have this yet, so we protect against AttributeErrors by
+        specifying a getter and setter as wrapper around that
+        attribute.  We return an empty list when the attribute is not
+        there.
+
+        This is not hooked up yet, but this way the tags are available
+        for whoever wants to integrate them in third party products.
+        """
+        if base_hasattr(self, '_feed_tags'):
+            return getattr(self, '_feed_tags')
+        return []
+
+    def _set_feed_tags(self, value):
+        """Get the tags from the feed item.
+
+        tags/keywords/categories
+        """
+        if not value:
+            self._feed_tags = []
+        elif isinstance(value, list):
+            self._feed_tags = value
+        elif isinstance(value, tuple):
+            self._feed_tags = list(value)
+        elif isinstance(value, basestring):
+            self._feed_tags = [value]
+        else:
+            raise ValueError("expected list, tuple or basestring, got %s",
+                             type(value))
+
+    feed_tags = property(_get_feed_tags, _set_feed_tags)
+
 
 registerType(FeedFeederItem, PROJECTNAME)

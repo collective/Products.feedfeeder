@@ -4,6 +4,11 @@ History of feedfeeder
 1.0rc4 (unreleased)
 -------------------
 
+- Read tags/categories/keywords of feed items and store them on the
+  created content item.  No Archetypes field, just a simple getter and
+  setter called feed_tags.   Idea: Robin Harms Oredsson.
+  [maurits]
+
 - DateTime.SyntaxError is thrown with some very common US 
   Daylight Saving zones, such as EDT. We now wrap the DateTime parsing
   of feeds, to try to recognise those zones before politely giving up, using 

@@ -23,6 +23,7 @@ from Products.feedfeeder.extendeddatetime import extendedDateTime
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
 
+
 class FeedConsumer:
     """
     """
@@ -123,6 +124,10 @@ class FeedConsumer:
                        link=link,
                        feedTitle=parsed['feed'].get('title', ''),
                        )
+            # Tags cannot be handled by the update method AFAIK,
+            # because it is not an Archetypes field.
+            feed_tags = [x.get('term') for x in entry.get('tags', [])]
+            obj.feed_tags = feed_tags
             if hasattr(entry, 'content'):
                 content = entry.content[0]
                 ctype=content.get('type') # sometimes no type on linux prsr.
