@@ -23,6 +23,62 @@ from Products.feedfeeder.extendeddatetime import extendedDateTime
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
 
+import formatter
+import htmllib
+from htmlentitydefs import entitydefs
+from StringIO import StringIO
+
+# Unifiable list taken from http://www.aaronsw.com/2002/html2text.py
+unifiable = {
+    'rsquo': "'", 'lsquo': "'", 'rdquo': '"', 'ldquo': '"', 'nbsp': ' ',
+    'rarr': '->', 'larr': '<-', 'middot': '*', 'copy': '(C)',
+    'mdash': '--', 'ndash': '-', 'oelig': 'oe', 'aelig': 'ae',
+    'agrave': 'a', 'aacute': 'a', 'acirc': 'a', 'atilde': 'a', 'auml': 'a',
+    'aring': 'a',
+    'egrave': 'e', 'eacute': 'e', 'ecirc': 'e', 'euml': 'e',
+    'igrave': 'i', 'iacute': 'i', 'icirc': 'i', 'iuml': 'i',
+    'ograve': 'o', 'oacute': 'o', 'ocirc': 'o', 'otilde': 'o', 'ouml': 'o',
+    'ugrave': 'u', 'uacute': 'u', 'ucirc': 'u', 'uuml': 'u',
+    }
+
+
+class SimpleHTMLParser(htmllib.HTMLParser):
+
+    def handle_entityref(self, name):
+        logger.warn("Parsing entity %r", name)
+        value = unifiable.get(name)
+        self.formatter.add_literal_data(value)
+        logger.warn("Parsed as value %r", value)
+
+    def old_handle_entityref(self, name):
+        logger.warn("Parsing entity %r", name)
+        entity = entitydefs.get(name)
+        if entity:
+            # According to the docs we get latin-1 here.  We turn it
+            # into unicode and pass it to the formatter.
+            value = entity.decode('iso-8859-1')
+            logger.warn("Parsed as value %r", value)
+            self.formatter.add_literal_data(value)
+        else:
+            logger.warn("Ignoring entity ref %r" % name)
+
+
+def convert_summary(input):
+    out = StringIO()
+    writer = formatter.DumbWriter(out)
+    parser = SimpleHTMLParser(formatter.AbstractFormatter(writer))
+    parser.feed(input)
+    value = out.getvalue()
+    out.close()
+    return value
+
+
+def debug_convert_summary(input):
+    writer = formatter.AbstractWriter()
+    parser = SimpleHTMLParser(formatter.AbstractFormatter(writer))
+    parser.feed(input)
+    return ''
+
 
 class FeedConsumer:
     """
@@ -119,9 +175,15 @@ class FeedConsumer:
                                 published, getattr(entry, 'title', ''))
                     continue
                 obj.setEffectiveDate(published)
+
+            summary = getattr(entry, 'summary', '')
+            #logger.warn("1 summary: %r" % summary)
+            summary = convert_summary(summary)
+            #logger.warn("2 summary: %r" % summary)
+
             obj.update(id=id,
                        title=getattr(entry, 'title', ''),
-                       description=getattr(entry, 'summary', ''),
+                       description=summary,
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
                        link=link,
