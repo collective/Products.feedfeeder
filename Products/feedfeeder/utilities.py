@@ -68,27 +68,28 @@ class FeedConsumer:
             updated = entry.get('updated')
             published = entry.get('published')
 
-            if updated == '':
-                # property may be blank never item has never
+            if not updated:
+                # property may be blank if item has never
                 # been updated -- use published date
                 updated = published
 
-            if updated is None:
-                continue
-
-            try:
-                updated = extendedDateTime(updated)
-            except DateTime.SyntaxError:
-                logger.warn("SyntaxError while parsing %r as DateTime for "
-                            "the 'updated' field of entry %s",
-                            updated, getattr(entry, 'title', ''))
-                continue
+            if updated:
+                try:
+                    updated = extendedDateTime(updated)
+                except DateTime.SyntaxError:
+                    logger.warn("SyntaxError while parsing %r as DateTime for "
+                                "the 'updated' field of entry %s",
+                                updated, getattr(entry, 'title', ''))
+                    continue
 
             prev = feedContainer.getItem(id)
-
             if prev is None:
                 # Completely new item, add it.
                 addItem = feedContainer.addItem
+            elif updated is None:
+                logger.warn("No updated or published date known. "
+                            "Not updating previously added entry.")
+                continue
             elif updated > prev.getFeedItemUpdated():
                 # Refreshed item, replace it.
                 addItem = feedContainer.replaceItem
@@ -107,6 +108,8 @@ class FeedConsumer:
                 linkDict = getattr(entry, 'links', [{'href': ''}])[0]
                 link = linkDict['href']
 
+            if not updated:
+                updated = DateTime()
             if published is not None:
                 try:
                     published = extendedDateTime(published)

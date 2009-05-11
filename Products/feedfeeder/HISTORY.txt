@@ -4,6 +4,12 @@ History of feedfeeder
 1.0rc4 (unreleased)
 -------------------
 
+- When both the updated and published date of an item is not known,
+  take today as the date when first adding it.  When updating, do not
+  change the original item.
+  Fixes http://plone.org/products/feedfeeder/issues/21
+  [maurits]
+
 - Read tags/categories/keywords of feed items and store them on the
   created content item.  No Archetypes field, just a simple getter and
   setter called feed_tags.   Idea: Robin Harms Oredsson.
