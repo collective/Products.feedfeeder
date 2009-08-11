@@ -1,0 +1,55 @@
+# ArchGenXML generated POT File
+# Reinout van Rees <reinout@zestsoftware.nl>, 2006.
+# Leonardo Caballero <leonardocaballero@gmail.com>, 2008, 2009.
+msgid ""
+msgstr ""
+"Project-Id-Version: feedfeeder\n"
+"POT-Creation-Date: 2006-10-19 12:46+0000\n"
+"PO-Revision-Date: 2009-08-11 17:21-0400\n"
+"Last-Translator: Leonardo Caballero <leonardocaballero@gmail.com>\n"
+"Language-Team: Spanish <plone-conosur@lists.plone.org>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=1; plural=0\n"
+"Language-Code: es\n"
+"Language-Name: Spanish\n"
+"Preferred-Encodings: latin1 utf-8\n"
+"Domain: feedfeeder\n"
+"X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
+
+#. Default: "Feeditemauthor"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_feedItemAuthor"
+msgstr "Autor del canal"
+
+#. Default: "Feeditemupdated"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_feedItemUpdated"
+msgstr "Elemento de canal actualizado"
+
+#. Default: "Feeds"
+#: content/FeedfeederFolder.py
+msgid "feedfeeder_label_feeds"
+msgstr "Canales"
+
+#. Default: "Links"
+#: content/FeedFeederItem.py
+msgid "feedfeeder_label_link"
+msgstr "Enlaces"
+
+#. Default: "Test view showing the latest items from the feeds"
+#: skins/feedfeeder/latest_items.pt
+msgid "test_view_title"
+msgstr "Vista de prueba mostrando los últimos elementos de los canales"
+
+#. 'Default transition'
+#: content/folder.py
+msgid "label_default_transition"
+msgstr "Transición por defecto"
+
+#. "When updating this feed's item the transition selected below will be performed."
+#: content/folder.py
+msgid "help_default_transition"
+msgstr "Cuando se actualice este elemento de canal la transición seleccionada será efectuada"
+
