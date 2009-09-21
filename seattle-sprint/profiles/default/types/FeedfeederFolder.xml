@@ -1,0 +1,60 @@
+<?xml version="1.0"?>
+<object name="FeedfeederFolder"
+   meta_type="Factory-based Type Information with dynamic views"
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
+ <property name="title">Feed Folder</property>
+ <property name="description">
+      </property>
+ <property name="content_icon">folder_icon.gif</property>
+ <property name="content_meta_type">FeedfeederFolder</property>
+ <property name="product">feedfeeder</property>
+ <property name="factory">addFeedfeederFolder</property>
+ <property name="immediate_view">feed-folder.html</property>
+ <property name="global_allow">True</property>
+ <property name="filter_content_types">True</property>
+ <property name="allowed_content_types">
+  <element value="FeedFeederItem"/>
+ </property>
+ <property name="allow_discussion">False</property>
+ <property name="default_view">feed-folder.html</property>
+ <property name="view_methods">
+  <element value="feed-folder.html"/>
+ </property>
+ <property name="default_view_fallback">False</property>
+ <alias from="(Default)" to="(dynamic view)"/>
+ <alias from="edit" to="atct_edit"/>
+ <alias from="index.html" to="(dynamic view)"/>
+ <alias from="properties" to="base_metadata"/>
+ <alias from="sharing" to="folder_localrole_form"/>
+ <alias from="view" to="(selected layout)"/>
+ <action title="view" action_id="view" category="object"
+    condition_expr="python:1" url_expr="string:$object_url/feed-folder.html"
+    visible="True">
+  <permission value="View"/>
+ </action>
+ <action title="Edit" action_id="edit" category="object" condition_expr=""
+    url_expr="string:${object_url}/base_edit" visible="True">
+  <permission value="Modify portal content"/>
+ </action>
+ <action title="Properties" action_id="metadata" category="object"
+    condition_expr="" url_expr="string:${object_url}/base_metadata"
+    visible="True">
+  <permission value="Modify portal content"/>
+ </action>
+ <action title="References" action_id="references" category="object"
+    condition_expr="object/archetype_tool/has_graphviz"
+    url_expr="string:${object_url}/reference_graph" visible="True">
+  <permission value="Modify portal content"/>
+  <permission value="Review portal content"/>
+ </action>
+ <action title="Folder Listing" action_id="folderlisting" category="folder"
+    condition_expr="object/isPrincipiaFolderish"
+    url_expr="string:${folder_url}/view" visible="False">
+  <permission value="View"/>
+ </action>
+ <action title="Update Feed Items" action_id="update_feed_items"
+    category="object_buttons" condition_expr="python:1"
+    url_expr="string:${object_url}/update_feed_items" visible="True">
+  <permission value="View"/>
+ </action>
+</object>

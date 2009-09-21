@@ -1,0 +1,23 @@
+<configure
+    xmlns="http://namespaces.zope.org/zope"
+    xmlns:browser="http://namespaces.zope.org/browser"
+    xmlns:five="http://namespaces.zope.org/five">
+
+  <include package="zope.app.annotation" />
+
+  <utility
+      factory=".utilities.FeedConsumer"
+      permission="cmf.ModifyPortalContent"
+      provides=".interfaces.consumer.IFeedConsumer"
+      />
+
+  <adapter
+      for=".interfaces.item.IFeedItem"
+      provides=".interfaces.contenthandler.IFeedItemContentHandler"
+      factory=".contenthandler.StandardContentHandler"
+      />
+
+  <include package=".browser" />
+  <include package="zope.app.annotation" />
+
+</configure>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ <title>Philips Research Eindhoven News</title>
+ <subtitle>General news of Philips Research Eindhoven - for internal use only.</subtitle>
+ <updated>2006-07-24T11:30:15Z</updated>
+ <id>http://resweb2.natlab.research.philips.com/NlwwNews/rss/NlwwNewsAtom.xml</id>
+ <entry>
+  <title>Thesis defence: 15 January 2007 15:00</title>
+  <id>vanrees1</id>
+  <content type="xhtml">
+<div xmlns="http://www.w3.org/1999/xhtml">
+Great news: a final thesis defence date!
+</div>
+  </content>
+  <link type="text/html" href="http://vanrees.org/weblog/archive/2006/10/03/defence-date" rel="enclosure" length="1000" />
+  <updated>2006-08-18T12:00:00Z</updated>
+  <author><name>Reinout van Rees</name></author>
+ </entry>
+</feed>
