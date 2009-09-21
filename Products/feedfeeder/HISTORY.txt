@@ -4,7 +4,10 @@ History of feedfeeder
 1.0rc6 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- Bug fix: curly quotes getting mangled when Descriptions are built.
+  Fixes http://plone.org/products/feedfeeder/issues/7
+  (Merged branch maurits-cleaner-entityrefs-in-description.)
+  [maurits]
 
 
 1.0rc5 (2009-07-02)
