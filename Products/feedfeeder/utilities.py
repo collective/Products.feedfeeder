@@ -25,7 +25,6 @@ logger = logging.getLogger("feedfeeder")
 
 import formatter
 import htmllib
-from htmlentitydefs import entitydefs
 from StringIO import StringIO
 
 # Unifiable list taken from http://www.aaronsw.com/2002/html2text.py
@@ -50,18 +49,6 @@ class SimpleHTMLParser(htmllib.HTMLParser):
         self.formatter.add_literal_data(value)
         logger.warn("Parsed as value %r", value)
 
-    def old_handle_entityref(self, name):
-        logger.warn("Parsing entity %r", name)
-        entity = entitydefs.get(name)
-        if entity:
-            # According to the docs we get latin-1 here.  We turn it
-            # into unicode and pass it to the formatter.
-            value = entity.decode('iso-8859-1')
-            logger.warn("Parsed as value %r", value)
-            self.formatter.add_literal_data(value)
-        else:
-            logger.warn("Ignoring entity ref %r" % name)
-
 
 def convert_summary(input):
     out = StringIO()
@@ -71,13 +58,6 @@ def convert_summary(input):
     value = out.getvalue()
     out.close()
     return value
-
-
-def debug_convert_summary(input):
-    writer = formatter.AbstractWriter()
-    parser = SimpleHTMLParser(formatter.AbstractFormatter(writer))
-    parser.feed(input)
-    return ''
 
 
 class FeedConsumer:
@@ -177,9 +157,9 @@ class FeedConsumer:
                 obj.setEffectiveDate(published)
 
             summary = getattr(entry, 'summary', '')
-            #logger.warn("1 summary: %r" % summary)
+            logger.debug("1 summary: %r" % summary)
             summary = convert_summary(summary)
-            #logger.warn("2 summary: %r" % summary)
+            logger.debug("2 summary: %r" % summary)
 
             obj.update(id=id,
                        title=getattr(entry, 'title', ''),
