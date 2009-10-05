@@ -60,6 +60,16 @@ def convert_summary(input):
     return value
 
 
+def update_text(obj, text, mimetype=None):
+    field = obj.getField('text')
+    if mimetype in field.getAllowedContentTypes(obj):
+        obj.setText(text, mimetype=mimetype)
+        obj.reindexObject()
+    else:
+        # update does a reindexObject automatically
+        obj.update(text=text)
+
+
 class FeedConsumer:
     """
     """
@@ -202,7 +212,7 @@ class FeedConsumer:
                                 obj, IFeedItemContentHandler)
 
                         if handler is None:
-                            obj.update(text=content['value'])
+                            update_text(obj, content['value'], mimetype=ctype)
                         else:
                             handler.apply(top)
                             # Grab the first non-<dl> node and treat
@@ -211,12 +221,13 @@ class FeedConsumer:
                             for node in top.childNodes:
                                 if node.nodeName == 'div':
                                     actualContent = node.toxml()
-                                    obj.update(text=actualContent)
+                                    update_text(obj, actualContent,
+                                                mimetype=ctype)
                                     break
                     else:
-                        obj.update(text=content['value'])
+                        update_text(obj, content['value'], mimetype=ctype)
                 else:
-                    obj.update(text=content['value'])
+                    update_text(obj, content['value'], mimetype=ctype)
 
             if hasattr(entry, 'links'):
                 enclosures = [x for x in entry.links if x.rel == 'enclosure']

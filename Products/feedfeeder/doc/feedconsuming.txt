@@ -33,6 +33,10 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   ...     def getItem(self,id):
   ...         return self.items.get(id, None)
   
+  >>> class MockField(object):
+  ...     def getAllowedContentTypes(self, obj):
+  ...         return []
+
   >>> class MockFeedItem(object):
   ...     zope.interface.implements(IFeedItem)
   ...     def __init__(self):
@@ -60,6 +64,8 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   ...     def setFeedTitle(self, x): self.feedTitle = x
   ...     def setEffectiveDate(self, x): pass
   ...     def reindexObject(self): pass
+  ...     def getField(self, name):
+  ...         return MockField()
 
   >>> class MockFeedEnclosure(object):
   ...     def __init__(self, id):
