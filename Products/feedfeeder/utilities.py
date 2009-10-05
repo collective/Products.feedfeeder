@@ -55,7 +55,12 @@ def convert_summary(input):
     writer = formatter.DumbWriter(out)
     parser = SimpleHTMLParser(formatter.AbstractFormatter(writer))
     parser.feed(input)
-    value = out.getvalue()
+    try:
+        value = out.getvalue()
+    except UnicodeDecodeError:
+        logger.warn("UnicodeDecodeError while converting summary. "
+                    "Falling back to original input.")
+        value = input
     out.close()
     return value
 
