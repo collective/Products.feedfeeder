@@ -3,6 +3,13 @@
     >
 
   <page
+      name="folder_feeds"
+      class=".folder.FolderFeedsFormWrapped"
+      for="Products.CMFCore.interfaces.IFolderish"
+      permission="cmf.AddPortalContent"
+      />
+
+  <page
       name="update_feed_items"
       class=".feed.UpdateFeedItems"
       for="Products.feedfeeder.interfaces.container.IFeedsContainer"

@@ -13,4 +13,18 @@
       <property name="visible">True</property>
     </object>
   </object>
+  <object name="object" meta_type="CMF Action Category">
+    <object name="folderFeeds" meta_type="CMF Action">
+      <property name="title">Feeds</property>
+      <property name="description">Specify syndication feeds from which to populate a folder</property>
+      <property
+         name="url_expr">string:${globals_view/getCurrentFolderUrl}/folder_feeds</property>
+      <property name="icon_expr"></property>
+      <property name="available_expr">object/displayContentsTab</property>
+      <property name="permissions">
+        <element value="Add portal content"/>
+      </property>
+      <property name="visible">True</property>
+    </object>
+  </object>
 </object>

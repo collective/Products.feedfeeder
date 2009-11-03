@@ -29,6 +29,7 @@ setup(name='Products.feedfeeder',
           'setuptools',
           'FeedParser',
           # -*- Extra requirements: -*-
+          'plone.app.z3cform',          
       ],
       entry_points="""
       # -*- Entry points: -*-

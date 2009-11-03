@@ -32,6 +32,14 @@ Open a browser and log in as a member who can not add items to the folder.
     ...     'Password').value = ptc.default_password
     >>> member_browser.getControl('Log in').click()
 
+Enable the intranet workflow for a content type and allow that content
+type to be added to demonstrate the limits of the workflow transition
+selection.
+
+    >>> portal.portal_workflow.setChainForPortalTypes(
+    ...     ('Topic',), ('intranet_workflow',))
+    >>> portal.events.setLocallyAllowedTypes(('Event', 'Topic'))
+
 The feeds form is available on any folderish object to contributors
 who can add items to the folder.
 
@@ -45,38 +53,54 @@ transitions to perform on newly added items.
     >>> owner_browser.getControl('Feed URLs').value = """\
     ... http://nohost/plone/news/RSS
     ... http://nohost/plone/search_rss?portal_type=Document"""
-    >>> owner_browser.getControl('Item Type').value = "Event"
-    >>> owner_browser.getControl(
-    ...     'Item Workflow Transitions').value = """\
-    ... submit
-    ... publish_internally"""
+    >>> owner_browser.getControl('Event').selected = True
+    >>> submit_ctl = owner_browser.getControl(
+    ...     'Submit for publication (Simple Publication Workflow)'
+    ...     )
+    >>> publish_ctl = owner_browser.getControl(
+    ...     'Publish internally (Intranet/Extranet Workflow)'
+    ...     )
+    >>> submit_ctl.mech_form.new_control(
+    ...     type='hidden', name='form.widgets.itemTransitions:list',
+    ...     attrs=dict(value=submit_ctl.optionValue))
+    >>> publish_ctl.mech_form.new_control(
+    ...     type='hidden', name='form.widgets.itemTransitions:list',
+    ...     attrs=dict(value=publish_ctl.optionValue))
 
 If the workflow transitions are not available for the content type
 selected a validation error is raised.  Note that this validation may
 not be accurate where transitions guards depend on specifics of the
 individual item.
 
-    >>> owner_browser.getControl('Save').click()
+    >>> owner_browser.getControl('Apply').click()
     >>> print owner_browser.contents
     <...
-    ...Please correct the indicated errors...
-    ...The 'publish_internally' workflow transition is not available
-    for the 'Event' item type...
+    ...There were some errors...
+    ...The following transitions are invalid for the 'Event' content
+    type: 'Publish internally (Intranet/Extranet Workflow)...
 
 Select valid workflow transitions and save the form.
 
-    >>> owner_browser.getControl(
-    ...     'Item Workflow Transitions').value = """\
-    ... submit
-    ... publish"""
-    >>> owner_browser.getControl('Save').click()
+    >>> submit_ctl = owner_browser.getControl(
+    ...     'Submit for publication (Simple Publication Workflow)'
+    ...     )
+    >>> publish_ctl = owner_browser.getControl(
+    ...     'Publish (Simple Publication Workflow)'
+    ...     )
+    >>> submit_ctl.mech_form.new_control(
+    ...     type='hidden', name='form.widgets.itemTransitions:list',
+    ...     attrs=dict(value=submit_ctl.optionValue))
+    >>> publish_ctl.mech_form.new_control(
+    ...     type='hidden', name='form.widgets.itemTransitions:list',
+    ...     attrs=dict(value=publish_ctl.optionValue))
+    >>> owner_browser.getControl('Apply').click()
     >>> print owner_browser.contents
     <...
-    ...Changes saved...
+    ...Data successfully updated...
 
 The feeds form is not available to members who can not add items there.
 
-    >>> member_browser.getLink('Events').click()
+    >>> member_browser.open(portal.events.absolute_url())
     >>> member_browser.getLink('Feeds')
     Traceback (most recent call last):
     LinkNotFoundError

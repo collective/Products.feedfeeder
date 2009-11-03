@@ -17,6 +17,8 @@
       zcml:condition="installed zope.app.annotation.tests"
       package="zope.app.annotation" />
 
+  <include package="plone.app.z3cform" />
+
   <utility
       factory=".utilities.FeedConsumer"
       permission="cmf.ModifyPortalContent"
@@ -28,6 +30,18 @@
       provides=".interfaces.contenthandler.IFeedItemContentHandler"
       factory=".contenthandler.StandardContentHandler"
       />
+
+  <adapter factory=".folder.FolderFeedsFactory" />
+  <utility
+     name="AddableTypesVocab"
+     component=".interfaces.folder.AddableTypesVocab"
+     provides="zope.schema.interfaces.IVocabularyFactory"
+     />
+  <utility
+     name="TransitionsVocab"
+     component=".interfaces.folder.TransitionsVocab"
+     provides="zope.schema.interfaces.IVocabularyFactory"
+     />
 
   <include package=".browser" />
 
