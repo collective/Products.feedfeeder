@@ -1,0 +1,169 @@
+.. -*-doctest-*-
+
+============
+Portal Types
+============
+
+Open a browser and log in as a member who can add items to a folder.
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> from Products.PloneTestCase import ptc
+    >>> owner_browser = Browser()
+    >>> owner_browser.handleErrors = False
+    >>> owner_browser.open(portal.absolute_url())
+    >>> owner_browser.getLink('Log in').click()
+    >>> owner_browser.getControl(
+    ...     'Login Name').value = ptc.portal_owner
+    >>> owner_browser.getControl(
+    ...     'Password').value = ptc.default_password
+    >>> owner_browser.getControl('Log in').click()
+
+Open a browser and log in as a member who can not add items to the folder.
+
+    >>> from Products.Five.testbrowser import Browser
+    >>> from Products.PloneTestCase import ptc
+    >>> member_browser = Browser()
+    >>> member_browser.handleErrors = False
+    >>> member_browser.open(portal.absolute_url())
+    >>> member_browser.getLink('Log in').click()
+    >>> member_browser.getControl(
+    ...     'Login Name').value = ptc.default_user
+    >>> member_browser.getControl(
+    ...     'Password').value = ptc.default_password
+    >>> member_browser.getControl('Log in').click()
+
+The feeds form is available on any folderish object to contributors
+who can add items to the folder.
+
+    >>> owner_browser.open(portal.events.absolute_url())
+    >>> owner_browser.getLink('Feeds').click()
+
+The feeds form allows the contributor to add feed URLs, to specify the
+portal type of added items, and to specify the default workflow
+transitions to perform on newly added items.
+
+    >>> owner_browser.getControl('Feed URLs').value = """\
+    ... http://nohost/plone/news/RSS
+    ... http://nohost/plone/search_rss?portal_type=Document"""
+    >>> owner_browser.getControl('Item Type').value = "Event"
+    >>> owner_browser.getControl(
+    ...     'Item Workflow Transitions').value = """\
+    ... submit
+    ... publish_internally"""
+
+If the workflow transitions are not available for the content type
+selected a validation error is raised.  Note that this validation may
+not be accurate where transitions guards depend on specifics of the
+individual item.
+
+    >>> owner_browser.getControl('Save').click()
+    >>> print owner_browser.contents
+    <...
+    ...Please correct the indicated errors...
+    ...The 'publish_internally' workflow transition is not available
+    for the 'Event' item type...
+
+Select valid workflow transitions and save the form.
+
+    >>> owner_browser.getControl(
+    ...     'Item Workflow Transitions').value = """\
+    ... submit
+    ... publish"""
+    >>> owner_browser.getControl('Save').click()
+    >>> print owner_browser.contents
+    <...
+    ...Changes saved...
+
+The feeds form is not available to members who can not add items there.
+
+    >>> member_browser.getLink('Events').click()
+    >>> member_browser.getLink('Feeds')
+    Traceback (most recent call last):
+    LinkNotFoundError
+
+Update All Feed Folders
+-----------------------
+
+A view is provided for updating all folderish items that have feed
+URLs set.
+
+The view uses a catalog index for querying folderish items which have
+feed URLs.
+
+    >>> 'hasFeedURLs' in portal.portal_catalog.indexes()
+    True
+
+Before the view has been loaded, no feed items have been added to the
+folder with feed URLs.
+
+    >>> portal.events.contentValues()
+    [<ATTopic at /plone/events/aggregator>]
+
+The update all view will only query for folderish items at or below
+the point in the hierarchy of the object for which the view is
+loaded.  Load the view for a context which contains no feed folders.
+No items are created.
+
+    >>> owner_browser.open(
+    ...     portal.news.absolute_url()+'/update_all_feed_folders')
+    >>> portal.events.contentValues()
+    [<ATTopic at /plone/events/aggregator>]
+
+After loading the update all view for a context which contains feed
+folders, items have been created in the folder for the feed items.
+
+    >>> owner_browser.open(
+    ...     portal.events.absolute_url()+'/update_all_feed_folders')
+    >>> portal.events.contentValues()
+    [<ATTopic at /plone/events/aggregator>,
+     <ATEvent at /plone/events/welcome-to-plone>]
+
+Fields
+------
+
+Feed item data is applied to the newly created item using an adapter.
+The default adapter is intended to be as flexible as possible and
+suitable for the default Plone/ATCT content types and the conventions
+those schemata establish.  The new item's title, description, creator,
+and modification date will all be updated from the feed item data.
+
+The feed item URL is passed into the content item's update method as
+both the "remoteURL" and "eventURL" keyword arguments.  Thus the
+Archetypes implementation will ignore those keyword arguments for
+content types whose schema contains no such field but will
+successfully use the "remoteURL" keyword argument for the "Link"
+content type or the "eventURL" keyword argument for the "Event"
+content type.  Similarly, if the feed item has any body content it
+will be passed in as the "text" keyword argument and thus will be
+consumed by content types with a "text" field such as with the
+"Document", "Event", "News Item" content types.
+
+The added content items have been populated from the feed item
+contents.
+
+    >>> item = portal.events['welcome-to-plone']
+    >>> item.Type()
+    'Event'
+    >>> item.Title() == portal['front-page'].Title()
+    True
+    >>> item.Description() == portal['front-page'].Description()
+    True
+    >>> item.getText() == portal['front-page'].getText()
+    True
+    >>> item.getEventUrl() == portal['front-page'].absolute_url()
+    True
+    >>> item.modified() == portal['front-page'].modified()
+    True
+
+Enclosures
+----------
+
+Any feed item enclosures will be added as well using the same logic as
+the Zope DAV/FTP handling.  If the new content item is a DAV/FTP
+collection, the enclosures will be added inside the content item.
+Otherwise the enclosures will be added to the feed folder as siblings
+to the new item.
+
+(Haven't been able to figure out how to hook into DAV/FTP item adding)
+
+    >>> TODO
