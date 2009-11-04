@@ -19,5 +19,6 @@ class FolderFeeds(persistent.Persistent):
     def __init__(self):
         self.itemType = folder.IFolderFeeds['itemType'].default
         self.itemTransitions = []
+        self.enclosureTransitions = []
  
 FolderFeedsFactory = factory(FolderFeeds)

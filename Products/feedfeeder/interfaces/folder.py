@@ -56,6 +56,10 @@ class IFolderFeeds(interface.Interface):
         title=u'Item Workflow Transitions',
         required=False,
         value_type=schema.Choice(vocabulary='TransitionsVocab'))
+    enclosureTransitions = schema.List(
+        title=u'Enclosure Workflow Transitions',
+        required=False,
+        value_type=schema.Choice(vocabulary='TransitionsVocab'))
 
     @interface.invariant
     def areTransitionsValidForType(context):
