@@ -135,7 +135,7 @@ Make sure the content all matches up.
   1
   >>> test_doc.values()[0].size()
   1000
-  >>> test_doc.feed_tags
+  >>> test_doc.subject
   [u'example']
   
 Lets check out the document's feed item metadata.
@@ -167,7 +167,7 @@ Get our item that talks about the thesis defence of Reinout.
   >>> thesis = container.__parent__['f065f774e8c28bf9f33221f290c4ca6a']
   >>> thesis.title
   u'Thesis defence: 15 January 2007 15:00'
-  >>> thesis.feed_tags
+  >>> thesis.subject
   []
 
 Now someone could have added an enclosure that is actually just a link.  We append that link with an "a href" to the text of the item.
