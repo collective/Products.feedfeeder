@@ -6,6 +6,10 @@ from Acquisition import aq_parent
 
 from Products.CMFCore.utils import getToolByName
 
+class IFeedFolder(interface.Interface):
+    """A folder for which feedURLs have been set
+    """
+
 def AddableTypesVocab(context):
     context = getattr(context, '__parent__', context)
     if not hasattr(context, 'allowedContentTypes'):

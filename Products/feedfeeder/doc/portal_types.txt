@@ -98,6 +98,13 @@ Select valid workflow transitions and save the form.
     <...
     ...Data successfully updated...
 
+Now that this folder has feed URLs, it can be queried in the catalog.
+
+    >>> [b.getObject() for b in portal.portal_catalog(
+    ...     object_provides=
+    ...     'Products.feedfeeder.interfaces.folder.IFeedFolder')]
+    [<ATBTreeFolder at /plone/events>]
+
 The feeds form is not available to members who can not add items there.
 
     >>> member_browser.open(portal.events.absolute_url())
@@ -110,12 +117,6 @@ Update All Feed Folders
 
 A view is provided for updating all folderish items that have feed
 URLs set.
-
-The view uses a catalog index for querying folderish items which have
-feed URLs.
-
-    >>> 'hasFeedURLs' in portal.portal_catalog.indexes()
-    True
 
 Before the view has been loaded, no feed items have been added to the
 folder with feed URLs.

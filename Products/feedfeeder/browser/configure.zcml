@@ -10,6 +10,13 @@
       />
 
   <page
+      name="update_all_feed_folders"
+      class=".folder.UpdateAllFeedFolders"
+      for="Products.CMFCore.interfaces.IFolderish"
+      permission="cmf.ManagePortal"
+      />
+
+  <page
       name="update_feed_items"
       class=".feed.UpdateFeedItems"
       for="Products.feedfeeder.interfaces.container.IFeedsContainer"
