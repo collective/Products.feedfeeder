@@ -6,13 +6,13 @@ Portal Types
 
 Start with some feed files.
 
-  >>> import os
-  >>> import Products.feedfeeder
-  >>> samplesdir = os.path.dirname(Products.feedfeeder.__file__)
-  >>> samplesdir = os.path.join(samplesdir, 'tests', 'samples')
-  >>> sample_urls = [
-  ...     'file://'+os.path.join(samplesdir, sample) for sample in
-  ...     'samplefeed1.xml', 'samplefeed2.xml']
+    >>> import os
+    >>> import Products.feedfeeder
+    >>> samplesdir = os.path.dirname(Products.feedfeeder.__file__)
+    >>> samplesdir = os.path.join(samplesdir, 'tests', 'samples')
+    >>> sample_urls = [
+    ...     'file://'+os.path.join(samplesdir, sample) for sample in
+    ...     'samplefeed1.xml', 'samplefeed2.xml']
 
 Open a browser and log in as a member who can add items to a folder.
 
