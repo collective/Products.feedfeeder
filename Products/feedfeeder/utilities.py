@@ -216,16 +216,17 @@ class FeedConsumer:
             summary = convert_summary(summary)
             logger.debug("2 summary: %r" % summary)
 
+            # Tags cannot be handled by the update method AFAIK,
+            # because it is not an Archetypes field.
+            feed_tags = [x.get('term') for x in entry.get('tags', [])]
             obj.update(id=id,
                        title=getattr(entry, 'title', ''),
                        description=summary,
                        creators=[getattr(entry, 'author', '')],
                        remoteURL=link,
-                       eventUrl=link)
-            # Tags cannot be handled by the update method AFAIK,
-            # because it is not an Archetypes field.
-            feed_tags = [x.get('term') for x in entry.get('tags', [])]
-            obj.feed_tags = feed_tags
+                       subject=feed_tags,
+                       eventUrl=link,
+                       eventType=feed_tags)
             if hasattr(entry, 'content'):
                 content = entry.content[0]
                 ctype=content.get('type') # sometimes no type on linux prsr.

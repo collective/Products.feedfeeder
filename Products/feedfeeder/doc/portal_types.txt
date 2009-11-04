@@ -169,7 +169,8 @@ Feed item data is applied to the newly created item using an adapter.
 The default adapter is intended to be as flexible as possible and
 suitable for the default Plone/ATCT content types and the conventions
 those schemata establish.  The new item's title, description, creator,
-and modification date will all be updated from the feed item data.
+modification date, and subject/keywords will all be updated from the
+feed item data.
 
 The feed item URL is passed into the content item's update method as
 both the "remoteURL" and "eventURL" keyword arguments.  Thus the
@@ -198,6 +199,8 @@ contents.
     DateTime('2006/07/21 12:00:00 GMT+0')
     >>> item.Creator()
     'Miriam Mobach'
+    >>> item.Subject()
+    ('example',)
 
     >>> item = portal.events['30ca408a75537f05d03821c64473289e']
     >>> item.getText()
