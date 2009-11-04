@@ -13,12 +13,14 @@ from zope import component
 from zope import event
 from zope import interface
 
-from Products.feedfeeder.interfaces.container import IFeedsContainer
+from Products.CMFCore.utils import getToolByName
+
 from Products.feedfeeder.interfaces.contenthandler import \
     IFeedItemContentHandler
 from Products.feedfeeder.events import FeedItemConsumedEvent
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.extendeddatetime import extendedDateTime
+from Products.feedfeeder.interfaces import folder as folder_ifaces
 
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
@@ -82,8 +84,8 @@ class FeedConsumer:
     interface.implements(IFeedConsumer)
 
     def retrieveFeedItems(self, container):
-        feedContainer = IFeedsContainer(container)
-        for url in feedContainer.getFeeds():
+        feedContainer = folder_ifaces.IFolderFeeds(container)
+        for url in feedContainer.feedURLs:
             self._retrieveSingleFeed(feedContainer, url)
 
     def tryRenamingEnclosure(self, enclosure, feeditem):
@@ -97,6 +99,26 @@ class FeedConsumer:
                 except:
                     pass
             newId = '%i_%s' % (x, enclosure.Title())
+
+    def addItem(self, feedsContainer, id):
+        """
+        """
+        container = feedsContainer.__parent__
+        item = container[
+            container.invokeFactory(feedsContainer.itemType, id)]
+        wf_tool = getToolByName(container, 'portal_workflow')
+        for transition in feedsContainer.itemTransitions:
+            wf_tool.doActionFor(
+                item, transition,
+                comment='Automatic transition triggered by FeedFolder')
+        return item
+
+    def replaceItem(self, feedsContainer, id):
+        """
+        """
+        container = feedsContainer.__parent__
+        container.manage_delObjects([id])
+        return self.addItem(container, id)
 
     def _retrieveSingleFeed(self, feedContainer, url):
         # feedparser doesn't understand proper file: url's
@@ -133,22 +155,20 @@ class FeedConsumer:
                                 updated, getattr(entry, 'title', ''))
                     continue
 
-            prev = feedContainer.getItem(id)
+            prev = feedContainer.__parent__.get(id)
             if prev is None:
                 # Completely new item, add it.
-                addItem = feedContainer.addItem
+                obj = self.addItem(feedContainer, id)
             elif updated is None:
                 logger.warn("No updated or published date known. "
                             "Not updating previously added entry.")
                 continue
             elif updated > prev.getFeedItemUpdated():
                 # Refreshed item, replace it.
-                addItem = feedContainer.replaceItem
+                obj = self.replaceItem(feedContainer, id)
             else:
                 # Not new, not refreshed: let it be, laddy.
                 continue
-
-            obj = addItem(id)
 
             linkDict = getattr(entry, 'link', None)
             if linkDict:
