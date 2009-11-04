@@ -126,8 +126,9 @@ class FeedConsumer:
         """
         """
         container = item
-        if not item.restrictedTraverse(
-            '@@plone_context_state').is_structural_folder():
+        is_folder = item.restrictedTraverse(
+            '@@plone_context_state').is_structural_folder()
+        if not is_folder:
             container = aq_parent(item)
 
         enclosure = container[container.invokeFactory('File', id)]
@@ -137,6 +138,11 @@ class FeedConsumer:
             wf_tool.doActionFor(
                 enclosure, transition.rsplit('/', 1)[-1],
                 comment='Automatic transition triggered by FeedFolder')
+
+        if not is_folder:
+            related = item.getField('relatedItems')
+            if related is not None:
+                item.addReference(enclosure, related.relationship)
 
         return enclosure
 

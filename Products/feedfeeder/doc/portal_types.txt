@@ -205,6 +205,9 @@ contents.
     >>> item = portal.events['30ca408a75537f05d03821c64473289e']
     >>> item.getText()
     '<div>\nwoo hoo, a party!\n</div>'
+    >>> item.getRelatedItems()
+    [<ATFile at /plone/events/136d893f04d8a7582b551df541fdff19>,
+     <ATFile at /plone/events/4416d3618704a80b3dfa28a907edf725>]
 
 Enclosures
 ----------
