@@ -17,55 +17,54 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   >>> from Products.feedfeeder.interfaces.item import IFeedItem
   >>> import zope.interface
 
-  >>> class MockFeedsContainer(object):
-  ...     zope.interface.implements(IFeedsContainer)
-  ...     def __init__(self, feeds):
-  ...         self.items = {}
-  ...         self.feeds = feeds
-  ...     def getFeeds(self):
-  ...         return self.feeds
-  ...     def addItem(self, id):
-  ...         item = MockFeedItem()
-  ...         self.items[id] = item
-  ...         return item
-  ...     def replaceItem(self, id):
-  ...         return self.addItem(id)
-  ...     def getItem(self,id):
-  ...         return self.items.get(id, None)
+  >>> class MockWorkflowTool(object):
+  ...     def doActionFor(self, obj, action, comment):
+  ...         pass
+
+  >>> class MockContextState(object):
+  ...     def is_structural_folder(self):
+  ...         return True
   
   >>> class MockField(object):
   ...     def getAllowedContentTypes(self, obj):
   ...         return []
 
-  >>> class MockFeedItem(object):
+  >>> class MockFeedItem(dict): 
   ...     zope.interface.implements(IFeedItem)
-  ...     def __init__(self):
-  ...         self.enclosures = {}
+  ...     portal_workflow = MockWorkflowTool()
+  ...     def restrictedTraverse(self, path):
+  ...         return MockContextState()
+  ...     def invokeFactory(self, type_name, id):
+  ...         self[id] = MockFeedEnclosure(id)
+  ...         return id
   ...     def update(self, **kwargs):
   ...         for key, value in kwargs.items():
   ...             setattr(self, key, value)
-  ...     def addEnclosure(self, id):
-  ...         self.enclosures[id] = MockFeedEnclosure(id)
-  ...         return self.enclosures[id]
+  ...     def setModificationDate(self, value):
+  ...         self.modification_date = value
+  ...     def modified(self): return self.modification_date
   ...     def getText(self):
   ...         return self.text
   ...     def manage_renameObject(self, orig_id, new_id):
-  ...         if new_id in self.enclosures.keys():
+  ...         if new_id in self.keys():
   ...             raise KeyError('Enclosure with %r id already exists' % repr(new_id))
-  ...         self.enclosures[new_id] = self.enclosures[orig_id]
-  ...         del self.enclosures[orig_id]
-  ...         self.enclosures[new_id].id = new_id
-  ...     def objectIds(self): return self.enclosures.keys()
-  ...     def getFeedItemUpdated(self): return self.feedItemUpdated
-  ...     def setFeedItemUpdated(self, x): self.feedItemUpdated = x
-  ...     def getFeedItemAuthor(self): return self.feedItemAuthor
-  ...     def setFeedItemAuthor(self, x): self.feedItemAuthor = x
-  ...     def getFeedTitle(self): return self.feedTitle
-  ...     def setFeedTitle(self, x): self.feedTitle = x
+  ...         self[new_id] = self[orig_id]
+  ...         del self[orig_id]
+  ...         self[new_id].id = new_id
+  ...     def objectIds(self): return self.keys()
   ...     def setEffectiveDate(self, x): pass
-  ...     def reindexObject(self): pass
+  ...     def reindexObject(self, idxs=[]): pass
   ...     def getField(self, name):
   ...         return MockField()
+
+  >>> class MockFeedsContainer(dict):
+  ...     zope.interface.implements(IFeedsContainer)
+  ...     portal_workflow = MockWorkflowTool()
+  ...     def invokeFactory(self, type_name, id):
+  ...         self[id] = MockFeedItem()
+  ...         return id
+  ...     def manage_delObjects(self, ids):
+  ...         for id in ids: del self[id]
 
   >>> class MockFeedEnclosure(object):
   ...     def __init__(self, id):
@@ -104,9 +103,12 @@ up our mock feedscontainer.
 Make sure the feed consumer tells us if it has been given a bad file
 path.
 
+  >>> from Products.feedfeeder import folder
   >>> from Products.feedfeeder import utilities
   >>> consumer = utilities.FeedConsumer()
-  >>> container = MockFeedsContainer(['file:///foobar.xml'])
+  >>> container = folder.FolderFeeds()
+  >>> container.feedURLs = ['file:///foobar.xml']
+  >>> container.__parent__ = MockFeedsContainer()
   >>> consumer.retrieveFeedItems(container)
   Traceback (most recent call last):
   ...
@@ -119,52 +121,50 @@ Now lets use our utilty to build the feed items.
   ...                os.path.join(samplesdir, 'samplefeed2.xml'),
   ...                os.path.join(samplesdir, 'samplefeed3.xml'),
   ...                os.path.join(samplesdir, 'samplefeed4.xml')]
-  >>> container = MockFeedsContainer(['file://'+x for x in samplefiles])
+  >>> container.feedURLs = ['file://'+x for x in samplefiles]
   >>> consumer.retrieveFeedItems(container)
-  >>> len(container.items)
+  >>> len(container.__parent__)
   6
 
 Make sure the content all matches up.
 
-  >>> test_doc = container.items['0cfbced08adbdc1f3bf30b4120371b7d']
+  >>> test_doc = container.__parent__['0cfbced08adbdc1f3bf30b4120371b7d']
   >>> test_doc.title
   u'Philips Nieuws 24 juli'
-  >>> test_doc.getFeedTitle()
-  u'Philips Research Eindhoven News (Special)'
-  >>> len(test_doc.enclosures)
+  >>> len(test_doc)
   1
-  >>> test_doc.enclosures.values()[0].size()
+  >>> test_doc.values()[0].size()
   1000
   >>> test_doc.feed_tags
   [u'example']
   
 Lets check out the document's feed item metadata.
 
-  >>> test_doc.getFeedItemAuthor()
-  u'Miriam Mobach'
-  >>> test_doc.getFeedItemUpdated()
+  >>> test_doc.creators
+  [u'Miriam Mobach']
+  >>> test_doc.modification_date
   DateTime('2006/07/21 12:00:00 GMT+0')
  
 There are duplicate entries in both feed1 and feed2.  In the case of the
 first duplicate, feed2's entry is later and thus should be the one we have.
 
-  >>> duplicate1 = container.items['649c8553c458001dbbb9b15957d58a92']
+  >>> duplicate1 = container.__parent__['649c8553c458001dbbb9b15957d58a92']
   >>> duplicate1.text
   u'<div>\nhello bar\n</div>'
   
 For the second duplicate, the first entry is the latest and should be
 kept.
-  >>> duplicate2 = container.items['30ca408a75537f05d03821c64473289e']
+  >>> duplicate2 = container.__parent__['30ca408a75537f05d03821c64473289e']
   >>> duplicate2.text
   u'<div>\nwoo hoo, a party!\n</div>'
-  >>> len(duplicate2.enclosures)
+  >>> len(duplicate2)
   2
-  >>> sorted([x.id for x in duplicate2.enclosures.values()])
+  >>> sorted([x.id for x in duplicate2.values()])
   [u'test2.doc', u'test3.xls']
 
 Get our item that talks about the thesis defence of Reinout.
 
-  >>> thesis = container.items['f065f774e8c28bf9f33221f290c4ca6a']
+  >>> thesis = container.__parent__['f065f774e8c28bf9f33221f290c4ca6a']
   >>> thesis.title
   u'Thesis defence: 15 January 2007 15:00'
   >>> thesis.feed_tags

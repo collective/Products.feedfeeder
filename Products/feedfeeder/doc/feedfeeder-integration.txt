@@ -15,13 +15,16 @@ Setup some feeds.
 
   >>> import os
   >>> import Products.feedfeeder
+  >>> from Products.feedfeeder.interfaces import folder as folder_ifaces
 
   >>> samplesdir = os.path.dirname(Products.feedfeeder.__file__)
   >>> samplesdir = os.path.join(samplesdir, 'tests', 'samples')
   >>> os.chdir(samplesdir)
   >>> samplefiles = [os.path.join(samplesdir, 'samplefeed1.xml'),
   ...                os.path.join(samplesdir, 'samplefeed2.xml')]
-  >>> feeder.setFeeds(['file://'+x for x in samplefiles])
+  >>> feedContainer = folder_ifaces.IFolderFeeds(feeder)
+  >>> feedContainer.feedURLs = ['file://'+x for x in samplefiles ]
+  >>> feedContainer.itemType = 'FeedFeederItem'
 
 
 Available Transitions
@@ -63,7 +66,8 @@ Using Updating View
   update FeedFolders.
 
   >>> self.setRoles('Manager')
-  >>> feeder.setDefaultTransition('publish')
+  >>> feedContainer.itemTransitions = ['publish']
+  >>> feedContainer.enclosureTransitions = ['publish']
   >>> view = feeder.restrictedTraverse('@@update_feed_items')
   >>> view.update()
   >>> self.setRoles('')
@@ -224,7 +228,10 @@ values.  Lets make sure that works.
   ...                          provides=IFeedItemContentHandler,
   ...                          name=u'definition-list-metadata')
   
-  >>> feeder.setFeeds(['file://'+os.path.join(samplesdir, 'samplefeed1.xml')])
+  >>> feedContainer = folder_ifaces.IFolderFeeds(feeder)
+  >>> feedContainer.feedURLs = [
+  ...     'file://'+os.path.join(samplesdir, 'samplefeed1.xml')]
+  >>> feedContainer.itemType = 'FeedFeederItem'
   >>> self.setRoles('Manager')
   >>> view = feeder.restrictedTraverse('@@update_feed_items')
   >>> view.update()
