@@ -4,6 +4,8 @@ import logging
 logger = logging.getLogger("feedfeeder")
 logger.debug('Start initialization of feedfeeder product.')
 
+from zope import i18nmessageid
+
 from Products.CMFCore import utils as cmfutils
 from Products.CMFCore import DirectoryView
 from Products.Archetypes.atapi import process_types
@@ -17,6 +19,7 @@ DirectoryView.registerDirectory('skins', product_globals)
 DirectoryView.registerDirectory('skins/feedfeeder',
                                     product_globals)
 
+MessageFactory = i18nmessageid.MessageFactory(u'feedfeeder')
 
 def initialize(context):
     # imports packages and types for registration

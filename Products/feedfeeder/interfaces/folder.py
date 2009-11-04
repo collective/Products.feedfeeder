@@ -6,6 +6,8 @@ from Acquisition import aq_parent
 
 from Products.CMFCore.utils import getToolByName
 
+from Products.feedfeeder import MessageFactory as _
+
 class IFeedFolder(interface.Interface):
     """A folder for which feedURLs have been set
     """
@@ -45,7 +47,7 @@ class IFolderFeeds(interface.Interface):
     """
 
     feedURLs = schema.List(
-        title=u'Feed URLs',
+        title=_('feedfeeder_label_feeds', default=u'Feed URLs'),
         required=False,
         value_type=schema.ASCIILine())
     itemType = schema.Choice(
@@ -53,7 +55,13 @@ class IFolderFeeds(interface.Interface):
         required=False,
         vocabulary='AddableTypesVocab')
     itemTransitions = schema.List(
-        title=u'Item Workflow Transitions',
+        title=_(
+            u'label_default_transition',
+            default=u'Item Workflow Transitions'),
+        description=_(
+            u"help_default_transition",
+            default=u"When updating this feed's item the transitions "
+            "selected below will be performed."),
         required=False,
         value_type=schema.Choice(vocabulary='TransitionsVocab'))
     enclosureTransitions = schema.List(

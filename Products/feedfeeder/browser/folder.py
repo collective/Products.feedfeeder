@@ -19,6 +19,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.feedfeeder.interfaces import folder as folder_ifaces
 from Products.feedfeeder.interfaces import consumer
 from Products.feedfeeder import folder
+from Products.feedfeeder import MessageFactory as _
 
 class LinesWidget(textarea.TextAreaWidget):
     interface.implements(interfaces.IDataConverter)
@@ -38,7 +39,8 @@ def LinesFieldWidget(field, request):
 class FolderFeedsForm(form.EditForm):
     """Specify syndication feeds from which to populate a folder
     """
-    label = u"Folder Feeds"
+    label = _(u'description_edit_feedfeederfolder',
+              default=u"Folder Feeds")
 
     fields = field.Fields(folder_ifaces.IFolderFeeds)
     fields['feedURLs'].widgetFactory = LinesFieldWidget
