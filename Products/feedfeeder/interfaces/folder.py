@@ -40,7 +40,7 @@ def TransitionsVocab(context):
     return vocabulary.SimpleVocabulary(
         [term for title, term in sorted(terms.iteritems())])
 
-class IFolderFeedsForm(interface.Interface):
+class IFolderFeeds(interface.Interface):
     """Specify syndication feeds from which to populate a folder
     """
 

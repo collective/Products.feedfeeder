@@ -10,15 +10,14 @@ from Products.CMFCore import interfaces
 from Products.feedfeeder.interfaces import folder
 
 class FolderFeeds(persistent.Persistent):
-    interface.implements(folder.IFolderFeedsForm)
+    interface.implements(folder.IFolderFeeds)
     component.adapts(interfaces.IFolderish)
 
     feedURLs = fieldproperty.FieldProperty(
-        folder.IFolderFeedsForm['feedURLs'])
+        folder.IFolderFeeds['feedURLs'])
 
     def __init__(self):
-        self.itemType = folder.IFolderFeedsForm[
-            'itemType'].default
+        self.itemType = folder.IFolderFeeds['itemType'].default
         self.itemTransitions = []
  
 FolderFeedsFactory = factory(FolderFeeds)

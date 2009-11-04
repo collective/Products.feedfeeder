@@ -40,7 +40,7 @@ class FolderFeedsForm(form.EditForm):
     """
     label = u"Folder Feeds"
 
-    fields = field.Fields(folder_ifaces.IFolderFeedsForm)
+    fields = field.Fields(folder_ifaces.IFolderFeeds)
     fields['feedURLs'].widgetFactory = LinesFieldWidget
 
     def applyChanges(self, *args, **kw):
@@ -55,7 +55,7 @@ class FolderFeedsForm(form.EditForm):
         factory = folder.FolderFeeds
         key = factory.__module__ + '.' + factory.__name__
         if key in annotations:
-            if folder_ifaces.IFolderFeedsForm(context).feedURLs:
+            if folder_ifaces.IFolderFeeds(context).feedURLs:
                 interface.alsoProvides(
                     context, folder_ifaces.IFeedFolder)
 
