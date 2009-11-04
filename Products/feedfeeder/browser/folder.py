@@ -72,7 +72,8 @@ class UpdateAllFeedFolders(object):
         catalog = getToolByName(context, 'portal_catalog')
         feed_consumer = component.getUtility(consumer.IFeedConsumer)
         for brain in catalog(
-            hasFeedURLs=True,
+            object_provides=
+            'Products.feedfeeder.interfaces.folder.IFeedFolder',
             path='/'.join(context.getPhysicalPath())):
             folder = brain.getObject()
             feed_consumer.retrieveFeedItems(folder)
