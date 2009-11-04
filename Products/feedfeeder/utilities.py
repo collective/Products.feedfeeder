@@ -13,6 +13,8 @@ from zope import component
 from zope import event
 from zope import interface
 
+from Acquisition import aq_parent
+
 from Products.CMFCore.utils import getToolByName
 
 from Products.feedfeeder.interfaces.contenthandler import \
@@ -109,7 +111,7 @@ class FeedConsumer:
         wf_tool = getToolByName(container, 'portal_workflow')
         for transition in feedsContainer.itemTransitions:
             wf_tool.doActionFor(
-                item, transition,
+                item, transition.rsplit('/', 1)[-1],
                 comment='Automatic transition triggered by FeedFolder')
         return item
 
@@ -118,7 +120,25 @@ class FeedConsumer:
         """
         container = feedsContainer.__parent__
         container.manage_delObjects([id])
-        return self.addItem(container, id)
+        return self.addItem(feedsContainer, id)
+
+    def addEnclosure(self, feedsContainer, item, id):
+        """
+        """
+        container = item
+        if not item.restrictedTraverse(
+            '@@plone_context_state').is_structural_folder():
+            container = aq_parent(item)
+
+        enclosure = container[container.invokeFactory('File', id)]
+
+        wf_tool = getToolByName(item, 'portal_workflow')
+        for transition in feedsContainer.enclosureTransitions:
+            wf_tool.doActionFor(
+                enclosure, transition.rsplit('/', 1)[-1],
+                comment='Automatic transition triggered by FeedFolder')
+
+        return enclosure
 
     def _retrieveSingleFeed(self, feedContainer, url):
         # feedparser doesn't understand proper file: url's
@@ -163,7 +183,7 @@ class FeedConsumer:
                 logger.warn("No updated or published date known. "
                             "Not updating previously added entry.")
                 continue
-            elif updated > prev.getFeedItemUpdated():
+            elif updated > prev.modified():
                 # Refreshed item, replace it.
                 obj = self.replaceItem(feedContainer, id)
             else:
@@ -199,11 +219,9 @@ class FeedConsumer:
             obj.update(id=id,
                        title=getattr(entry, 'title', ''),
                        description=summary,
-                       feedItemAuthor=getattr(entry, 'author', ''),
-                       feedItemUpdated=updated,
-                       link=link,
-                       feedTitle=parsed['feed'].get('title', ''),
-                       )
+                       creators=[getattr(entry, 'author', '')],
+                       remoteURL=link,
+                       eventUrl=link)
             # Tags cannot be handled by the update method AFAIK,
             # because it is not an Archetypes field.
             feed_tags = [x.get('term') for x in entry.get('tags', [])]
@@ -262,7 +280,8 @@ class FeedConsumer:
                 for link in real_enclosures:
                     enclosureSig = md5.new(link.href)
                     enclosureId = enclosureSig.hexdigest()
-                    enclosure = obj.addEnclosure(enclosureId)
+                    enclosure = self.addEnclosure(
+                        feedContainer, obj, enclosureId)
                     enclosure.update(title=enclosureId)
                     updateWithRemoteFile(enclosure, link)
                     if enclosure.Title() != enclosure.getId():
@@ -271,6 +290,13 @@ class FeedConsumer:
                     # rename-after-creation magic might have changed
                     # the ID of the file. So we recatalog the object.
                     obj.reindexObject()
+
+
+            # the modification date is updated on
+            # reindexObject(idxs=[]) so set the modification date on
+            # the way out
+            obj.setModificationDate(updated)
+            obj.reindexObject(idxs=['modification_date'])
 
             if obj is not None:
                 event.notify(FeedItemConsumedEvent(obj))

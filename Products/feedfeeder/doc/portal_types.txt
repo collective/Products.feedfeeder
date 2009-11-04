@@ -48,7 +48,8 @@ selection.
 
     >>> portal.portal_workflow.setChainForPortalTypes(
     ...     ('Topic',), ('intranet_workflow',))
-    >>> portal.events.setLocallyAllowedTypes(('Event', 'Topic'))
+    >>> portal.events.setLocallyAllowedTypes(
+    ...     ('Event', 'Topic', 'File'))
 
 The feeds form is available on any folderish object to contributors
 who can add items to the folder.
@@ -63,12 +64,12 @@ transitions to perform on newly added items.
     >>> owner_browser.getControl(
     ...     'Feed URLs').value = '\n'.join(sample_urls)
     >>> owner_browser.getControl('Event').selected = True
-    >>> submit_ctl = owner_browser.getControl(
-    ...     'Submit for publication (Simple Publication Workflow)'
-    ...     )
-    >>> publish_ctl = owner_browser.getControl(
-    ...     'Publish internally (Intranet/Extranet Workflow)'
-    ...     )
+    >>> item_trans_ctl = owner_browser.getControl(
+    ...     name="form.widgets.itemTransitions.from")
+    >>> submit_ctl = item_trans_ctl.getControl(
+    ...     'Submit for publication (Simple Publication Workflow)')
+    >>> publish_ctl = item_trans_ctl.getControl(
+    ...     'Publish internally (Intranet/Extranet Workflow)')
     >>> submit_ctl.mech_form.new_control(
     ...     type='hidden', name='form.widgets.itemTransitions:list',
     ...     attrs=dict(value=submit_ctl.optionValue))
@@ -90,18 +91,20 @@ individual item.
 
 Select valid workflow transitions and save the form.
 
-    >>> submit_ctl = owner_browser.getControl(
-    ...     'Submit for publication (Simple Publication Workflow)'
-    ...     )
-    >>> publish_ctl = owner_browser.getControl(
-    ...     'Publish (Simple Publication Workflow)'
-    ...     )
+    >>> item_trans_ctl = owner_browser.getControl(
+    ...     name="form.widgets.itemTransitions.to")
+    >>> submit_ctl = item_trans_ctl.getControl(
+    ...     'Submit for publication (Simple Publication Workflow)')
+    >>> item_trans_ctl = owner_browser.getControl(
+    ...     name="form.widgets.itemTransitions.from")
+    >>> publish_ctl = item_trans_ctl.getControl(
+    ...     'Publish (Simple Publication Workflow)')
     >>> submit_ctl.mech_form.new_control(
     ...     type='hidden', name='form.widgets.itemTransitions:list',
-    ...     attrs=dict(value=submit_ctl.optionValue))
+    ...     attrs=dict(value=submit_ctl.optionValue), index=220)
     >>> publish_ctl.mech_form.new_control(
     ...     type='hidden', name='form.widgets.itemTransitions:list',
-    ...     attrs=dict(value=publish_ctl.optionValue))
+    ...     attrs=dict(value=publish_ctl.optionValue), index=230)
     >>> owner_browser.getControl('Apply').click()
     >>> print owner_browser.contents
     <...
@@ -149,8 +152,15 @@ folders, items have been created in the folder for the feed items.
     >>> owner_browser.open(
     ...     portal.events.absolute_url()+'/update_all_feed_folders')
     >>> portal.events.contentValues()
-    [<ATTopic at /plone/events/aggregator>,
-     <ATEvent at /plone/events/welcome-to-plone>]
+    [<ATEvent at /plone/events/0cfbced08adbdc1f3bf30b4120371b7d>,
+     <ATFile at /plone/events/136d893f04d8a7582b551df541fdff19>,
+     <ATEvent at /plone/events/30ca408a75537f05d03821c64473289e>,
+     <ATFile at /plone/events/4416d3618704a80b3dfa28a907edf725>,
+     <ATEvent at /plone/events/649c8553c458001dbbb9b15957d58a92>,
+     <ATFile at /plone/events/6e3e14007b03794de64cfafe071607e6>,
+     <ATTopic at /plone/events/aggregator>,
+     <ATFile at /plone/events/bc5f29b4fabfa05bd12d301c34668724>,
+     <ATEvent at /plone/events/c17db5a7fa227e2e34193c71a173dbb1>]
 
 Fields
 ------
@@ -175,19 +185,23 @@ consumed by content types with a "text" field such as with the
 The added content items have been populated from the feed item
 contents.
 
-    >>> item = portal.events['welcome-to-plone']
+    >>> item = portal.events['0cfbced08adbdc1f3bf30b4120371b7d']
     >>> item.Type()
-    'Event'
-    >>> item.Title() == portal['front-page'].Title()
-    True
-    >>> item.Description() == portal['front-page'].Description()
-    True
-    >>> item.getText() == portal['front-page'].getText()
-    True
-    >>> item.getEventUrl() == portal['front-page'].absolute_url()
-    True
-    >>> item.modified() == portal['front-page'].modified()
-    True
+    u'Event'
+    >>> item.Title()
+    'Philips Nieuws 24 juli'
+    >>> item.Description()
+    'This is a sample summary'
+    >>> item.event_url()
+    'file:test1.pdf'
+    >>> item.modified()
+    DateTime('2006/07/21 12:00:00 GMT+0')
+    >>> item.Creator()
+    'Miriam Mobach'
+
+    >>> item = portal.events['30ca408a75537f05d03821c64473289e']
+    >>> item.getText()
+    '<div>\nwoo hoo, a party!\n</div>'
 
 Enclosures
 ----------
@@ -200,4 +214,4 @@ to the new item.
 
 (Haven't been able to figure out how to hook into DAV/FTP item adding)
 
-    >>> TODO
+    TODO
