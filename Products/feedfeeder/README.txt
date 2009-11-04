@@ -5,7 +5,7 @@ Feedfeeder has just a few things it needs to do:
 
 - Read in a few ATOM feeds (not too many).
 
-- Create FeedFeederItems out of the entries pulled from the ATOM feeds.
+- Create Plone content out of the entries pulled from the ATOM feeds.
   Any feed items that contain enclosures will have the enclosures
   pulled down and added as File items to the feed item.
 
@@ -37,18 +37,6 @@ Product name
 The product feeds the content of ATOM feeds to plone as document/file
 content types. So "feedfeeder" sort of suggested itself as a funny
 name. Fun is important :-)
-
-
-Product structure
------------------
-
-I'm using archgenxml to generate the boiler plate stuff. There's a
-'generate.sh' shell script that'll call archgenxml for you. Nothing
-fancy.
-
-The feedfeeder's content types are: 
-  - folder.FeedfeederFolder
-  - item.FeedFeederItem
 
 
 How it works

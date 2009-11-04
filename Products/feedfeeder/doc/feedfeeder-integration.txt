@@ -8,12 +8,13 @@ folderish type.
 
 Lets begin by creating our feeder.
 
-  >>> id = folder.invokeFactory('FeedfeederFolder', 'feeder')
+  >>> id = folder.invokeFactory('Folder', 'feeder')
   >>> feeder = folder.feeder
   
 Setup some feeds.
 
   >>> import os
+  >>> from zope import interface
   >>> import Products.feedfeeder
   >>> from Products.feedfeeder.interfaces import folder as folder_ifaces
 
@@ -24,7 +25,9 @@ Setup some feeds.
   ...                os.path.join(samplesdir, 'samplefeed2.xml')]
   >>> feedContainer = folder_ifaces.IFolderFeeds(feeder)
   >>> feedContainer.feedURLs = ['file://'+x for x in samplefiles ]
-  >>> feedContainer.itemType = 'FeedFeederItem'
+  >>> feedContainer.itemType = 'Event'
+  >>> interface.alsoProvides(feeder, folder_ifaces.IFeedFolder)
+  >>> feeder.reindexObject(idxs=['object_provides'])
 
 
 Available Transitions
@@ -33,30 +36,18 @@ Available Transitions
 Feed items that are added during an update can be automatically
 transitioned.
 
-Between Plone 2.5 and 3.0 there were some changes to the workflows
-which make it tricky to have tests here that pass in both cases.  We
-explicitly set the workflow chain for FeedFeederItems to
-plone_workflow, as that is what the default for Plone 2.5.  And we do
-the same for Files, as we use them for enclosures::
+Set a workflow for Files, as we use them for enclosures::
 
-  >>> portal.portal_workflow.setChainForPortalTypes(['FeedFeederItem', 'File'], 'plone_workflow')
+  >>> portal.portal_workflow.setChainForPortalTypes(
+  ...     ['File'], 'simple_publication_workflow')
 
 See what transitions we have available::
 
-  >>> feeder.getAvailableTransitions()
-  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit...>
-  >>> self.setRoles('Manager')
-  >>> [trans for trans in feeder.getAvailableTransitions()]
-  ['', 'hide', 'submit', 'publish']
-
-  >>> from Products.CMFCore.utils import getToolByName
-  >>> wf_tool = getToolByName(folder,'portal_workflow')
-  >>> wf_tool.doActionFor(feeder, 'publish')
-  >>> [trans for trans in feeder.getAvailableTransitions()]
-  ['', 'hide', 'submit', 'publish']
-  >>> self.setRoles('')
-  >>> [trans for trans in feeder.getAvailableTransitions()]
-  ['', 'hide', 'submit']
+  >>> [t.title for t in folder_ifaces.TransitionsVocab(feeder)]
+  [u'Publish (Simple Publication Workflow)',
+   u'Retract (Simple Publication Workflow)',
+   u'Send back (Simple Publication Workflow)',
+   u'Submit for publication (Simple Publication Workflow)']
 
 
 Using Updating View
@@ -74,7 +65,7 @@ Using Updating View
 
 Make sure we got what we wanted.
 
-  >>> sorted([x for x in feeder.objectIds()])
+  >>> sorted([x for x in feeder.objectIds('ATEvent')])
   ['0cfbced08adbdc1f3bf30b4120371b7d', '30ca408a75537f05d03821c64473289e', '649c8553c458001dbbb9b15957d58a92', 'c17db5a7fa227e2e34193c71a173dbb1']
 
   >>> test_doc = feeder['30ca408a75537f05d03821c64473289e']
@@ -84,13 +75,15 @@ Make sure we got what we wanted.
   'Party on the roof of the Mediterranean Inn'
   >>> test_doc.getText()
   '<div>\nwoo hoo, a party!\n</div>'
-  >>> enclosure = test_doc.objectValues()[0]
+  >>> enclosure = test_doc.getRelatedItems()[0]
   >>> enclosure
   <ATFile at ...>
 
 And did the automatic transition work?
-For the FeedFeederItem:
+For the item:
 
+  >>> from Products.CMFCore.utils import getToolByName
+  >>> wf_tool = getToolByName(folder,'portal_workflow')
   >>> chain = wf_tool.getChainFor(test_doc)
   >>> status = wf_tool.getStatusOf(chain[0], test_doc)
   >>> status['review_state']
@@ -108,108 +101,6 @@ For the enclosure:
   'Automatic transition triggered by FeedFolder'
 
 
-
-Folder Listing
---------------
-
-We need to make sure the items listed by the folder listing view match
-up with appropriate logic.
-
-  >>> id = folder.invokeFactory('FeedfeederFolder', 'feeder2')
-  >>> feeder = folder.feeder2
-  >>> view = feeder.restrictedTraverse('@@feed-folder.html')
-
-The requirements for how things get linked is as follows:
-
-  1) feed item with no text and no enclosures: show feed item title and 
-  link to feed item
-  2) feed item with text: show feed item title and link to feed item
-  3) feed item with text and one enclosure: show feed item title and 
-  link to feed item
-  4) feed item with no text and one enclosure: show feed item title and 
-  link to enclosure
-  5) feed item with no text and multiple enclosures: show feed item 
-  title and link to feed item
-
-We have to satisfy each of these requirements.  Make sure that a feed 
-item with no text and no enclosures still have the feed item title and 
-feed item url.
-
-  >>> id = feeder.invokeFactory('FeedFeederItem', '1')
-  >>> feeder[id].update(title='foo')
-  >>> items = [x for x in view.items]
-  >>> len(items)
-  1
-  >>> items[0]['title']
-  'foo'
-  >>> items[0]['url']
-  'http://nohost/plone/Members/test_user_1_/feeder2/1'
-
-A feed item with text should have it's title and url displayed.
-
-  >>> feeder[id].setText('abcdef')
-  >>> items = [x for x in view.items]
-  >>> len(items)
-  1
-  >>> items[0]['title']
-  'foo'
-  >>> items[0]['url']
-  'http://nohost/plone/Members/test_user_1_/feeder2/1'
-
-Even if the feed item has an enclosure, as long as it has text the
-feed item title and url should be used.
-
-  >>> obj = feeder[id].addEnclosure('1.1')
-  >>> obj.update(title='foo.bar')
-  >>> items = [x for x in view.items]
-  >>> len(items)
-  1
-  >>> items[0]['title']
-  'foo'
-  >>> items[0]['url']
-  'http://nohost/plone/Members/test_user_1_/feeder2/1'
-
-If there is no text in the feed item and there is one and only one 
-enclosure, then the feed item title and enclosure url should be used.
-
-  >>> feeder[id].setText('')
-  >>> feeder[id].reindexObject()
-  >>> len(feeder[id].getFolderContents())
-  1
-  >>> items = [x for x in view.items]
-  >>> len(items)
-  1
-  >>> items[0]['title']
-  'foo'
-  >>> items[0]['url']
-  'http://nohost/plone/Members/test_user_1_/feeder2/1/1.1'
-
-If there is no text in the feed item and there is more than one
-enclosure, we should go back to simply using the title and url of the 
-feed item.
-
-  >>> feeder[id].setText('')
-  >>> obj = feeder[id].addEnclosure('1.2')
-  >>> obj.update(title='foo.hello')
-  >>> len(feeder[id].getFolderContents()) > 1
-  True
-  >>> items = [x for x in view.items]
-  >>> len(items)
-  1
-  >>> items[0]['title']
-  'foo'
-  >>> items[0]['url']
-  'http://nohost/plone/Members/test_user_1_/feeder2/1'
-
-Items with summaries should have summaries. Summaries come from 
-the description field on the content object.
-
-  >>> feeder[id].setDescription('Test Summary')
-  >>> feeder[id].update(title='blatant')
-  >>> items = [x for x in view.items]
-  >>> items[0]['summary']
-  'Test Summary'
-
 Annotated Metadata Handler
 --------------------------
 
@@ -217,6 +108,9 @@ Feedfeeder comes with an unregistered zope3 annotations based metadata
 handler adapter.  Essentially it scans the content of an atom entry
 for a toplevel DL entry and saves the DT/DD items as annotation
 values.  Lets make sure that works.
+
+  >>> id = folder.invokeFactory('Folder', 'feeder2')
+  >>> feeder = folder.feeder2
 
   >>> from zope import component
   >>> from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandler
@@ -231,7 +125,10 @@ values.  Lets make sure that works.
   >>> feedContainer = folder_ifaces.IFolderFeeds(feeder)
   >>> feedContainer.feedURLs = [
   ...     'file://'+os.path.join(samplesdir, 'samplefeed1.xml')]
-  >>> feedContainer.itemType = 'FeedFeederItem'
+  >>> feedContainer.itemType = 'Event'
+  >>> interface.alsoProvides(feeder, folder_ifaces.IFeedFolder)
+  >>> feeder.reindexObject(idxs=['object_provides'])
+
   >>> self.setRoles('Manager')
   >>> view = feeder.restrictedTraverse('@@update_feed_items')
   >>> view.update()
@@ -240,11 +137,13 @@ values.  Lets make sure that works.
 Now that we've retrieved the items, lets make sure the metadata we expect
 is present.
 
+  >>> from Products.feedfeeder.interfaces import item as item_ifaces
   >>> try:
   ...     from zope.annotation import IAnnotations
   ... except ImportError:
   ...     from zope.app.annotation import IAnnotations
-  >>> annotations = IAnnotations(feeder['649c8553c458001dbbb9b15957d58a92'])
+  >>> item = feeder['649c8553c458001dbbb9b15957d58a92']
+  >>> annotations = IAnnotations(item)
   >>> metadata = annotations[AnnotationContentHandler.ANNO_KEY]
   >>> dict(metadata)
   {u'date': u'2006-03-23'}
@@ -252,7 +151,6 @@ is present.
 Also make sure that the normal content is still available, but that
 the dl with the extra data is gone.
 
-  >>> item = feeder['649c8553c458001dbbb9b15957d58a92']
   >>> text = item.getText()
   >>> 'definition-list-metadata' not in text
   True
@@ -293,18 +191,4 @@ make sure the handler is getting to handle them.
   >>> handler.event_evt
   <Products.feedfeeder.events.FeedItemConsumedEvent ...>
   >>> handler.event_obj
-  <FeedFeederItem ...>
-
-
-Collections
------------
-
-Plone has Collections (a.k.a. Smart Folders, a.k.a. Topics).  The
-feedItemUpdated field is available as metadata there (you can select
-on it) and as index (you can sort on it)::
-
-  >>> smart_folder_tool = getToolByName(portal, 'portal_atct')
-  >>> 'getFeedItemUpdated' in smart_folder_tool.getIndexes(enabledOnly=True)
-  True
-  >>> 'getFeedItemUpdated' in smart_folder_tool.getAllMetadata(enabledOnly=True)
-  True
+  <ATEvent ...>

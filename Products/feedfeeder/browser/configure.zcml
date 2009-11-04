@@ -19,7 +19,7 @@
   <page
       name="update_feed_items"
       class=".feed.UpdateFeedItems"
-      for="Products.feedfeeder.interfaces.container.IFeedsContainer"
+      for="Products.feedfeeder.interfaces.folder.IFeedFolder"
       allowed_interface=".feed.IUpdateFeedItems"
       permission="cmf.ManagePortal"
       />
@@ -27,27 +27,8 @@
   <page
       name="is_feedcontainer"
       class=".feed.IsFeedContainer"
-      for="*"
-      attribute="is_feedcontainer"
+      for="Products.feedfeeder.interfaces.folder.IFeedFolder"
       permission="zope2.View"
-      />
-
-  <page
-      name="feed-folder.html"
-      for="Products.feedfeeder.interfaces.container.IFeedsContainer"
-      permission="zope2.View"
-      template="feed-folder.pt"
-      allowed_interface="Products.feedfeeder.interfaces.folderview.IFeedfeederFolderView"
-      class=".feed.FeedFolderView"
-      />
-
-  <page
-      name="feed-folder.html"
-      for="Products.ATContentTypes.interface.IATTopic"
-      permission="zope2.View"
-      template="feed-folder.pt"
-      allowed_interface="Products.feedfeeder.interfaces.folderview.IFeedfeederFolderView"
-      class=".feed.FeedFolderView"
       />
 
   <page

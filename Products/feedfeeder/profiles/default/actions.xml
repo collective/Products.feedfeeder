@@ -6,7 +6,7 @@
       <property name="description"/>
       <property name="url_expr">string:${object_url}/update_feed_items</property>
       <property name="icon_expr"/>
-      <property name="available_expr">object/@@is_feedcontainer</property>
+      <property name="available_expr">object/@@is_feedcontainer|nothing</property>
       <property name="permissions">
         <element value="Manage portal"/>
       </property>

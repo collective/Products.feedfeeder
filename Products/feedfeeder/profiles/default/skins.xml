@@ -1,8 +1,0 @@
-<?xml version="1.0"?>
-<object name="portal_skins">
- <object name="feedfeeder" meta_type="Filesystem Directory View"
-    directory="feedfeeder/skins/feedfeeder"/>
- <skin-path name="*">
-  <layer name="feedfeeder"/>
- </skin-path>
-</object>

@@ -1,19 +1,19 @@
 Consuming Feeds
 ===============
 
-The basic premise here is that there is a global utility available that
-is capable of taking an object that either implements or adapts to
-the IFeedsContainer interface.  And with that object, it can retrieve
-feed items and store them within the object ... typically as
-(but not restricted to) child items in a folderish container.
+The basic premise here is that there is a global utility available
+that is capable of taking an object that either implements the
+Products.CMFCore.interfaces.IFolderish interface.  And with that
+object, it can retrieve feed items and store them within the object
+... typically as (but not restricted to) child items in the container.
 
 Mock Container
 ~~~~~~~~~~~~~~
 
 The requirements for getting feed information and populating feed items
-are pretty minimal.  The class merely has to implement IFeedsContainer.
+are pretty minimal.  The class merely need to implement
+Products.CMFCore.interfaces.IFolderish.
 
-  >>> from Products.feedfeeder.interfaces.container import IFeedsContainer
   >>> from Products.feedfeeder.interfaces.item import IFeedItem
   >>> import zope.interface
 
@@ -58,7 +58,6 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   ...         return MockField()
 
   >>> class MockFeedsContainer(dict):
-  ...     zope.interface.implements(IFeedsContainer)
   ...     portal_workflow = MockWorkflowTool()
   ...     def invokeFactory(self, type_name, id):
   ...         self[id] = MockFeedItem()
