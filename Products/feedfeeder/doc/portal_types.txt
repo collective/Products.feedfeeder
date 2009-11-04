@@ -4,6 +4,16 @@
 Portal Types
 ============
 
+Start with some feed files.
+
+  >>> import os
+  >>> import Products.feedfeeder
+  >>> samplesdir = os.path.dirname(Products.feedfeeder.__file__)
+  >>> samplesdir = os.path.join(samplesdir, 'tests', 'samples')
+  >>> sample_urls = [
+  ...     'file://'+os.path.join(samplesdir, sample) for sample in
+  ...     'samplefeed1.xml', 'samplefeed2.xml']
+
 Open a browser and log in as a member who can add items to a folder.
 
     >>> from Products.Five.testbrowser import Browser
@@ -50,9 +60,8 @@ The feeds form allows the contributor to add feed URLs, to specify the
 portal type of added items, and to specify the default workflow
 transitions to perform on newly added items.
 
-    >>> owner_browser.getControl('Feed URLs').value = """\
-    ... http://nohost/plone/news/RSS
-    ... http://nohost/plone/search_rss?portal_type=Document"""
+    >>> owner_browser.getControl(
+    ...     'Feed URLs').value = '\n'.join(sample_urls)
     >>> owner_browser.getControl('Event').selected = True
     >>> submit_ctl = owner_browser.getControl(
     ...     'Submit for publication (Simple Publication Workflow)'
