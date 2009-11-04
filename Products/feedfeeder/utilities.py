@@ -23,6 +23,7 @@ from Products.feedfeeder.events import FeedItemConsumedEvent
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.extendeddatetime import extendedDateTime
 from Products.feedfeeder.interfaces import folder as folder_ifaces
+from Products.feedfeeder.interfaces import item as item_ifaces
 
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
@@ -108,6 +109,7 @@ class FeedConsumer:
         container = feedsContainer.__parent__
         item = container[
             container.invokeFactory(feedsContainer.itemType, id)]
+        interface.alsoProvides(item, item_ifaces.IFeedItem)
         wf_tool = getToolByName(container, 'portal_workflow')
         for transition in feedsContainer.itemTransitions:
             wf_tool.doActionFor(
