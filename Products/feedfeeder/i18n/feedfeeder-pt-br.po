@@ -64,7 +64,7 @@ msgstr "Esse item não tem nenhum texto no corpo, clique na aba Edição para al
 #. Default: "Source available here."
 #: ./browser/feed-item.pt:105
 msgid "source_available_here"
-msgstr ""
+msgstr "Original disponível aqui."
 
 #. Default: "Test view showing the latest items from the feeds"
 #: skins/feedfeeder/latest_items.pt:7
