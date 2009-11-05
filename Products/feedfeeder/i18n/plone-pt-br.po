@@ -1,6 +1,6 @@
 msgid ""
 msgstr ""
-"Project-Id-Version: feedfeeder 1.0\n"
+"Project-Id-Version: Plone\n"
 "POT-Creation-Date: 2006-10-19 12:46+0000\n"
 "PO-Revision-Date: 2006-10-19 12:46+0000\n"
 "Last-Translator: Luciano Pacheco <lucmult@gmail.com>\n"
@@ -11,11 +11,12 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "Language-Code: pt-br\n"
 "Language-Name: Português do Brasil\n"
-"Preferred-Encodings: utf-8 latin1 \n"
+"Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
-
-msgid "Feed folder"
-msgstr "Pasta de RSS externo"
 
 msgid "Feed Item"
 msgstr "Item do RSS"
+
+msgid "Feed Folder"
+msgstr "Pasta de RSS externo"
+

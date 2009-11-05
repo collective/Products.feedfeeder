@@ -23,11 +23,10 @@
              i18n:attributes="title label_document_locked;"
              />
 
-        <tal:name tal:condition="creator"
-                  tal:define="author python:mtool.getMemberInfo(creator)">
-          <span i18n:translate="label_by_author">
+        <tal:name tal:condition="creator">
+          <span i18n:domain="plone" i18n:translate="label_by_author">
             by
-            <span tal:replace="context/getFeedItemAuthor"></span>
+            <span i18n:name="author" tal:content="context/getFeedItemAuthor"></span>
           </span>
 
           &mdash;
@@ -102,9 +101,10 @@
         </ul>
       </tal:enclosures>
 
-      <div i18n:translate="source_available"
-           class="feed-source-link">
-        Source available
+      <div class="feed-source-link">
+        <span i18n:translate="source_available">
+            Source available
+        </span>
         <a href="#"
            tal:attributes="href context/remote_url"
            i18n:attributes="name string:here"

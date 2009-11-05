@@ -45,3 +45,8 @@ msgstr ""
 #: content/folder.py
 msgid "help_default_transition"
 msgstr ""
+
+#. "Feed Title"
+#: content/folder.py
+msgid "feedfeeder_label_feedTitle"
+msgstr ""

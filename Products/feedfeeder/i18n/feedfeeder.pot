@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2009-05-09 21:38+0000\n"
+"POT-Creation-Date: 2009-11-05 20:07+0000\n"
 "PO-Revision-Date: Thu Jul 20 09:13:40 2006\n"
 "Last-Translator: Reinout van Rees <reinout@zestsoftware.nl>\n"
 "Language-Team: Reinout van Rees <reinout@zestsoftware.nl>\n"
@@ -16,6 +16,11 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: feedfeeder\n"
 
+#. Default: "last modified"
+#: ./browser/feed-item.pt:36
+msgid "box_last_modified"
+msgstr ""
+
 #. Default: "Feeditemauthor"
 #: content/FeedFeederItem.py
 msgid "feedfeeder_label_feedItemAuthor"
@@ -24,6 +29,11 @@ msgstr ""
 #. Default: "Feeditemupdated"
 #: content/FeedFeederItem.py
 msgid "feedfeeder_label_feedItemUpdated"
+msgstr ""
+
+#. "Feed Title"
+#: content/folder.py
+msgid "feedfeeder_label_feedTitle"
 msgstr ""
 
 #. Default: "Feeds"
@@ -46,8 +56,38 @@ msgstr ""
 msgid "label_default_transition"
 msgstr ""
 
+#. Default: "here"
+#: ./browser/feed-item.pt:108
+msgid "link_here"
+msgstr ""
+
+#. Default: "This item does not have any body text, click the edit tab to change it."
+#: ./browser/feed-item.pt:81
+msgid "no_body_text"
+msgstr ""
+
+#. Default: "Source available"
+#: ./browser/feed-item.pt:105
+msgid "source_available"
+msgstr ""
+
+#. Default: "string:here"
+#: ./browser/feed-item.pt:108
+msgid "string:here"
+msgstr ""
+
 #. Default: "Test view showing the latest items from the feeds"
 #: skins/feedfeeder/latest_items.pt:7
 msgid "test_view_title"
+msgstr ""
+
+#. Default: "Contributors: ${name}"
+#: ./browser/feed-item.pt:60
+msgid "text_contributors"
+msgstr ""
+
+#. Default: "— expired"
+#: ./browser/feed-item.pt:43
+msgid "time_expired"
 msgstr ""
 

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2006-10-19 12:46+0000\n"
+"POT-Creation-Date: 2009-11-05 20:07+0000\n"
 "PO-Revision-Date: 2009-08-11 17:21-0400\n"
 "Last-Translator: Leonardo Caballero <leonardocaballero@gmail.com>\n"
 "Language-Team: Spanish <plone-conosur@lists.plone.org>\n"
@@ -18,6 +18,11 @@ msgstr ""
 "Domain: feedfeeder\n"
 "X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
+#. Default: "last modified"
+#: ./browser/feed-item.pt:36
+msgid "box_last_modified"
+msgstr ""
+
 #. Default: "Feeditemauthor"
 #: content/FeedFeederItem.py
 msgid "feedfeeder_label_feedItemAuthor"
@@ -27,6 +32,11 @@ msgstr "Autor del canal"
 #: content/FeedFeederItem.py
 msgid "feedfeeder_label_feedItemUpdated"
 msgstr "Elemento de canal actualizado"
+
+#. "Feed Title"
+#: content/folder.py
+msgid "feedfeeder_label_feedTitle"
+msgstr ""
 
 #. Default: "Feeds"
 #: content/FeedfeederFolder.py
@@ -38,18 +48,48 @@ msgstr "Canales"
 msgid "feedfeeder_label_link"
 msgstr "Enlaces"
 
-#. Default: "Test view showing the latest items from the feeds"
-#: skins/feedfeeder/latest_items.pt
-msgid "test_view_title"
-msgstr "Vista de prueba mostrando los últimos elementos de los canales"
+#. "When updating this feed's item the transition selected below will be performed."
+#: content/folder.py
+msgid "help_default_transition"
+msgstr "Cuando se actualice este elemento de canal la transición seleccionada será efectuada"
 
 #. 'Default transition'
 #: content/folder.py
 msgid "label_default_transition"
 msgstr "Transición por defecto"
 
-#. "When updating this feed's item the transition selected below will be performed."
-#: content/folder.py
-msgid "help_default_transition"
-msgstr "Cuando se actualice este elemento de canal la transición seleccionada será efectuada"
+#. Default: "here"
+#: ./browser/feed-item.pt:108
+msgid "link_here"
+msgstr ""
+
+#. Default: "This item does not have any body text, click the edit tab to change it."
+#: ./browser/feed-item.pt:81
+msgid "no_body_text"
+msgstr ""
+
+#. Default: "Source available"
+#: ./browser/feed-item.pt:105
+msgid "source_available"
+msgstr ""
+
+#. Default: "string:here"
+#: ./browser/feed-item.pt:108
+msgid "string:here"
+msgstr ""
+
+#. Default: "Test view showing the latest items from the feeds"
+#: skins/feedfeeder/latest_items.pt:7
+msgid "test_view_title"
+msgstr "Vista de prueba mostrando los últimos elementos de los canales"
+
+#. Default: "Contributors: ${name}"
+#: ./browser/feed-item.pt:60
+msgid "text_contributors"
+msgstr ""
+
+#. Default: "— expired"
+#: ./browser/feed-item.pt:43
+msgid "time_expired"
+msgstr ""
 
