@@ -9,6 +9,14 @@ History of feedfeeder
   Refs http://plone.org/products/feedfeeder/issues/24
   [maurits]
 
+- Changed the way to translate xml/html entities from summary, now 
+  using BeatifulSoup. Old way was breaking with some non ascii 
+  characters.
+  [lucmult]
+
+- Improved the translations stuffs
+  [lucmult]
+
 1.0rc6 (2009-09-21)
 -------------------
 
