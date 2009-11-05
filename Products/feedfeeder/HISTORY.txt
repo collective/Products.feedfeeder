@@ -10,7 +10,7 @@ History of feedfeeder
   [maurits]
 
 - Changed the way to translate xml/html entities from summary, now 
-  using BeatifulSoup. Old way was breaking with some non ascii 
+  using BeautifulSoup. Old way was breaking with some non ascii 
   characters.
   [lucmult]
 
