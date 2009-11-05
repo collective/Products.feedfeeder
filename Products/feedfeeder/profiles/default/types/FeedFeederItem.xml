@@ -27,7 +27,7 @@
  <alias from="properties" to="base_metadata"/>
  <alias from="sharing" to="folder_localrole_form"/>
  <alias from="view" to="(selected layout)"/>
- <action title="view" action_id="view" category="object"
+ <action title="View" action_id="view" category="object"
     condition_expr="python:1" url_expr="string:${object_url}/feed-item.html"
     visible="True">
   <permission value="View"/>
