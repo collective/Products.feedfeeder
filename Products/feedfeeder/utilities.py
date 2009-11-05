@@ -40,7 +40,7 @@ unifiable = {
 
 
 def convert_summary(input):
-    value = unicode(BeautifulStoneSoup(input, convertEntities=BeautifulStoneSoup.HTML_ENTITIES))  
+    value = unicode(BeautifulStoneSoup(input, convertEntities=BeautifulStoneSoup.HTML_ENTITIES))
     return value
 
 
