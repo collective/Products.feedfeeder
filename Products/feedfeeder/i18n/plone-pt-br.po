@@ -14,9 +14,9 @@ msgstr ""
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
 
-msgid "Feed Item"
-msgstr "Item do RSS"
-
 msgid "Feed Folder"
 msgstr "Pasta de RSS externo"
+
+msgid "Feed Item"
+msgstr "Item do RSS"
 

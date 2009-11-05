@@ -14,9 +14,9 @@ msgstr ""
 "Preferred-Encodings: utf-8\n"
 "Domain: plone\n"
 
+msgid "Feed Folder"
+msgstr ""
+
 msgid "Feed Item"
 msgstr "Element Rss"
-
-msgid "Feed folder"
-msgstr "Dossier de Flux Rss"
 

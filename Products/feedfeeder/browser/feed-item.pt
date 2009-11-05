@@ -102,13 +102,9 @@
       </tal:enclosures>
 
       <div class="feed-source-link">
-        <span i18n:translate="source_available">
-            Source available
-        </span>
         <a href="#"
            tal:attributes="href context/remote_url"
-           i18n:attributes="name string:here"
-           i18n:translate="link_here">here</a>
+           i18n:translate="source_available_here">Source available here.</a>
       </div>
     </div>
   </body>

@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2009-11-05 20:07+0000\n"
+"POT-Creation-Date: 2009-11-05 22:04+0000\n"
 "PO-Revision-Date: 2009-08-11 17:21-0400\n"
 "Last-Translator: Leonardo Caballero <leonardocaballero@gmail.com>\n"
 "Language-Team: Plone Cono Sur <plone-conosur@lists.plone.org>\n"
@@ -58,24 +58,14 @@ msgstr ""
 msgid "label_default_transition"
 msgstr ""
 
-#. Default: "here"
-#: ./browser/feed-item.pt:108
-msgid "link_here"
-msgstr ""
-
 #. Default: "This item does not have any body text, click the edit tab to change it."
 #: ./browser/feed-item.pt:81
 msgid "no_body_text"
 msgstr ""
 
-#. Default: "Source available"
+#. Default: "Source available here."
 #: ./browser/feed-item.pt:105
-msgid "source_available"
-msgstr ""
-
-#. Default: "string:here"
-#: ./browser/feed-item.pt:108
-msgid "string:here"
+msgid "source_available_here"
 msgstr ""
 
 #. Default: "Test view showing the latest items from the feeds"

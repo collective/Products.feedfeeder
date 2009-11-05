@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2009-11-05 20:07+0000\n"
+"POT-Creation-Date: 2009-11-05 22:04+0000\n"
 "PO-Revision-Date: Thu Jul 20 09:13:40 2006\n"
 "Last-Translator: Luciano Pacheco <lucmult@gmail.com>\n"
 "Language-Team: Luciano Pacheco <lucmult@gmail.com>\n"
@@ -56,25 +56,15 @@ msgstr "Quando um novo item do RSS for criado será feita a seguinte transição
 msgid "label_default_transition"
 msgstr "Transição padrão"
 
-#. Default: "here"
-#: ./browser/feed-item.pt:108
-msgid "link_here"
-msgstr "aqui"
-
 #. Default: "This item does not have any body text, click the edit tab to change it."
 #: ./browser/feed-item.pt:81
 msgid "no_body_text"
 msgstr "Esse item não tem nenhum texto no corpo, clique na aba Edição para alterá-lo."
 
-#. Default: "Source available"
+#. Default: "Source available here."
 #: ./browser/feed-item.pt:105
-msgid "source_available"
-msgstr "Original disponível em"
-
-#. Default: "string:here"
-#: ./browser/feed-item.pt:108
-msgid "string:here"
-msgstr "aqui"
+msgid "source_available_here"
+msgstr ""
 
 #. Default: "Test view showing the latest items from the feeds"
 #: skins/feedfeeder/latest_items.pt:7

@@ -14,9 +14,9 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: plone\n"
 
-msgid "Feed Item"
+msgid "Feed Folder"
 msgstr ""
 
-msgid "Feed folder"
-msgstr "Feed Ordner"
+msgid "Feed Item"
+msgstr ""
 
