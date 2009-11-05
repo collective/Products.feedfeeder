@@ -23,9 +23,7 @@ from Products.feedfeeder.extendeddatetime import extendedDateTime
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
 
-import formatter
-import htmllib
-from StringIO import StringIO
+from BeautifulSoup import BeautifulStoneSoup
 
 # Unifiable list taken from http://www.aaronsw.com/2002/html2text.py
 unifiable = {
@@ -41,27 +39,8 @@ unifiable = {
     }
 
 
-class SimpleHTMLParser(htmllib.HTMLParser):
-
-    def handle_entityref(self, name):
-        logger.warn("Parsing entity %r", name)
-        value = unifiable.get(name)
-        self.formatter.add_literal_data(value)
-        logger.warn("Parsed as value %r", value)
-
-
 def convert_summary(input):
-    out = StringIO()
-    writer = formatter.DumbWriter(out)
-    parser = SimpleHTMLParser(formatter.AbstractFormatter(writer))
-    parser.feed(input)
-    try:
-        value = out.getvalue()
-    except UnicodeDecodeError:
-        logger.warn("UnicodeDecodeError while converting summary. "
-                    "Falling back to original input.")
-        value = input
-    out.close()
+    value = unicode(BeautifulStoneSoup(input, convertEntities=BeautifulStoneSoup.HTML_ENTITIES))  
     return value
 
 

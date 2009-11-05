@@ -28,6 +28,7 @@ setup(name='Products.feedfeeder',
       install_requires=[
           'setuptools',
           'FeedParser',
+          'BeautifulSoup',
           # -*- Extra requirements: -*-
       ],
       entry_points="""
