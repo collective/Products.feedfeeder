@@ -23,7 +23,7 @@ from Products.feedfeeder.extendeddatetime import extendedDateTime
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
 
-from BeautifulSoup import BeautifulStoneSoup
+from BeautifulSoup import BeautifulSoup, HTMLParseError
 
 # Unifiable list taken from http://www.aaronsw.com/2002/html2text.py
 unifiable = {
@@ -40,7 +40,10 @@ unifiable = {
 
 
 def convert_summary(input):
-    value = unicode(BeautifulStoneSoup(input, convertEntities=BeautifulStoneSoup.HTML_ENTITIES))
+    try:
+        value = unicode(BeautifulSoup(input, convertEntities=BeautifulSoup.HTML_ENTITIES))
+    except HTMLParseError:
+	return input
     return value
 
 
