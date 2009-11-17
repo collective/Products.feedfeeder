@@ -170,7 +170,7 @@ class FeedConsumer:
                     "Skipping the following entry since no id, link "
                     "or title can be found: %r") % entry)
                 continue
-            id = md5.new(entry.id).hexdigest()
+            id = md5.new(id).hexdigest()
 
             updated = entry.get('updated')
             published = entry.get('published')
