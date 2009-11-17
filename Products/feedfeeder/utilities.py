@@ -13,6 +13,8 @@ from zope import component
 from zope import event
 from zope import interface
 
+from plone.i18n.normalizer.interfaces import IURLNormalizer
+
 from Acquisition import aq_parent
 
 from Products.CMFCore.utils import getToolByName
@@ -113,8 +115,8 @@ class FeedConsumer:
         wf_tool = getToolByName(container, 'portal_workflow')
         for transition in feedsContainer.itemTransitions:
             wf_tool.doActionFor(
-                item, transition.rsplit('/', 1)[-1],
-                comment='Automatic transition triggered by FeedFolder')
+                item, transition.rsplit('/', 1)[-1], comment=
+                'Automatic transition triggered by FeedFolder')
         return item
 
     def replaceItem(self, feedsContainer, id):
@@ -149,6 +151,7 @@ class FeedConsumer:
         return enclosure
 
     def _retrieveSingleFeed(self, feedContainer, url):
+        container = feedContainer.__parent__
         # feedparser doesn't understand proper file: url's
         if url.startswith('file://'):
             url = url[7:]
@@ -159,12 +162,15 @@ class FeedConsumer:
             url = url.replace('feed://', 'http://', 1)
         parsed = feedparser.parse(url)
         for entry in parsed.entries:
-            try:
-                sig = md5.new(entry.id)
-            except AttributeError:
-                # Sometimes, rss providers send items without guid element.
-                sig = md5.new(entry.link)
-            id = sig.hexdigest()
+            linkDict = getattr(entry, 'link', None)
+            title = getattr(entry, 'title', '')
+            id = getattr(entry, 'id', linkDict or title)
+            if not id:
+                logger.warn((
+                    "Skipping the following entry since no id, link "
+                    "or title can be found: %r") % entry)
+                continue
+            id = md5.new(entry.id).hexdigest()
 
             updated = entry.get('updated')
             published = entry.get('published')
@@ -198,7 +204,6 @@ class FeedConsumer:
                 # Not new, not refreshed: let it be, laddy.
                 continue
 
-            linkDict = getattr(entry, 'link', None)
             if linkDict:
                 # Hey, that's not a dict at all; at least not in my test.
                 #link = linkDict['href']
@@ -228,7 +233,7 @@ class FeedConsumer:
             # because it is not an Archetypes field.
             feed_tags = [x.get('term') for x in entry.get('tags', [])]
             obj.update(id=id,
-                       title=getattr(entry, 'title', ''),
+                       title=title,
                        description=summary,
                        creators=[getattr(entry, 'author', '')],
                        remoteURL=link,

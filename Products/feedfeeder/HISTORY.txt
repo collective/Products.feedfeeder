@@ -4,10 +4,13 @@ History of feedfeeder
 2.0 (unreleased)
 -------------------
 
+- Fallback to title if no id or link are present.  Also log a warning
+  for and skip entries without any id, link, or title.  [rossp]
+
 - Make feedfeeder portal type agnostic such that any folderish item
   can be configured to have content items added to it from syndication
   URLs and the content item type to be added can also be selected from
-  existing portal types.
+  existing portal types.  [rossp]
 
 1.0rc7 (unreleased)
 -------------------
