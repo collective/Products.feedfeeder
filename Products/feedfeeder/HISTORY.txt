@@ -1,8 +1,8 @@
 History of feedfeeder
 =====================
 
-1.0rc8 (unreleased)
--------------------
+1.0 (2009-12-23)
+----------------
 
 - Some summaries are a snippet from the full content, and then they
   can contain broken html; in this case we are now saving the raw
