@@ -74,6 +74,9 @@ def convert_summary(input):
 
 def update_text(obj, text, mimetype=None):
     field = obj.getField('text')
+    if field is None:
+        return
+    
     if mimetype in field.getAllowedContentTypes(obj):
         obj.setText(text, mimetype=mimetype)
         obj.reindexObject()
@@ -236,7 +239,7 @@ class FeedConsumer:
                        title=title,
                        description=summary,
                        creators=[getattr(entry, 'author', '')],
-                       remoteURL=link,
+                       remoteUrl=link,
                        subject=feed_tags,
                        eventUrl=link,
                        eventType=feed_tags)

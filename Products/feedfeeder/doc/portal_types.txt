@@ -49,7 +49,7 @@ selection.
     >>> portal.portal_workflow.setChainForPortalTypes(
     ...     ('Topic',), ('intranet_workflow',))
     >>> portal.events.setLocallyAllowedTypes(
-    ...     ('Event', 'Topic', 'File'))
+    ...     ('Event', 'Link', 'Topic', 'File'))
 
 The feeds form is available on any folderish object to contributors
 who can add items to the folder.
@@ -173,10 +173,10 @@ modification date, and subject/keywords will all be updated from the
 feed item data.
 
 The feed item URL is passed into the content item's update method as
-both the "remoteURL" and "eventURL" keyword arguments.  Thus the
+both the "remoteUrl" and "eventURL" keyword arguments.  Thus the
 Archetypes implementation will ignore those keyword arguments for
 content types whose schema contains no such field but will
-successfully use the "remoteURL" keyword argument for the "Link"
+successfully use the "remoteUrl" keyword argument for the "Link"
 content type or the "eventURL" keyword argument for the "Event"
 content type.  Similarly, if the feed item has any body content it
 will be passed in as the "text" keyword argument and thus will be
@@ -205,6 +205,55 @@ contents.
     >>> item = portal.events['30ca408a75537f05d03821c64473289e']
     >>> item.getText()
     '<div>\nwoo hoo, a party!\n</div>'
+    >>> item.getRelatedItems()
+    [<ATFile at /plone/events/136d893f04d8a7582b551df541fdff19>,
+     <ATFile at /plone/events/4416d3618704a80b3dfa28a907edf725>]
+
+Links
+-----
+
+Links can also be added for feed items and the remoteUrl for each item
+will point to the external feed item.
+
+Clear the events to re-import them.
+
+    >>> portal.events.manage_delObjects(
+    ...     portal.events.contentIds(dict(type='Event')))
+    >>> portal.events.contentValues()
+    []
+
+Change the feeds configuration to add Links instead of Events.
+
+    >>> owner_browser.open(portal.events.absolute_url())
+    >>> owner_browser.getLink('Feeds').click()
+    >>> owner_browser.getControl('Link').selected = True
+    >>> owner_browser.getControl('Apply').click()
+    >>> print owner_browser.contents
+    <...
+    ...Data successfully updated...
+
+After updating the feed folders, Link objects will be created and the
+remoteUrl field will be populated.
+
+    >>> owner_browser.open(
+    ...     portal.events.absolute_url()+'/update_all_feed_folders')
+    >>> item = portal.events['0cfbced08adbdc1f3bf30b4120371b7d']
+    >>> item.Type()
+    u'Link'
+    >>> item.Title()
+    'Philips Nieuws 24 juli'
+    >>> item.Description()
+    'This is a sample summary'
+    >>> item.getRemoteUrl()
+    'file:///test1.pdf'
+    >>> item.modified()
+    DateTime('2006/07/21 12:00:00 GMT+0')
+    >>> item.Creator()
+    'Miriam Mobach'
+    >>> item.Subject()
+    ('example',)
+
+    >>> item = portal.events['30ca408a75537f05d03821c64473289e']
     >>> item.getRelatedItems()
     [<ATFile at /plone/events/136d893f04d8a7582b551df541fdff19>,
      <ATFile at /plone/events/4416d3618704a80b3dfa28a907edf725>]
