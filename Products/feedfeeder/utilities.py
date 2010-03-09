@@ -57,34 +57,6 @@ class SimpleHTMLParser(htmllib.HTMLParser):
         logger.warn("Parsed as value %r", value)
 
 
-def convert_summary(input):
-    out = StringIO()
-    writer = formatter.DumbWriter(out)
-    parser = SimpleHTMLParser(formatter.AbstractFormatter(writer))
-    parser.feed(input)
-    try:
-        value = out.getvalue()
-    except UnicodeDecodeError:
-        logger.warn("UnicodeDecodeError while converting summary. "
-                    "Falling back to original input.")
-        value = input
-    out.close()
-    return value
-
-
-def update_text(obj, text, mimetype=None):
-    field = obj.getField('text')
-    if field is None:
-        return
-    
-    if mimetype in field.getAllowedContentTypes(obj):
-        obj.setText(text, mimetype=mimetype)
-        obj.reindexObject()
-    else:
-        # update does a reindexObject automatically
-        obj.update(text=text)
-
-
 class FeedConsumer:
     """
     """
@@ -207,42 +179,8 @@ class FeedConsumer:
                 # Not new, not refreshed: let it be, laddy.
                 continue
 
-            if linkDict:
-                # Hey, that's not a dict at all; at least not in my test.
-                #link = linkDict['href']
-                link = linkDict
-            else:
-                linkDict = getattr(entry, 'links', [{'href': ''}])[0]
-                link = linkDict['href']
-
-            if not updated:
-                updated = DateTime()
-            if published is not None:
-                try:
-                    published = extendedDateTime(published)
-                except DateTime.SyntaxError:
-                    logger.warn("SyntaxError while parsing %r as DateTime for "
-                                "the 'published' field of entry %s",
-                                published, getattr(entry, 'title', ''))
-                    continue
-                obj.setEffectiveDate(published)
-
-            summary = getattr(entry, 'summary', '')
-            logger.debug("1 summary: %r" % summary)
-            summary = convert_summary(summary)
-            logger.debug("2 summary: %r" % summary)
-
-            # Tags cannot be handled by the update method AFAIK,
-            # because it is not an Archetypes field.
-            feed_tags = [x.get('term') for x in entry.get('tags', [])]
-            obj.update(id=id,
-                       title=title,
-                       description=summary,
-                       creators=[getattr(entry, 'author', '')],
-                       remoteUrl=link,
-                       subject=feed_tags,
-                       eventUrl=link,
-                       eventType=feed_tags)
+            cls = u''
+            doc = None
             if hasattr(entry, 'content'):
                 content = entry.content[0]
                 ctype=content.get('type') # sometimes no type on linux prsr.
@@ -258,36 +196,20 @@ class FeedConsumer:
                         # Might be an ExpatError, but that is
                         # somewhere in a .so file, so we cannot
                         # specifically catch only that error.
-                        continue
-                    if len(doc.childNodes) > 0 and \
-                            doc.firstChild.hasAttributes():
-                        handler = None
-                        top = doc.firstChild
-                        cls = top.getAttribute('class')
-                        if cls:
-                            handler = component.queryAdapter(
-                                obj, IFeedItemContentHandler, name=cls)
-                        if handler is None:
-                            handler = component.queryAdapter(
-                                obj, IFeedItemContentHandler)
-
-                        if handler is None:
-                            update_text(obj, content['value'], mimetype=ctype)
-                        else:
-                            handler.apply(top)
-                            # Grab the first non-<dl> node and treat
-                            # that as the content.
-                            actualContent = None
-                            for node in top.childNodes:
-                                if node.nodeName == 'div':
-                                    actualContent = node.toxml()
-                                    update_text(obj, actualContent,
-                                                mimetype=ctype)
-                                    break
+                        pass
                     else:
-                        update_text(obj, content['value'], mimetype=ctype)
-                else:
-                    update_text(obj, content['value'], mimetype=ctype)
+                        if len(doc.childNodes) > 0 and \
+                               doc.firstChild.hasAttributes():
+                            handler = None
+                            top = doc.firstChild
+                            cls = top.getAttribute('class') or cls
+
+            handler = component.queryAdapter(
+                obj, IFeedItemContentHandler, name=cls)
+            if handler is None:
+                handler = component.getAdapter(
+                    obj, IFeedItemContentHandler)
+            handler.apply(entry, doc)
 
             if hasattr(entry, 'links'):
                 enclosures = [x for x in entry.links if x.rel == 'enclosure']
@@ -307,7 +229,6 @@ class FeedConsumer:
                     # rename-after-creation magic might have changed
                     # the ID of the file. So we recatalog the object.
                     obj.reindexObject()
-
 
             # the modification date is updated on
             # reindexObject(idxs=[]) so set the modification date on

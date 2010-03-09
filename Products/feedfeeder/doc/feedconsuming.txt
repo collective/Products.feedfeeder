@@ -14,6 +14,7 @@ The requirements for getting feed information and populating feed items
 are pretty minimal.  The class merely need to implement
 Products.CMFCore.interfaces.IFolderish.
 
+>>> from Products.Archetypes import interfaces as at_ifaces
   >>> from Products.feedfeeder.interfaces.item import IFeedItem
   >>> import zope.interface
 
@@ -30,7 +31,7 @@ Products.CMFCore.interfaces.IFolderish.
   ...         return []
 
   >>> class MockFeedItem(dict): 
-  ...     zope.interface.implements(IFeedItem)
+  ...     zope.interface.implements(IFeedItem, at_ifaces.IBaseObject)
   ...     portal_workflow = MockWorkflowTool()
   ...     def restrictedTraverse(self, path):
   ...         return MockContextState()
@@ -45,6 +46,8 @@ Products.CMFCore.interfaces.IFolderish.
   ...     def modified(self): return self.modification_date
   ...     def getText(self):
   ...         return self.text
+  ...     def setText(self, value):
+  ...         self.text = value
   ...     def manage_renameObject(self, orig_id, new_id):
   ...         if new_id in self.keys():
   ...             raise KeyError('Enclosure with %r id already exists' % repr(new_id))
@@ -87,6 +90,14 @@ Products.CMFCore.interfaces.IFolderish.
   ...     def __str__(self):
   ...         return '<MockFeedEnclosure id=%s>' % self.id
   ...     __repr__ = __str__
+
+  >>> from zope import component
+  >>> from Products.feedfeeder.contenthandler import (
+  ...     StandardContentHandler)
+  >>> from Products.feedfeeder.interfaces import contenthandler
+  >>> component.provideAdapter(
+  ...     StandardContentHandler, adapts=(IFeedItem,),
+  ...     provides=contenthandler.IFeedItemContentHandler)
 
 Using The Utility
 ~~~~~~~~~~~~~~~~~

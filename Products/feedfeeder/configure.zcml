@@ -26,8 +26,6 @@
       />
 
   <adapter
-      for=".interfaces.item.IFeedItem"
-      provides=".interfaces.contenthandler.IFeedItemContentHandler"
       factory=".contenthandler.StandardContentHandler"
       />
 
