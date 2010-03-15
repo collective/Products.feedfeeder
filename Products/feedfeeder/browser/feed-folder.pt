@@ -10,13 +10,18 @@
       tal:define="results view/item_list;
                   Batch python:modules['Products.CMFPlone'].Batch;
                   b_size request/b_size|python:20;b_start python:0;b_start request/b_start | b_start;
-                  batch python:Batch(results, b_size, int(b_start), orphan=1);">
+                  batch python:Batch(results, b_size, int(b_start), orphan=1);
+                  toLocalizedTime nocall:context/@@plone/toLocalizedTime;">
 
-      <div metal:use-macro="context/document_actions/macros/document_actions"></div>
+     <tal:actions condition="nocall:context/document_actions|nothing">
+       <div metal:use-macro="context/document_actions/macros/document_actions"></div>
+     </tal:actions>
 
       <h1 tal:content="context/title_or_id"></h1>
 
-      <div metal:use-macro="context/document_byline/macros/byline"></div>
+      <tal:byline condition="nocall:context/document_byline|nothing">
+        <div metal:use-macro="context/document_byline/macros/byline"></div>
+      </tal:byline>
 
       <p class="documentDescription"
          tal:content="context/Description"

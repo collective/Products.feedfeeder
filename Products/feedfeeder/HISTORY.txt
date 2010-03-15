@@ -4,7 +4,10 @@ History of feedfeeder
 1.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fix errors when viewing a folder or item on Plone 4, while still
+  keeping Plone 2.5 and Plone 3 compatibility.
+  Refs http://plone.org/products/feedfeeder/issues/25
+  [maurits]
 
 
 1.0 (2009-12-23)
