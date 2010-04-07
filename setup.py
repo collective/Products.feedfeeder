@@ -6,6 +6,8 @@ version = version.strip()
 readme = open(os.path.join("Products", "feedfeeder", "README.txt")).read()
 history = open(os.path.join("Products", "feedfeeder", "HISTORY.txt")).read()
 
+tests_require = ['collective.testcaselayer']
+
 setup(name='Products.feedfeeder',
       version=version,
       description="Turn external feed entries into content items",
@@ -31,6 +33,8 @@ setup(name='Products.feedfeeder',
           # -*- Extra requirements: -*-
           'plone.app.z3cform',          
       ],
+      tests_require=tests_require,
+      extras_require={'tests': tests_require},
       entry_points="""
       # -*- Entry points: -*-
       """,
