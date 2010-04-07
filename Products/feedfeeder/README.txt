@@ -83,7 +83,7 @@ with the following data::
 Dependencies
 ------------
 
-- Works with Plone 2.5, 3.0 or 3.1.
+- Targeted at Plone 3.3 or Plone 4 (might work on earlier Plone 3 versions, but this is not tested).
 
 
 Tests
