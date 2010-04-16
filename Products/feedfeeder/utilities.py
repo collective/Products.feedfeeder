@@ -41,9 +41,10 @@ unifiable = {
 
 def convert_summary(input):
     try:
-        value = unicode(BeautifulSoup(input, convertEntities=BeautifulSoup.HTML_ENTITIES))
+        value = unicode(BeautifulSoup(
+                input, convertEntities=BeautifulSoup.HTML_ENTITIES))
     except HTMLParseError:
-	return input
+        return input
     return value
 
 
@@ -172,7 +173,7 @@ class FeedConsumer:
             obj.feed_tags = feed_tags
             if hasattr(entry, 'content'):
                 content = entry.content[0]
-                ctype=content.get('type') # sometimes no type on linux prsr.
+                ctype = content.get('type') # sometimes no type on linux prsr.
                 if ctype in ('text/xhtml', 'application/xhtml+xml'):
                     # Warning: minidom.parseString needs a byte
                     # string, not a unicode one, so we need to
@@ -250,7 +251,7 @@ def updateWithRemoteFile(obj, link):
         if link.href.startswith('file:'):
             pos = link.href.rfind('/')
             if pos > -1:
-                filename = link.href[pos+1:]
+                filename = link.href[pos + 1:]
             else:
                 filename = link.href[5:]
 
@@ -275,11 +276,11 @@ def updateWithRemoteFile(obj, link):
         file.seek(0)
         obj.update_data(file, link.type)
         file.close()
-    except urllib2.URLError, e:
+    except urllib2.URLError:
         # well, if we cannot retrieve the data, the file object will
         # remain empty
         pass
-    except  OSError, e:
+    except  OSError:
         # well, if we cannot retrieve the data, the file object will
         # remain empty
         pass
