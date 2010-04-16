@@ -4,7 +4,10 @@ History of feedfeeder
 2.0 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Ignore unidentifiable entries without id or link, instead of
+  throwing an AttributeError.
+  Fixes http://plone.org/products/feedfeeder/issues/26
+  [maurits]
 
 
 1.0.1 (2010-04-02)

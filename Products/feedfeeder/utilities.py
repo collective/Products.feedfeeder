@@ -58,6 +58,26 @@ def update_text(obj, text, mimetype=None):
         obj.update(text=text)
 
 
+def get_uid_from_entry(entry):
+    """Get a unique id from the entry.
+
+    We return an md5 digest.  Usually that should be from the id of
+    the entry, but sometimes, rss providers send items without guid
+    element; we take the link then.  If even that is missing, then we
+    cannot get a unique id so we cannot know if this is a new item
+    that should be added or an existing that should be updated.  So we
+    return nothing for safety.
+    """
+    if hasattr(entry, 'id'):
+        value = entry.id
+    elif hasattr(entry, 'link'):
+        value = entry.link
+    else:
+        return None
+    sig = md5.new(value)
+    return sig.hexdigest()
+
+
 class FeedConsumer:
     """
     """
@@ -92,13 +112,10 @@ class FeedConsumer:
             url = url.replace('feed://', 'http://', 1)
         parsed = feedparser.parse(url)
         for entry in parsed.entries:
-            try:
-                sig = md5.new(entry.id)
-            except AttributeError:
-                # Sometimes, rss providers send items without guid element.
-                sig = md5.new(entry.link)
-            id = sig.hexdigest()
-
+            id = get_uid_from_entry(entry)
+            if not id:
+                logger.warn("Ignored unidentifiable entry without id or link.")
+                continue
             updated = entry.get('updated')
             published = entry.get('published')
 
