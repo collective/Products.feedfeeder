@@ -41,9 +41,10 @@ unifiable = {
 
 def convert_summary(input):
     try:
-        value = unicode(BeautifulSoup(input, convertEntities=BeautifulSoup.HTML_ENTITIES))
+        value = unicode(BeautifulSoup(
+                input, convertEntities=BeautifulSoup.HTML_ENTITIES))
     except HTMLParseError:
-	return input
+        return input
     return value
 
 
@@ -55,6 +56,26 @@ def update_text(obj, text, mimetype=None):
     else:
         # update does a reindexObject automatically
         obj.update(text=text)
+
+
+def get_uid_from_entry(entry):
+    """Get a unique id from the entry.
+
+    We return an md5 digest.  Usually that should be from the id of
+    the entry, but sometimes, rss providers send items without guid
+    element; we take the link then.  If even that is missing, then we
+    cannot get a unique id so we cannot know if this is a new item
+    that should be added or an existing that should be updated.  So we
+    return nothing for safety.
+    """
+    if hasattr(entry, 'id'):
+        value = entry.id
+    elif hasattr(entry, 'link'):
+        value = entry.link
+    else:
+        return None
+    sig = md5.new(value)
+    return sig.hexdigest()
 
 
 class FeedConsumer:
@@ -91,13 +112,10 @@ class FeedConsumer:
             url = url.replace('feed://', 'http://', 1)
         parsed = feedparser.parse(url)
         for entry in parsed.entries:
-            try:
-                sig = md5.new(entry.id)
-            except AttributeError:
-                # Sometimes, rss providers send items without guid element.
-                sig = md5.new(entry.link)
-            id = sig.hexdigest()
-
+            id = get_uid_from_entry(entry)
+            if not id:
+                logger.warn("Ignored unidentifiable entry without id or link.")
+                continue
             updated = entry.get('updated')
             published = entry.get('published')
 
@@ -172,7 +190,7 @@ class FeedConsumer:
             obj.feed_tags = feed_tags
             if hasattr(entry, 'content'):
                 content = entry.content[0]
-                ctype=content.get('type') # sometimes no type on linux prsr.
+                ctype = content.get('type') # sometimes no type on linux prsr.
                 if ctype in ('text/xhtml', 'application/xhtml+xml'):
                     # Warning: minidom.parseString needs a byte
                     # string, not a unicode one, so we need to
@@ -250,7 +268,7 @@ def updateWithRemoteFile(obj, link):
         if link.href.startswith('file:'):
             pos = link.href.rfind('/')
             if pos > -1:
-                filename = link.href[pos+1:]
+                filename = link.href[pos + 1:]
             else:
                 filename = link.href[5:]
 
@@ -275,11 +293,11 @@ def updateWithRemoteFile(obj, link):
         file.seek(0)
         obj.update_data(file, link.type)
         file.close()
-    except urllib2.URLError, e:
+    except urllib2.URLError:
         # well, if we cannot retrieve the data, the file object will
         # remain empty
         pass
-    except  OSError, e:
+    except  OSError:
         # well, if we cannot retrieve the data, the file object will
         # remain empty
         pass
