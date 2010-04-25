@@ -78,7 +78,7 @@ Make sure we got what we wanted.
   u'Party!'
   >>> test_doc.Description()
   'Party on the roof of the Mediterranean Inn'
-  >>> test_doc.getText()
+  >>> test_doc.getRawText()
   '<div>\nwoo hoo, a party!\n</div>'
   >>> enclosure = test_doc.objectValues()[0]
   >>> enclosure
