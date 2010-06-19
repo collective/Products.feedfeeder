@@ -253,7 +253,10 @@ class FeedConsumer:
                     obj.reindexObject()
 
             if obj is not None:
-                event.notify(FeedItemConsumedEvent(obj))
+                try:
+                    event.notify(FeedItemConsumedEvent(obj))
+                except UnicodeDecodeError:
+                    logger.warn("UnicodeDecodeError: %s" % obj.getPhysicalPath())
 
     def isHTMLEnclosure(self, enclosure):
         return enclosure.type == u'text/html'

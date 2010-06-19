@@ -11,11 +11,8 @@
                      creator context/Creator;
                      portal context/@@plone_portal_state/portal;
                      isLocked context/@@plone_context_state/is_locked;
+                     is_editable context/@@plone_context_state/is_editable;
                      toLocalizedTime nocall:context/@@plone/toLocalizedTime;">
-
-     <tal:actions condition="nocall:context/document_actions|nothing">
-       <div metal:use-macro="context/document_actions/macros/document_actions"></div>
-     </tal:actions>
 
       <h1 tal:content="structure context/title_or_id"></h1>
 
