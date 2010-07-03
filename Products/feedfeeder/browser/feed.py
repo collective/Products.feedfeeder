@@ -4,6 +4,8 @@ from zope import component
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.interfaces.container import IFeedsContainer
 
+from Products.CMFPlone import PloneMessageFactory as _
+from Products.statusmessages.interfaces import IStatusMessage
 
 class IUpdateFeedItems(interface.Interface):
 
@@ -37,9 +39,11 @@ class UpdateFeedItems(object):
 
     def __call__(self):
         self.update()
-        self.request.response.redirect(
-            self.context.absolute_url()
-            +"?portal_status_message=Feed+items+updated")
+        message = _('Feed items updated')
+        messages = IStatusMessage(self.request, alternate=None)
+        if messages is not None:
+            messages.addStatusMessage(message, 'info') 
+        self.request.response.redirect(self.context.absolute_url())
 
 
 class FeedFolderView(object):
