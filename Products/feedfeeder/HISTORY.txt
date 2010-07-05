@@ -4,6 +4,9 @@ History of feedfeeder
 2.0 (unreleased)
 ----------------
 
+- Solve some Plone 4 compatibility issues.
+  [sureshvv]
+
 - Ignore unidentifiable entries without id or link, instead of
   throwing an AttributeError.
   Fixes http://plone.org/products/feedfeeder/issues/26
