@@ -185,7 +185,6 @@ class FeedFeederItem(ATFolder):
 
     def _set_feed_tags(self, value):
         """Get the tags from the feed item.
-
         tags/keywords/categories
         """
         if not value:
@@ -202,5 +201,22 @@ class FeedFeederItem(ATFolder):
 
     feed_tags = property(_get_feed_tags, _set_feed_tags)
 
+    def getEventType(self):
+        if base_hasattr(self, '_feed_tags'):
+            feed_tags = getattr(self, '_feed_tags')
+            return [tag['term'] for tag in feed_tags if tag['scheme']==u'http://www.uk-koeln.de/EventType/']
+        return []
+
+    def getEventZielgruppen(self):
+        if base_hasattr(self, '_feed_tags'):
+            feed_tags = getattr(self, '_feed_tags')
+            return [tag['term'] for tag in feed_tags if tag['scheme']==u'http://www.uk-koeln.de/EventZielgruppen/']
+        return []
+    
+    def getEventMedicalField(self):
+        if base_hasattr(self, '_feed_tags'):
+            feed_tags = getattr(self, '_feed_tags')
+            return [tag['term'] for tag in feed_tags if tag['scheme']==u'http://www.uk-koeln.de/MedicalField/']
+        return []
 
 registerType(FeedFeederItem, PROJECTNAME)

@@ -146,7 +146,8 @@ class FeedConsumer:
                 addItem = feedContainer.replaceItem
             else:
                 # Not new, not refreshed: let it be, laddy.
-                continue
+                #continue
+                addItem = feedContainer.replaceItem
 
             obj = addItem(id)
 
@@ -186,7 +187,7 @@ class FeedConsumer:
                        )
             # Tags cannot be handled by the update method AFAIK,
             # because it is not an Archetypes field.
-            feed_tags = [x.get('term') for x in entry.get('tags', [])]
+            feed_tags = [{'term':x.get('term'), 'scheme':x.get('scheme'), 'label':x.get('label'), } for x in entry.get('tags', [])]
             obj.feed_tags = feed_tags
             if hasattr(entry, 'content'):
                 content = entry.content[0]
