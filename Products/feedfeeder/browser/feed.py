@@ -1,3 +1,5 @@
+import logging
+
 from zope import interface
 from zope import component
 
@@ -6,6 +8,8 @@ from Products.feedfeeder.interfaces.container import IFeedsContainer
 
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.statusmessages.interfaces import IStatusMessage
+
+logger = logging.getLogger("feedfeeder")
 
 class IUpdateFeedItems(interface.Interface):
 
@@ -100,3 +104,52 @@ class FeedFolderView(object):
 
     def __call__(self, *args, **kwargs):
         return self.index(template_id='feed-folder.html')
+
+class MegaUpdate(object):
+    """ Update all feed folders on the site.
+
+    This is intended to be called using HTTP command-line client
+    or a clock server.
+    """
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+        
+    def updateAll(self):
+        """
+        """
+        
+        logger.info("Beginning feed update process")
+        
+        updated = 0
+        errors = 0
+        context = self.context.aq_inner
+        
+        brains = context.portal_catalog(portal_type="FeedfeederFolder")
+        
+        logger.info("Found %d feed folders" % len(list(brains)))
+        
+        for brain in brains:
+            folder = brain.getObject()
+            logger.debug("Updating folder:" + str(folder))
+            update_view = folder.unrestrictedTraverse("@@update_feed_items")
+            try:
+                update_view.update()
+                updated += 1
+            except Exception, e:
+                # Don't allow single bad feed crash us
+                logger.error("Feed raised exception:" + str(folder))
+                logger.exceptione(e)
+                errors += 1
+            
+        msg = "Updated %d feed folders, %d errors" % (updated, errors)
+        logger.info(msg)
+        
+        return msg
+    
+    
+
+        
+    def __call__(self):
+        return self.updateAll()
