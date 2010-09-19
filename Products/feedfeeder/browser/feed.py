@@ -140,7 +140,7 @@ class MegaUpdate(object):
             except Exception, e:
                 # Don't allow single bad feed crash us
                 logger.error("Feed raised exception:" + str(folder))
-                logger.exceptione(e)
+                logger.exception(e)
                 errors += 1
             
         msg = "Updated %d feed folders, %d errors" % (updated, errors)
