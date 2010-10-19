@@ -19,6 +19,8 @@ from Products.feedfeeder.interfaces.contenthandler import \
 from Products.feedfeeder.events import FeedItemConsumedEvent
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.extendeddatetime import extendedDateTime
+from Products.CMFCore.utils import getToolByName
+
 
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
@@ -188,9 +190,16 @@ class FeedConsumer:
             # because it is not an Archetypes field.
             feed_tags = [x.get('term') for x in entry.get('tags', [])]
             obj.feed_tags = feed_tags
+            content = None
             if hasattr(entry, 'content'):
                 content = entry.content[0]
                 ctype = content.get('type') # sometimes no type on linux prsr.
+            elif hasattr(entry, 'summary_detail'):
+                #if it is a rss feed with a html description use that as content
+                ctype = entry.summary_detail.get('type')
+                if ctype in ('text/xhtml', 'application/xhtml+xml', 'text/html'):
+                    content = entry.summary_detail
+            if content:
                 if ctype in ('text/xhtml', 'application/xhtml+xml'):
                     # Warning: minidom.parseString needs a byte
                     # string, not a unicode one, so we need to
@@ -233,6 +242,26 @@ class FeedConsumer:
                         update_text(obj, content['value'], mimetype=ctype)
                 else:
                     update_text(obj, content['value'], mimetype=ctype)
+                if summary == convert_summary(content['value']):
+                    # summary and content is the same so we can cut the summary
+                    portal_transforms = getToolByName(self, 'portal_transforms')
+                    data = portal_transforms.convert('html_to_text', summary)
+                    summary = data.getData()
+                    words = summary.split()[:72]
+                    summarywords = words[:45]
+                    if len(words) > 70:
+                        # use the first 50-70 words as a description
+                        for word in words[45:]:
+                            summarywords.append(word)
+                            if word.endswith(u'.'):
+                                # if we encounter a fullstop that will be the
+                                # last word appended to the description
+                                break
+                        summary = u' '.join(summarywords)
+                        if not summary.endswith(u'.'):
+                            summary = summary +' ...'
+                    obj.setDescription(summary)
+
 
             if hasattr(entry, 'links'):
                 enclosures = [x for x in entry.links if x.rel == 'enclosure']
