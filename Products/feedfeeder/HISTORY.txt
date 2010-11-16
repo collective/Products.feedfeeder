@@ -4,7 +4,10 @@ History of feedfeeder
 2.0.1 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Import HTMLParseError from the standard python HTMLParser instead of
+  BeautifulSoup.  This makes feedfeeder compatible with BeautifulSoup
+  3.0.x again.
+  [maurits]
 
 
 2.0 (2010-07-05)
