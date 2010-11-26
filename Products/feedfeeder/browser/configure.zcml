@@ -42,7 +42,7 @@
       permission="zope2.View"
       template="feed-item.pt"
       />
-      
+
   <page
       name="feed-mega-update"
       for="Products.CMFCore.interfaces.ISiteRoot"

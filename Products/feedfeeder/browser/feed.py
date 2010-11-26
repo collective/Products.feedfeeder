@@ -46,7 +46,7 @@ class UpdateFeedItems(object):
         message = _('Feed items updated')
         messages = IStatusMessage(self.request, alternate=None)
         if messages is not None:
-            messages.addStatusMessage(message, 'info') 
+            messages.addStatusMessage(message, 'info')
         self.request.response.redirect(self.context.absolute_url())
 
 
@@ -115,21 +115,21 @@ class MegaUpdate(object):
     def __init__(self, context, request):
         self.context = context
         self.request = request
-        
+
     def updateAll(self):
         """
         """
-        
+
         logger.info("Beginning feed update process")
-        
+
         updated = 0
         errors = 0
         context = self.context.aq_inner
-        
+
         brains = context.portal_catalog(portal_type="FeedfeederFolder")
-        
+
         logger.info("Found %d feed folders" % len(list(brains)))
-        
+
         for brain in brains:
             folder = brain.getObject()
             logger.debug("Updating folder:" + str(folder))
@@ -142,14 +142,14 @@ class MegaUpdate(object):
                 logger.error("Feed raised exception:" + str(folder))
                 logger.exception(e)
                 errors += 1
-            
+
         msg = "Updated %d feed folders, %d errors" % (updated, errors)
         logger.info(msg)
-        
-        return msg
-    
-    
 
-        
+        return msg
+
+
+
+
     def __call__(self):
         return self.updateAll()
