@@ -42,5 +42,12 @@
       permission="zope2.View"
       template="feed-item.pt"
       />
+      
+  <page
+      name="feed-mega-update"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      permission="cmf.ManagePortal"
+      class=".feed.MegaUpdate"
+      />
 
 </configure>

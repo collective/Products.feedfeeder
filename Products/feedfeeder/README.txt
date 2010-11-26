@@ -79,7 +79,20 @@ with the following data::
      host localhost:8080
   </clock-server>
 
+Updating all feeds once
++++++++++++++++++++++++
 
+If your site has several feed folders and you 
+want update them all once you can do:: 
+
+   <clock-server>
+     method /yoursiteid/feed-mega-update
+     period 3600 # seconds
+     user admin
+     password 123
+     host localhost:8080
+   </clock-server>
+   
 Dependencies
 ------------
 

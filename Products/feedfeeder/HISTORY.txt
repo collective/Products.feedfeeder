@@ -4,6 +4,10 @@ History of feedfeeder
 2.0.1 (unreleased)
 ------------------
 
+- Added @@feed-mega-update view so you can update all feed folders at
+  once, for example in a clock server.
+  [miohtoma]
+
 - Import HTMLParseError from the standard python HTMLParser instead of
   BeautifulSoup.  This makes feedfeeder compatible with BeautifulSoup
   3.0.x again.
