@@ -5,15 +5,17 @@ daylight saving time zone variants in US.
    >>> easy_time = 'Fri, 13 Mar 2009 10:30:00 EST'
    >>> from DateTime import DateTime
    >>> some_time = DateTime(easy_time)
-   >>> bad_time = DateTime(hard_time)
+
+A call to ``bad_time = DateTime(hard_time)`` throws an Exception in
+older zope versions.  In Plone 4 it is no longer thrown, so the
+underlying Zope has probably been brought up-to-date.  At this point,
+extendeddatetime is relegated to helping to maintain functionality in
+older Zope versions.  For the record, this is the error that was
+thrown::
+
    Traceback (most recent call last):
        ...
    SyntaxError: Fri, 13 Mar 2009 10:30:00 EDT
-
-NOTE: if the above Exception is no longer thrown, then your underlying
-Zope has probably been brought up-to-date.  At that point, 
-extendeddatetime is relegated to helping to maintain functionality in older 
-Zope versions.
 
 Although it would be nice to fix DateTime, that's going to take a while, 
 and this is one of those areas where due to the many "dodgy" RSS formats 
