@@ -1,7 +1,7 @@
 History of feedfeeder
 =====================
 
-2.0.1 (unreleased)
+2.0.1 (2010-11-26)
 ------------------
 
 - Added @@feed-mega-update view so you can update all feed folders at
