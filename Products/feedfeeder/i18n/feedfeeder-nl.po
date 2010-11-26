@@ -1,10 +1,10 @@
-# ArchGenXML generated POT File
-# Reinout van Rees <reinout@zestsoftware.nl>, 2006.
+# Reinout van Rees <reinout@vanrees.org>, 2006.
+# Maurits van Rees <m.van.rees@zestsoftware.nl>, 2006-2010
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
 "POT-Creation-Date: 2010-11-26 18:29+0000\n"
-"PO-Revision-Date: 2009-11-05 23:05+0100\n"
+"PO-Revision-Date: 2010-11-26 19:32+0100\n"
 "Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl>\n"
 "Language-Team: Zest Software <info@zestsoftware.nl>\n"
 "MIME-Version: 1.0\n"
@@ -18,7 +18,7 @@ msgstr ""
 
 #: ./browser/feed.py:47
 msgid "Feed items updated"
-msgstr ""
+msgstr "Feed items geüpdatet"
 
 #. Default: "last modified"
 #: ./browser/feed-item.pt:38
