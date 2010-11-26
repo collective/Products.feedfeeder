@@ -11,6 +11,7 @@ from Products.statusmessages.interfaces import IStatusMessage
 
 logger = logging.getLogger("feedfeeder")
 
+
 class IUpdateFeedItems(interface.Interface):
 
     def update():
@@ -76,14 +77,14 @@ class FeedFolderView(object):
                 portal_type='FeedFeederItem')
         for index, x in enumerate(results):
             content_url = x.getURL()
-            item = dict(updated_date = x.getFeedItemUpdated,
-                        url = content_url,
-                        content_url = content_url,
-                        title = x.Title,
-                        summary = x.Description,
-                        author = x.getFeedItemAuthor,
-                        has_text = x.getHasBody,
-                        target_link = x.getLink,
+            item = dict(updated_date=x.getFeedItemUpdated,
+                        url=content_url,
+                        content_url=content_url,
+                        title=x.Title,
+                        summary=x.Description,
+                        author=x.getFeedItemAuthor,
+                        has_text=x.getHasBody,
+                        target_link=x.getLink,
                         )
             self.extraDecoration(item, x)
             enclosures = x.getObjectids
@@ -104,6 +105,7 @@ class FeedFolderView(object):
 
     def __call__(self, *args, **kwargs):
         return self.index(template_id='feed-folder.html')
+
 
 class MegaUpdate(object):
     """ Update all feed folders on the site.
@@ -138,7 +140,7 @@ class MegaUpdate(object):
                 update_view.update()
                 updated += 1
             except Exception, e:
-                # Don't allow single bad feed crash us
+                # Don't allow a single bad feed to crash us.
                 logger.error("Feed raised exception:" + str(folder))
                 logger.exception(e)
                 errors += 1
@@ -147,9 +149,6 @@ class MegaUpdate(object):
         logger.info(msg)
 
         return msg
-
-
-
 
     def __call__(self):
         return self.updateAll()
