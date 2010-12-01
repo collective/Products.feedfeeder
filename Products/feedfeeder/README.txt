@@ -104,8 +104,10 @@ Tests
 
 The look-here-first test is the doctest at 'doc/feedfeeder-integration.txt'.
 
-Testing is best done with zope's zopectl. ::
+Assuming you have a buildout, testing is best done something like this::
 
-  bin/zopectl test -s Products.feedfeeder'.
+  bin/instance test -s Products.feedfeeder
+ 
+or if you have a ``bin/test`` command properly set up::
 
-
+  bin/test -s Products.feedfeeder
