@@ -23,7 +23,8 @@ from Products.feedfeeder.extendeddatetime import extendedDateTime
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
 
-from BeautifulSoup import BeautifulSoup, HTMLParseError
+from BeautifulSoup import BeautifulSoup
+from HTMLParser import HTMLParseError
 
 # Unifiable list taken from http://www.aaronsw.com/2002/html2text.py
 unifiable = {

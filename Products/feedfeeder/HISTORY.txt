@@ -4,6 +4,12 @@ History of feedfeeder
 1.0.2 (unreleased)
 ------------------
 
+- Import HTMLParseError from the standard python HTMLParser instead of
+  BeautifulSoup.  This makes feedfeeder compatible with BeautifulSoup
+  3.0.x again.  Backported from trunk in case anyone is using this
+  branch.
+  [maurits]
+
 - Ignore unidentifiable entries without id or link, instead of
   throwing an AttributeError.
   Fixes http://plone.org/products/feedfeeder/issues/26
