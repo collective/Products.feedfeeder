@@ -55,6 +55,7 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   ...         self.enclosures[new_id] = self.enclosures[orig_id]
   ...         del self.enclosures[orig_id]
   ...         self.enclosures[new_id].id = new_id
+  ...     def getObjectInfo(self): return self.objectInfo
   ...     def objectIds(self): return self.enclosures.keys()
   ...     def getFeedItemUpdated(self): return self.feedItemUpdated
   ...     def setFeedItemUpdated(self, x): self.feedItemUpdated = x
@@ -137,6 +138,14 @@ Make sure the content all matches up.
   1000
   >>> test_doc.feed_tags
   [u'example']
+
+Object info field filled?
+  >>> object_info = test_doc.getObjectInfo()
+  >>> test_doc.getFeedItemAuthor() == object_info['author']
+  True
+  >>> 'summary' in object_info
+  True
+
   
 Lets check out the document's feed item metadata.
 

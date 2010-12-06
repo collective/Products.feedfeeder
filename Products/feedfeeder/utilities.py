@@ -186,6 +186,7 @@ class FeedConsumer:
                        feedItemUpdated=updated,
                        link=link,
                        feedTitle=parsed['feed'].get('title', ''),
+                       objectInfo=entry,
                        )
             # Tags cannot be handled by the update method AFAIK,
             # because it is not an Archetypes field.
