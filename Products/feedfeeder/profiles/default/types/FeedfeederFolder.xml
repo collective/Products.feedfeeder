@@ -11,10 +11,13 @@
  <property name="factory">addFeedfeederFolder</property>
  <property name="immediate_view">feed-folder.html</property>
  <property name="global_allow">True</property>
+ <property name="filter_content_types">False</property>
+ <!--
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
   <element value="FeedFeederItem"/>
  </property>
+ -->
  <property name="allow_discussion">False</property>
  <property name="default_view">feed-folder.html</property>
  <property name="view_methods">
