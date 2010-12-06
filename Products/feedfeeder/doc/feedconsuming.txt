@@ -56,6 +56,7 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   ...         del self.enclosures[orig_id]
   ...         self.enclosures[new_id].id = new_id
   ...     def getObjectInfo(self): return self.objectInfo
+  ...     def setObjectInfo(self, value): self.objectInfo = value
   ...     def objectIds(self): return self.enclosures.keys()
   ...     def getFeedItemUpdated(self): return self.feedItemUpdated
   ...     def setFeedItemUpdated(self, x): self.feedItemUpdated = x
