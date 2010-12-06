@@ -4,7 +4,8 @@ from zope.component import getMultiAdapter
 
 from Products.Five import BrowserView
 
-from zope.pagetemplate.pagetemplatefile import PageTemplateFile
+from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
+
 
 class IFeedItemView(Interface):
     """ """
@@ -83,13 +84,17 @@ class FeedItemView(BrowserView):
     """
     implements(IFeedItemView)
 
-    __call__ = PageTemplateFile('feed-item.pt')
+    def __call__(self):
+        redirect_url = self.redirect_url()
+        if redirect_url:
+            return self.request.response.redirect(redirect_url)
+        return ViewPageTemplateFile('feed-item.pt')(self)
 
 
     def redirect_url(self):
         object_info = self.context.getObjectInfo()
         parent = self.parent()
-        if parent.getRedirect() and self.checkEditPermission():
+        if parent.getRedirect() and not self.checkEditPermission():
             return object_info.get('link')
         else:
             return ''

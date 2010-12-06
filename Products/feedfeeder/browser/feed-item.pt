@@ -14,10 +14,6 @@
                      is_editable context/@@plone_context_state/is_editable;
                      toLocalizedTime nocall:context/@@plone/toLocalizedTime;">
 
-      <tal:redirect tal:define="redirect_url view/redirect_url" tal:condition="redirect_url">
-          <tal:dummy tal:define="dummy python:here.REQUEST.RESPONSE.redirect(redirect_url)" />
-      </tal:redirect>
-
       <h1 tal:content="structure context/title_or_id"></h1>
 
       <div class="documentByLine">
