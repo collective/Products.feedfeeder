@@ -14,6 +14,7 @@
                      is_editable context/@@plone_context_state/is_editable;
                      toLocalizedTime nocall:context/@@plone/toLocalizedTime;">
 
+      <tal:dummy tal:on-error="nothing" tal:define="dummy python:here.REQUEST.RESPONSE.redirect(here.getObjectInfo().get('link'))" />
       <h1 tal:content="structure context/title_or_id"></h1>
 
       <div class="documentByLine">

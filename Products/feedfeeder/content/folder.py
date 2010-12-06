@@ -51,6 +51,10 @@ FeedfeederFolder_schema = ATBTreeFolder.schema.copy() + \
 
 class FeedfeederFolder(ATBTreeFolder):
     """
+      Verify class test
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(IFeedsContainer, FeedfeederFolder)
+      True
     """
     security = ClassSecurityInfo()
     # zope3 interfaces
@@ -147,6 +151,10 @@ class FeedfeederFolder(ATBTreeFolder):
             wf_tool.doActionFor(self[id], transition,
                 comment='Automatic transition triggered by FeedFolder')
         return self[id]
+
+    security.declarePublic('getFeedFolder')
+    def getFeedFolder(self):
+        return self
 
 
 registerType(FeedfeederFolder, PROJECTNAME)

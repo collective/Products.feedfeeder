@@ -9,6 +9,7 @@ class TestFields(MainTestCase):
         feedfolder_id = self.folder.invokeFactory('FeedfeederFolder', 'feedfolder')
 
         self.feedfolder = getattr(self.folder, feedfolder_id)
+#        self.feedfolder.invokeFactor
 
     def test_redirect_field(self):
         """ Does exists the redirect field?  """
