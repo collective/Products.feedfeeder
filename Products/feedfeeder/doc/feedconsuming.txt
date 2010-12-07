@@ -184,3 +184,12 @@ Now someone could have added an enclosure that is actually just a link.  We appe
 
   >>> thesis.getText()
   u'<div>\nGreat news: a final thesis defence date!\n</div>'
+
+Now refresh feeds and check changes
+
+  >>> newsamplefile = os.path.join(samplesdir, 'samplefeed5.xml')
+  >>> container.feeds = ['file://' + newsamplefile] 
+  >>> consumer.retrieveFeedItems(container)
+  >>> container.items[u'12dc2a55581a62b093b6ad611b3ba2d3'].title == 'The title is changed'
+  True
+  
