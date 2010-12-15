@@ -89,7 +89,8 @@ class FeedItemView(BrowserView):
         redirect_url = self.redirect_url()
         if redirect_url:
             return self.request.response.redirect(redirect_url)
-        return ViewPageTemplateFile('feed-item.pt')(self)
+        # Render our template as set in the zcml.
+        return self.index()
 
     def redirect_url(self):
         object_info = self.context.getObjectInfo()
