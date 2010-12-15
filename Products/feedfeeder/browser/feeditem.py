@@ -13,7 +13,7 @@ class IFeedItemView(Interface):
     def redirect_url():
         """ Returns empty string or the url to be redirected, depending on
             the configuration of the feed folder.
-            Returns an empty string if redirect is not enabled or if you don't have modify 
+            Returns an empty string if redirect is not enabled or if you have modify 
             permissions
         """
 
