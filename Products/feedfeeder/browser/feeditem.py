@@ -1,5 +1,5 @@
 from zope.interface import Interface
-from zope.interface import implements 
+from zope.interface import implements
 from zope.component import getMultiAdapter
 
 from Products.Five import BrowserView
@@ -13,8 +13,9 @@ class IFeedItemView(Interface):
     def redirect_url():
         """ Returns empty string or the url to be redirected, depending on
             the configuration of the feed folder.
-            Returns an empty string if redirect is not enabled or if you have modify 
-            permissions
+
+            Returns an empty string if redirect is not enabled or if
+            you have modify permissions
         """
 
     def parent():
@@ -25,7 +26,7 @@ class IFeedItemView(Interface):
 
 
 class FeedItemView(BrowserView):
-    """ 
+    """
       Verify class test
       >>> from zope.interface.verify import verifyClass
       >>> verifyClass(IFeedItemView, FeedItemView)
@@ -45,7 +46,7 @@ class FeedItemView(BrowserView):
       ...     def getObjectInfo(self):
       ...         return {'link':'http://somewhere'}
       ...     def getFeedFolder(self):
-      ...         return self.folder 
+      ...         return self.folder
       >>> class FakeFeedItemView(FeedItemView):
       ...     def checkEditPermission(self):
       ...         return True
@@ -90,7 +91,6 @@ class FeedItemView(BrowserView):
             return self.request.response.redirect(redirect_url)
         return ViewPageTemplateFile('feed-item.pt')(self)
 
-
     def redirect_url(self):
         object_info = self.context.getObjectInfo()
         parent = self.parent()
@@ -104,5 +104,7 @@ class FeedItemView(BrowserView):
 
     def checkEditPermission(self):
         """ Returns if you have the edit permission"""
-        membership = getMultiAdapter((self.context, self.request), name=u'plone_tools').membership()
-        return membership.checkPermission('Modify portal content', self.context)
+        membership = getMultiAdapter((self.context, self.request),
+                                     name=u'plone_tools').membership()
+        return membership.checkPermission(
+            'Modify portal content', self.context)
