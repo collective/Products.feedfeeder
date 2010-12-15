@@ -33,7 +33,7 @@ class FeedItemView(BrowserView):
 
       Fake objects
       ------------
-      >>> fake_requets = {}
+      >>> fake_request = {}
       >>> class FakeFolder(object):
       ...     def __init__(self, redirect):
       ...         self.redirect = redirect
@@ -54,13 +54,13 @@ class FeedItemView(BrowserView):
       --------------
       Item with a folder with redirect enabled
       >>> item1 = FakeItem(True)
-      >>> view1 = FakeFeedItemView(item1, fake_requets)
+      >>> view1 = FakeFeedItemView(item1, fake_request)
       >>> bool(view1.redirect_url())
       False
 
       Item with a folder with redirect not enabled
       >>> item2 = FakeItem(False)
-      >>> view2 = FakeFeedItemView(item2, fake_requets)
+      >>> view2 = FakeFeedItemView(item2, fake_request)
       >>> bool(view2.redirect_url())
       False
 
@@ -72,13 +72,13 @@ class FeedItemView(BrowserView):
 
       Item with a folder with redirect enabled
       >>> item1 = FakeItem(True)
-      >>> view1 = FakeFeedItemView(item1, fake_requets)
+      >>> view1 = FakeFeedItemView(item1, fake_request)
       >>> view1.redirect_url()
       'http://somewhere'
 
       Item with a folder with redirect not enabled
       >>> item2 = FakeItem(False)
-      >>> view2 = FakeFeedItemView(item2, fake_requets)
+      >>> view2 = FakeFeedItemView(item2, fake_request)
       >>> bool(view2.redirect_url())
       False
     """
