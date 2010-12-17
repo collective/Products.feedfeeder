@@ -1,7 +1,7 @@
 History of feedfeeder
 =====================
 
-2.0.2 (unreleased)
+2.0.2 (2010-12-17)
 ------------------
 
 - Modified import RSS and added a new field on feed items named 
