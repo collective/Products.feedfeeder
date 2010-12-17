@@ -39,6 +39,7 @@
   <page
       name="feed-item.html"
       for="Products.feedfeeder.interfaces.item.IFeedItem"
+      class=".feeditem.FeedItemView"
       permission="zope2.View"
       template="feed-item.pt"
       />

@@ -9,4 +9,6 @@ def test_suite():
                                  package='Products.feedfeeder.doc'),
         doctestunit.DocFileSuite('extendeddatetime.txt',
                                  package='Products.feedfeeder.doc'),
+        doctestunit.DocTestSuite(module='Products.feedfeeder.browser.feeditem'),
+
         ))

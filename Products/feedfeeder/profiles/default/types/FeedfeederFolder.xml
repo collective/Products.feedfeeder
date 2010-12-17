@@ -14,6 +14,8 @@
  <property name="filter_content_types">True</property>
  <property name="allowed_content_types">
   <element value="FeedFeederItem"/>
+  <element value="News Item"/>
+  <element value="Event"/>
  </property>
  <property name="allow_discussion">False</property>
  <property name="default_view">feed-folder.html</property>
@@ -28,7 +30,7 @@
  <alias from="sharing" to="folder_localrole_form"/>
  <alias from="view" to="(selected layout)"/>
  <action title="view" action_id="view" category="object"
-    condition_expr="python:1" url_expr="string:$object_url/feed-folder.html"
+    condition_expr="python:1" url_expr="string:$object_url"
     visible="True">
   <permission value="View"/>
  </action>

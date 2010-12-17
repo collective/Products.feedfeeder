@@ -4,7 +4,20 @@ History of feedfeeder
 2.0.2 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Modified import RSS and added a new field on feed items named 
+  objectInfo. All feed data will be stored on this field, 
+  as a python dict.
+  Just changing the remote RSS template, you will able to memoize 
+  additional info without having to modify the feed item schema.
+  [dmoro]
+
+- Added an option on feed folder that let you choose to redirect 
+  automatically to remote resources. If you have modify permissions 
+  on feed items there will not be any redirect
+  [dmoro]
+
+- Added new tests
+  [sithmel]
 
 
 2.0.1 (2010-11-26)

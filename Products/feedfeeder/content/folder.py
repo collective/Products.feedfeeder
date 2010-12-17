@@ -19,6 +19,17 @@ schema = Schema((
         )
     ),
 
+    BooleanField(
+        name='redirect',
+        widget=BooleanWidget(
+            description="If checked the feed item will be automatically redirected if you don't have the edit permission.",
+            description_msgid="help_redirect",
+            label='Automatic redirect of feed items',
+            label_msgid='label_redirect',
+            i18n_domain='feedfeeder',
+        )
+    ),
+
     StringField(
         name='defaultTransition',
         vocabulary='getAvailableTransitions',
@@ -40,6 +51,10 @@ FeedfeederFolder_schema = ATBTreeFolder.schema.copy() + \
 
 class FeedfeederFolder(ATBTreeFolder):
     """
+      Verify class test
+      >>> from zope.interface.verify import verifyClass
+      >>> verifyClass(IFeedsContainer, FeedfeederFolder)
+      True
     """
     security = ClassSecurityInfo()
     # zope3 interfaces
@@ -136,6 +151,10 @@ class FeedfeederFolder(ATBTreeFolder):
             wf_tool.doActionFor(self[id], transition,
                 comment='Automatic transition triggered by FeedFolder')
         return self[id]
+
+    security.declarePublic('getFeedFolder')
+    def getFeedFolder(self):
+        return self
 
 
 registerType(FeedfeederFolder, PROJECTNAME)

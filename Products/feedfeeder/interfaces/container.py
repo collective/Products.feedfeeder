@@ -20,3 +20,6 @@ class IFeedsContainer(interface.Interface):
     def getItem(id):
         """
         """
+
+    def getFeedFolder():
+        """ """

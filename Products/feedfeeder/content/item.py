@@ -71,6 +71,15 @@ schema = Schema((
             i18n_domain='feedfeeder',
         )
     ),
+    ObjectField(
+        name='objectInfo',
+#        read_permission=ManagePortal,
+#        write_permission=ManagePortal,
+        widget=StringWidget(
+            visible={'view':'invisible', 'edit':'invisible'},
+        ),
+        default={},
+    ),
 
 ),
 )

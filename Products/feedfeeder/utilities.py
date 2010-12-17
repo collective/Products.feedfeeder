@@ -149,6 +149,8 @@ class FeedConsumer:
                 addItem = feedContainer.replaceItem
             else:
                 # Not new, not refreshed: let it be, laddy.
+                prev.setObjectInfo(entry.copy())
+                prev.reindexObject()
                 continue
 
             obj = addItem(id)
@@ -186,6 +188,7 @@ class FeedConsumer:
                        feedItemUpdated=updated,
                        link=link,
                        feedTitle=parsed['feed'].get('title', ''),
+                       objectInfo=entry.copy(),
                        )
             # Tags cannot be handled by the update method AFAIK,
             # because it is not an Archetypes field.
