@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<feed xmlns="http://www.w3.org/2005/Atom">
+ <title>Philips Research Eindhoven News</title>
+ <subtitle>General news of Philips Research Eindhoven - for internal use only.</subtitle>
+ <updated>2007-07-30T23:32:36Z</updated>
+ <id>http://resweb2.natlab.research.philips.com/NlwwNews/rss/NlwwNewsAtom.xml</id>
+ <entry>
+  <title>The title is changed</title>
+  <id>oldnews</id>
+  <content type="xhtml">
+    <div xmlns="http://www.w3.org/1999/xhtml">
+      The content is changed
+    </div>
+  </content>
+  <updated></updated>
+  <published>2008-07-30T23:32:36Z</published>
+  <author><name>Not Reinout anymore</name></author>
+ </entry>
+</feed>
