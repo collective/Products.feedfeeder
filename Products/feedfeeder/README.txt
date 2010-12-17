@@ -64,6 +64,7 @@ filename (md5 hex hash of the atom id of the entry), that way you can
 detect whether there are new items.
 
 New items are turned into feed items.
+Feed data are filled into feed items (see field named objectInfo).
 
 Scheduled updates for feed folders
 
