@@ -4,7 +4,10 @@ History of feedfeeder
 2.0.3 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Respect the Plone setting on the 'about' information: only show the
+  document byline if the user is logged in or anonymous users are
+  allowed to view the about information.
+  [markvl]
 
 
 2.0.2 (2010-12-17)

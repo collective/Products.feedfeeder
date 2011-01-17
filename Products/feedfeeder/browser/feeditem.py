@@ -24,6 +24,9 @@ class IFeedItemView(Interface):
     def checkEditPermission():
         """ Returns if you have the edit permission"""
 
+    def show_doc_byline():
+        """ Returns whether the document byline should be shown or not."""
+
 
 class FeedItemView(BrowserView):
     """
@@ -109,3 +112,16 @@ class FeedItemView(BrowserView):
                                      name=u'plone_tools').membership()
         return membership.checkPermission(
             'Modify portal content', self.context)
+
+    def show_doc_byline(self):
+        """ Returns whether the document byline should be shown or not."""
+        plone_tools = getMultiAdapter((self.context, self.request),
+                                      name='plone_tools')
+        portal_state = getMultiAdapter((self.context, self.request),
+                                       name=u'plone_portal_state')
+        properties = plone_tools.properties()
+        site_properties = getattr(properties, 'site_properties')
+        anonymous = portal_state.anonymous()
+        allowAnonymousViewAbout = site_properties.getProperty(
+            'allowAnonymousViewAbout', True)
+        return not anonymous or allowAnonymousViewAbout
