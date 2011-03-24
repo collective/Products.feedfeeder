@@ -22,6 +22,7 @@ are pretty minimal.  The class merely has to implement IFeedsContainer.
   ...     def __init__(self, feeds):
   ...         self.items = {}
   ...         self.feeds = feeds
+  ...         self.portal_transforms = None
   ...     def getFeeds(self):
   ...         return self.feeds
   ...     def addItem(self, id):

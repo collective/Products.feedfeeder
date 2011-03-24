@@ -113,6 +113,7 @@ class FeedConsumer:
         # urllib does not support the 'feed' scheme -- replace with 'http'
         if url.startswith('feed://'):
             url = url.replace('feed://', 'http://', 1)
+        portal_transforms = getToolByName(feedContainer, 'portal_transforms')
         parsed = feedparser.parse(url)
         for entry in parsed.entries:
             id = get_uid_from_entry(entry)
@@ -256,8 +257,6 @@ class FeedConsumer:
                     update_text(obj, content['value'], mimetype=ctype)
                 if summary == convert_summary(content['value']):
                     # summary and content is the same so we can cut the summary
-                    portal_transforms = getToolByName(
-                        self, 'portal_transforms')
                     data = portal_transforms.convert('html_to_text', summary)
                     summary = data.getData()
                     words = summary.split()[:72]
