@@ -4,7 +4,10 @@ History of feedfeeder
 2.0.4 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Do not reindex the feed item when nothing has changed.  Only update
+  the objectInfo field when there has been a change.
+  Fixes http://plone.org/products/feedfeeder/issues/34
+  [maurits]
 
 
 2.0.3 (2011-01-17)

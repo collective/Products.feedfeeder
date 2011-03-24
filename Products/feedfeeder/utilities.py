@@ -148,9 +148,15 @@ class FeedConsumer:
                 # Refreshed item, replace it.
                 addItem = feedContainer.replaceItem
             else:
-                # Not new, not refreshed: let it be, laddy.
-                prev.setObjectInfo(entry.copy())
-                prev.reindexObject()
+                # Not new, not refreshed: let it be, laddy.  Still,
+                # the entry might have changed slightly, so we check
+                # this.
+                if prev.getObjectInfo != entry:
+                    # Note: no need for a reindexObject here, which
+                    # would also update the modification date, which
+                    # we do not want.  See
+                    # http://plone.org/products/feedfeeder/issues/34
+                    prev.setObjectInfo(entry.copy())
                 continue
 
             obj = addItem(id)
