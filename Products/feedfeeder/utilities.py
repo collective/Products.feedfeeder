@@ -1,7 +1,11 @@
 # -*- coding: utf-8 -*-
 import logging
 from xml.dom import minidom
-import md5
+try:
+    from hashlib import md5
+except ImportError:
+    # BBB python2.4
+    from md5 import md5
 import os
 import re
 import tempfile
@@ -77,7 +81,7 @@ def get_uid_from_entry(entry):
         value = entry.link
     else:
         return None
-    sig = md5.new(value)
+    sig = md5(value)
     return sig.hexdigest()
 
 
@@ -280,7 +284,7 @@ class FeedConsumer:
                                    not self.isHTMLEnclosure(x)]
 
                 for link in real_enclosures:
-                    enclosureSig = md5.new(link.href)
+                    enclosureSig = md5(link.href)
                     enclosureId = enclosureSig.hexdigest()
                     enclosure = obj.addEnclosure(enclosureId)
                     enclosure.update(title=enclosureId)
