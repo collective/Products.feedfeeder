@@ -4,7 +4,8 @@ History of feedfeeder
 2.0.5 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed Plone 4.1 compatibility
+  [iElectric]
 
 
 2.0.4 (2011-03-24)

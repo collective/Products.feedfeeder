@@ -7,6 +7,9 @@
     xmlns:zcml="http://namespaces.zope.org/zcml"
     i18n_domain="feedfeeder">
 
+  <!-- Zope 2.13 needs some additional love -->
+  <include package="Products.CMFCore" file="permissions.zcml" />
+
   <!-- zope.annotation is used in Zope 2.10 -->
   <include
       zcml:condition="installed zope.annotation"
