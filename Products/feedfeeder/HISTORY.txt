@@ -4,6 +4,9 @@ History of feedfeeder
 2.0.5 (unreleased)
 ------------------
 
+- Fixed possible UnicodeDecodeError when updating feed items.
+  [maurits]
+
 - Fixed Plone 4.1 compatibility
   [iElectric]
 
