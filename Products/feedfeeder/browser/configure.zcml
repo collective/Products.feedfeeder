@@ -50,5 +50,12 @@
       permission="cmf.ManagePortal"
       class=".feed.MegaUpdate"
       />
+      
+  <page
+      name="feed-mega-cleanup"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      permission="cmf.ManagePortal"
+      class=".feed.MegaClean"
+      />      
 
 </configure>

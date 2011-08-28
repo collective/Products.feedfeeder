@@ -1,7 +1,10 @@
 import logging
 
+import transaction
 from zope import interface
 from zope import component
+import DateTime
+import zExceptions
 
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.interfaces.container import IFeedsContainer
@@ -152,3 +155,70 @@ class MegaUpdate(object):
 
     def __call__(self):
         return self.updateAll()
+
+
+class MegaClean(object):
+    """ Clean-up old feed items by deleting them on the site.
+
+    This is intended to be called from cron weekly.
+    """
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def clean(self, days, transaction_threshold=25):
+        """
+        
+        @param days: if item has been created before than this many days ago it is deleted
+        
+        @param transaction_threshold: How often we commit - for every nth item
+        """
+
+        logger.info("Beginning feed clean up process")
+
+        context = self.context.aq_inner
+        count = 0
+
+
+        # DateTime deltas are days as floating points
+        end = DateTime.DateTime() - days
+        start = DateTime.DateTime(2000, 1,1)
+        
+        date_range_query = { 'query':(start,end), 'range': 'min:max'} 
+                
+        items = context.portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
+                                             "created" : date_range_query,
+                                             "sort_on" : "created"
+                                            })
+        
+        items = list(items)
+        
+        logger.info("Found %d items to be purged" % len(items))
+        
+        for b in items:
+            count += 1            
+            obj = b.getObject()
+            logger.info("Deleting:" + obj.absolute_url() + " " + str(obj.created()))
+            obj.aq_parent.manage_delObjects([obj.getId()])
+
+            if count % transaction_threshold == 0:
+                # Prevent transaction becoming too large (memory buffer)
+                # by committing now and then
+                transaction.commit()
+
+        msg = "%d items removed" % count
+        logger.info(msg)
+
+        return msg
+
+    def __call__(self):
+        
+        days = self.request.form.get("days", None)
+        if not days:
+            raise zExceptions.InternalError("Bad input")
+        
+        days = int(days)
+        
+        return self.clean(days)
+
