@@ -167,8 +167,11 @@ class MegaClean(object):
         self.context = context
         self.request = request
 
-    def clean(self, days, transaction_threshold=25):
-        """
+    def clean(self, days, transaction_threshold=100):
+        """ Perform the clean-up by looking old objects and deleting them.
+        
+        Commit ZODB transaction for every N objects to that commit buffer does not grow
+        too long (timewise, memory wise).
         
         @param days: if item has been created before than this many days ago it is deleted
         
@@ -205,9 +208,10 @@ class MegaClean(object):
             if count % transaction_threshold == 0:
                 # Prevent transaction becoming too large (memory buffer)
                 # by committing now and then
+                logger.info("Committing transaction")
                 transaction.commit()
 
-        msg = "%d items removed" % count
+        msg = "Total %d items removed" % count
         logger.info(msg)
 
         return msg
@@ -216,7 +220,7 @@ class MegaClean(object):
         
         days = self.request.form.get("days", None)
         if not days:
-            raise zExceptions.InternalError("Bad input")
+            raise zExceptions.InternalError("Bad input. Please give days=60 as HTTP GET query parameter")
         
         days = int(days)
         
