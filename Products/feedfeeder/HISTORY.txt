@@ -5,6 +5,7 @@ History of feedfeeder
 ------------------
 
 - Fixed possible UnicodeDecodeError when updating feed items.
+  Refs http://plone.org/products/feedfeeder/issues/37
   [maurits]
 
 - Fixed Plone 4.1 compatibility

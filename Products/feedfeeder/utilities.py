@@ -3,6 +3,7 @@ import logging
 from xml.dom import minidom
 try:
     from hashlib import md5
+    md5  # pyflakes
 except ImportError:
     # BBB python2.4
     from md5 import md5
@@ -272,12 +273,12 @@ class FeedConsumer:
                         # use the first 50-70 words as a description
                         for word in words[45:]:
                             summarywords.append(word)
-                            if word.endswith(u'.'):
+                            if word.endswith('.'):
                                 # if we encounter a fullstop that will be the
                                 # last word appended to the description
                                 break
-                        summary = u' '.join(summarywords)
-                        if not summary.endswith(u'.'):
+                        summary = ' '.join(summarywords)
+                        if not summary.endswith('.'):
                             summary = summary + ' ...'
                     obj.setDescription(summary)
 
