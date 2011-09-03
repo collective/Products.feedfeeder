@@ -51,4 +51,13 @@
       class=".feed.MegaUpdate"
       />
 
+  <!-- Render the document byline -->
+  <viewlet
+      name="plone.belowcontenttitle.documentbyline"
+      manager="plone.app.layout.viewlets.interfaces.IBelowContentTitle"
+      class=".viewlets.FeedFeederBylineViewlet"
+      permission="zope2.View"
+      for="Products.feedfeeder.interfaces.item.IFeedItem"
+      />
+
 </configure>
