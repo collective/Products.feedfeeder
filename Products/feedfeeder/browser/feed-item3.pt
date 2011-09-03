@@ -1,0 +1,117 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+      metal:use-macro="context/@@standard_macros/view"
+      i18n:domain="feedfeeder">
+
+  <body>
+    <div metal:fill-slot="body"
+         tal:define="text context/getText;
+                     creator context/Creator;
+                     portal context/@@plone_portal_state/portal;
+                     isLocked context/@@plone_context_state/is_locked;
+                     is_editable context/@@plone_context_state/is_editable;
+                     toLocalizedTime nocall:context/@@plone/toLocalizedTime;">
+
+      <h1 tal:content="structure context/title_or_id"></h1>
+
+      <tal:show_doc_byline tal:condition="view/show_doc_byline">
+        <div class="documentByLine">
+          <img src="" alt=""
+               title="This document is locked."
+               tal:define="locked portal/lock_icon.gif;"
+               tal:condition="isLocked"
+               tal:replace="structure python:locked.tag(title='Locked')"
+               i18n:attributes="title label_document_locked;"
+               />
+
+          <tal:name tal:condition="creator">
+            <span i18n:domain="plone" i18n:translate="label_by_author">
+              by
+              <span i18n:name="author" tal:content="context/getFeedItemAuthor"></span>
+            </span>
+
+            &mdash;
+
+          </tal:name>
+
+          <span i18n:translate="box_last_modified">
+            last modified
+          </span>
+          <span tal:replace="python:toLocalizedTime(context.getFeedItemUpdated(),long_format=0)">
+            August 16, 2001
+          </span>
+
+          <span class="state-expired"
+                tal:condition="python:portal.isExpired(here)"
+                i18n:translate="time_expired">
+            &mdash; expired
+          </span>
+
+          <span tal:define="locked portal/lock_icon.gif"
+                tal:condition="isLocked">
+            <img src=""
+                 tal:replace="structure python:locked.tag(title='This item is locked')"
+                 alt="Object locked"
+                 i18n:attributes="alt label_object_locked;" />
+          </span>
+
+          <div tal:condition="here/Contributors"
+               i18n:translate="text_contributors">
+            Contributors:
+            <span i18n:name="name"
+                  tal:omit-tag=""
+                  tal:content="python: ', '.join(here.Contributors())">
+              Mary
+            </span>
+          </div>
+
+          <tal:rights condition="here/Rights">
+            <div tal:replace="here/Rights">
+              Copyleft NiceCorp Inc.
+            </div>
+          </tal:rights>
+
+          <tal:history condition="nocall:context/review_history|nothing">
+            <span metal:use-macro="context/review_history/macros/review_history" />
+          </tal:history>
+
+        </div>
+      </tal:show_doc_byline>
+
+      <p class="documentDescription"
+         tal:content="structure context/Description"
+         tal:condition="context/Description"></p>
+
+      <p tal:condition="python: not text and is_editable"
+         i18n:translate="no_body_text"
+         class="discreet">
+        This item does not have any body text, click the edit tab to change it.
+      </p>
+
+      <div class="plain"
+           tal:condition="text">
+        <div tal:replace="structure text" />
+      </div>
+
+      <tal:enclosures condition="python:context.getFolderContents()">
+        <h3>Enclosures</h3>
+
+        <ul>
+          <li tal:repeat="child python:context.getFolderContents()">
+            <a tal:attributes="href child/getURL"
+               tal:content="child/Title"
+               href="">Enclosure</a>
+          </li>
+        </ul>
+      </tal:enclosures>
+
+      <div class="feed-source-link">
+        <a href="#"
+           tal:attributes="href context/remote_url"
+           i18n:translate="source_available_here">Source available here.</a>
+      </div>
+    </div>
+  </body>
+</html>
