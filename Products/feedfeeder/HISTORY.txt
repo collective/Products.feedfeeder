@@ -4,6 +4,11 @@ History of feedfeeder
 2.0.5 (unreleased)
 ------------------
 
+- Use feed-item.pt on Plone 4, filling the content-core slot, and
+  feed-item3.pt on Plone 3, filling the body slot as before.
+  Fixes http://plone.org/products/feedfeeder/issues/36
+  [maurits]
+
 - Register our own documentbyline viewlet for feed items, which
   displays the feed item author as creator.
   Refs http://plone.org/products/feedfeeder/issues/36
