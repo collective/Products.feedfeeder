@@ -110,7 +110,11 @@ class FeedConsumer:
         # urllib does not support the 'feed' scheme -- replace with 'http'
         if url.startswith('feed://'):
             url = url.replace('feed://', 'http://', 1)
-        parsed = feedparser.parse(url)
+        try:
+            parsed = feedparser.parse(url)
+        except UnicodeDecodeError:
+            logger.debug("UnicodeDecodeError when parsing feed: %s" % url)
+            return
         for entry in parsed.entries:
             id = get_uid_from_entry(entry)
             if not id:
@@ -118,6 +122,7 @@ class FeedConsumer:
                 continue
             updated = entry.get('updated')
             published = entry.get('published')
+            title=getattr(entry, 'title', '')
 
             if not updated:
                 # property may be blank if item has never
@@ -130,7 +135,7 @@ class FeedConsumer:
                 except DateTime.SyntaxError:
                     logger.warn("SyntaxError while parsing %r as DateTime for "
                                 "the 'updated' field of entry %s",
-                                updated, getattr(entry, 'title', ''))
+                                updated, title)
                     continue
 
             prev = feedContainer.getItem(id)
@@ -167,7 +172,7 @@ class FeedConsumer:
                 except DateTime.SyntaxError:
                     logger.warn("SyntaxError while parsing %r as DateTime for "
                                 "the 'published' field of entry %s",
-                                published, getattr(entry, 'title', ''))
+                                published, title)
                     continue
                 obj.setEffectiveDate(published)
 
@@ -176,8 +181,12 @@ class FeedConsumer:
             summary = convert_summary(summary)
             logger.debug("2 summary: %r" % summary)
 
+            try:
+                obj.update(title=title)
+            except UnicodeDecodeError:
+                logger.debug("UnicodeDecodeError when setting title: %r" % title)
+
             obj.update(id=id,
-                       title=getattr(entry, 'title', ''),
                        description=summary,
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
@@ -256,7 +265,7 @@ class FeedConsumer:
                 try:
                     event.notify(FeedItemConsumedEvent(obj))
                 except UnicodeDecodeError:
-                    logger.warn("UnicodeDecodeError: %s" % obj.getPhysicalPath())
+                    logger.warn("UnicodeDecodeError: %s" % '/'.join(obj.getPhysicalPath()))
 
     def isHTMLEnclosure(self, enclosure):
         return enclosure.type == u'text/html'

@@ -2,19 +2,17 @@
       xmlns:tal="http://xml.zope.org/namespaces/tal"
       xmlns:metal="http://xml.zope.org/namespaces/metal"
       xmlns:i18n="http://xml.zope.org/namespaces/i18n"
-      metal:use-macro="context/@@standard_macros/view"
+      metal:use-macro="here/main_template/macros/master"
       i18n:domain="feedfeeder">
 
-  <body>
-    <div metal:fill-slot="body"
-         tal:define="text context/getText;
-                     creator context/Creator;
-                     portal context/@@plone_portal_state/portal;
-                     isLocked context/@@plone_context_state/is_locked;
-                     is_editable context/@@plone_context_state/is_editable;
-                     toLocalizedTime nocall:context/@@plone/toLocalizedTime;">
-
+  <div metal:fill-slot="content-title">
       <h1 tal:content="structure context/title_or_id"></h1>
+  </div>
+  <div metal:fill-slot="content-description"
+       tal:define="creator context/Creator;
+                   portal context/@@plone_portal_state/portal;
+                   isLocked context/@@plone_context_state/is_locked;
+                   toLocalizedTime nocall:context/@@plone/toLocalizedTime;">
 
       <div class="documentByLine">
         <img src="" alt=""
@@ -82,6 +80,12 @@
          tal:content="structure context/Description"
          tal:condition="context/Description"></p>
 
+  </div>
+    <div metal:fill-slot="content-core"
+         tal:define="text context/getText;
+                     is_editable context/@@plone_context_state/is_editable">
+
+
       <p tal:condition="python: not text and is_editable"
          i18n:translate="no_body_text"
          class="discreet">
@@ -111,5 +115,4 @@
            i18n:translate="source_available_here">Source available here.</a>
       </div>
     </div>
-  </body>
 </html>
