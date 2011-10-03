@@ -308,7 +308,9 @@ class FeedConsumer:
                                 obj.getPhysicalPath())
 
     def isHTMLEnclosure(self, enclosure):
-        return enclosure.type == u'text/html'
+        if hasattr(enclosure, 'type'):
+            return enclosure.type == u'text/html'
+        return False
 
 
 def updateWithRemoteFile(obj, link):
@@ -343,7 +345,13 @@ def updateWithRemoteFile(obj, link):
 
         file.flush()
         file.seek(0)
-        obj.update_data(file, link.type)
+        try:
+            link_type = link.type
+        except AttributeError:
+            # Some links do not have a type.
+            # http://plone.org/products/feedfeeder/issues/39
+            link_type = 'application/octet-stream'
+        obj.update_data(file, link_type)
         file.close()
     except urllib2.URLError:
         # well, if we cannot retrieve the data, the file object will
