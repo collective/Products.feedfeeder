@@ -1,7 +1,7 @@
 History of feedfeeder
 =====================
 
-2.0.6 (unreleased)
+2.0.6 (2011-10-03)
 ------------------
 
 - Guard against links (enclosures) not having a type.
