@@ -161,6 +161,9 @@ class MegaUpdate(object):
         return self.updateAll()
 
 
+from zope.component import queryUtility
+from Products.CMFCore.interfaces import IPropertiesTool
+
 class MegaClean(object):
     """ Clean-up old feed items by deleting them on the site.
 
@@ -202,6 +205,14 @@ class MegaClean(object):
         items = list(items)
         
         logger.info("Found %d items to be purged" % len(items))
+
+        # We need to disable link integrity check,
+        # because it cannot handle several delete calls in
+        # one request
+        ptool = queryUtility(IPropertiesTool)
+        props = getattr(ptool, 'site_properties', None)
+        old_check = props.getProperty('enable_link_integrity_checks', False)
+        props.enable_link_integrity_checks = False
         
         for b in items:
             count += 1            
@@ -221,6 +232,8 @@ class MegaClean(object):
                 # by committing now and then
                 logger.info("Committing transaction")
                 transaction.commit()
+
+        props.enable_link_integrity_checks = old_check
 
         msg = "Total %d items removed" % count
         logger.info(msg)
