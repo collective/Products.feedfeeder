@@ -84,7 +84,15 @@ schema = Schema((
     
     # Parsed and locally pulled thumb image for the item
     ImageField(
-        name="leadImage"
+        name="leadImage",
+        sizes= {'large'   : (768, 768),
+               'preview' : (400, 400),
+               'mini'    : (200, 200),
+               'thumb'   : (128, 128),
+               'tile'    :  (64, 64),
+               'icon'    :  (32, 32),
+               'listing' :  (16, 16),
+              },        
     )
 
 ),
