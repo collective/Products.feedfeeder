@@ -147,6 +147,9 @@ class MegaUpdate(object):
                 logger.error("Feed raised exception:" + str(folder))
                 logger.exception(e)
                 errors += 1
+            
+            # Don't allow transaction to grow too large
+            transaction.commit()
 
         msg = "Updated %d feed folders, %d errors" % (updated, errors)
         logger.info(msg)
