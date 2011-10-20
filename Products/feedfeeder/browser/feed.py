@@ -256,7 +256,8 @@ class FetchAllImages(object):
             item = brain.getObject()
             fetch_image(item, force=True)
             transaction.commit()
-            
+    
+        logger.info("Done")
         return "All ok"
 
     def __call__(self):
