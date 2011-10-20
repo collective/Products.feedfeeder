@@ -71,6 +71,7 @@ schema = Schema((
             i18n_domain='feedfeeder',
         )
     ),
+    
     ObjectField(
         name='objectInfo',
 #        read_permission=ManagePortal,
@@ -80,6 +81,11 @@ schema = Schema((
         ),
         default={},
     ),
+    
+    # Parsed and locally pulled thumb image for the item
+    ImageField(
+        name="leadImage"
+    )
 
 ),
 )

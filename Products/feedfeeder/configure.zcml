@@ -10,7 +10,11 @@
   <!-- Zope 2.13 needs some additional love -->
   <include package="Products.CMFCore" file="permissions.zcml"
            zcml:condition="installed plone.app.upgrade" />
-
+ 
+  <include
+      zcml:condition="installed five.grok"
+      file="fetchimage.zcml" />
+ 
   <!-- zope.annotation is used in Zope 2.10 -->
   <include
       zcml:condition="installed zope.annotation"
