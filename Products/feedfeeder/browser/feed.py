@@ -149,6 +149,7 @@ class MegaUpdate(object):
                 errors += 1
             
             # Don't allow transaction to grow too large
+            logger.info("Updated folder %s" % folder.absolute_url())
             transaction.commit()
 
         msg = "Updated %d feed folders, %d errors" % (updated, errors)
