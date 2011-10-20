@@ -8,7 +8,7 @@ import zExceptions
 
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.interfaces.container import IFeedsContainer
-
+from Products.feedfeeder.fetchimage import fetch_image
 from Products.CMFPlone import PloneMessageFactory as _
 from Products.statusmessages.interfaces import IStatusMessage
 
@@ -230,3 +230,34 @@ class MegaClean(object):
         
         return self.clean(days)
 
+class FetchAllImages(object):
+    """ Fetch images to all Feedfeeder items
+    """
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def updateAll(self):
+        """
+        """
+
+        logger.info("Beginning feed image update process")
+
+        updated = 0
+        errors = 0
+        context = self.context.aq_inner
+
+        brains = context.portal_catalog(portal_type="FeedFeederItem")
+
+        logger.info("Found %d feed items" % len(list(brains)))
+
+        for brain in brains:
+            item = brain.getObject()
+            fetch_image(item, force=True)
+            transaction.commit()
+            
+        return "All ok"
+
+    def __call__(self):
+        return self.updateAll()

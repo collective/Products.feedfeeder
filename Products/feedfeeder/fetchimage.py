@@ -20,11 +20,19 @@ logger = logging.getLogger("fetchimage")
 logger.info("Initialized Feedfeeder image fetcher")
 
 @grok.subscribe(IFeedItem, IFeedItemConsumedEvent)
-def fetch_image(context, event):
+def fetch_image_on_creation(context, event):
     """
     Check for the image changes when RSS item is fetched.
     
     http://collective-docs.readthedocs.org/en/latest/components/events.html#subscribing-using-the-grok-api
+    """
+    fetch_image(context)
+    
+def fetch_image(context, force=False):
+    """
+    Check if RSS HTML has an image and fetch it.
+    
+    @parma force: Always fetch - don't check if previous image exists
     """
     
     logger.info("Checking the lead image for %s" % context.absolute_url())
@@ -59,11 +67,12 @@ def fetch_image(context, event):
         return
     
     try:
-        download_and_attach_image(context, image_url)
+        download_and_attach_image(context, image_url, force)
     except Exception, e:
         logger.error("Could not fetch remote image")
         logger.exception(e)
         return
+    
         
 def pick_first_image_source(html):
     """
@@ -77,15 +86,16 @@ def pick_first_image_source(html):
         
     return None
 
-def download_and_attach_image(context, image_url):
+def download_and_attach_image(context, image_url, force):
     """
     Fetch the image from the remote server and save a local copy of it as ZODB blob.
     """
     
     # Don't try to re-fetch images
-    if context.getLeadImage() not in [None, ""]:
-        logger.info("Lead image already exists for %s" % context)
-        return
+    if not force:
+        if context.getLeadImage() not in [None, ""]:
+            logger.info("Lead image already exists for %s" % context)
+            return
     
     logger.info("Fetching remote image: %s" % image_url)
     r = requests.get(image_url, timeout=FETCH_TIMEOUT)

@@ -57,5 +57,12 @@
       permission="cmf.ManagePortal"
       class=".feed.MegaClean"
       />      
+      
+  <page
+      name="feed-mega-image-fetch"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      permission="cmf.ManagePortal"
+      class=".feed.FetchAllImages"
+      />            
 
 </configure>
