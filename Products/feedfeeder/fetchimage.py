@@ -16,6 +16,9 @@ from Products.feedfeeder.interfaces.item import IFeedItem, IFeedItemConsumedEven
 # Don't let slow remote server stall us forever
 FETCH_TIMEOUT = 30
 
+# Skip images having these marker string in URLs (ads)
+IMAGE_BLACKLIST = ["feedads.g.doubleclick.net"]
+
 logger = logging.getLogger("fetchimage")
 logger.info("Initialized Feedfeeder image fetcher")
 
@@ -80,9 +83,22 @@ def pick_first_image_source(html):
     """
     doc = fromstring(html)
     
+    def is_blacklisted(src):
+        for x in IMAGE_BLACKLIST:
+            if x in src:
+                return True
+            
+        return False
+    
     for img in doc.iter('img'):
         if "src" in img.attrib:
-            return img.attrib["src"]
+            src = img.attrib["src"]
+            
+            # Skip certain kind of images
+            if is_blacklisted(src):
+                logger.info("Detected blaclisted image:" + src)
+                continue
+            return src
         
     return None
 
