@@ -207,8 +207,15 @@ class MegaClean(object):
             count += 1            
             obj = b.getObject()
             logger.info("Deleting:" + obj.absolute_url() + " " + str(obj.created()))
-            obj.aq_parent.manage_delObjects([obj.getId()])
-
+            
+            try:
+                obj.aq_parent.manage_delObjects([obj.getId()])
+            except Exception, e:
+                # E.g. linkintegrityerror
+                logger.error("Could not remove item:" + obj.absolute_url())
+                logger.exception(e)
+                continue
+                
             if count % transaction_threshold == 0:
                 # Prevent transaction becoming too large (memory buffer)
                 # by committing now and then
