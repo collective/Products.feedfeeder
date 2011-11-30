@@ -4,7 +4,9 @@ History of feedfeeder
 2.0.7 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- protect against UnicodeDecode errors in getting the UID
+  of an entry.
+  [vangheem]
 
 
 2.0.6 (2011-10-03)

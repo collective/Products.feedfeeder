@@ -82,7 +82,7 @@ def get_uid_from_entry(entry):
         value = entry.link
     else:
         return None
-    sig = md5(value)
+    sig = md5(value.encode('ascii', 'ignore'))
     return sig.hexdigest()
 
 
