@@ -25,6 +25,8 @@ from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.extendeddatetime import extendedDateTime
 from Products.CMFCore.utils import getToolByName
 
+from zope.component import getUtility
+from plone.i18n.normalizer.interfaces import IIDNormalizer
 
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
@@ -68,22 +70,25 @@ def update_text(obj, text, mimetype=None):
 def get_uid_from_entry(entry):
     """Get a unique id from the entry.
 
-    We return an md5 digest.  Usually that should be from the id of
-    the entry, but sometimes, rss providers send items without guid
-    element; we take the link then.  If even that is missing, then we
-    cannot get a unique id so we cannot know if this is a new item
-    that should be added or an existing that should be updated.  So we
-    return nothing for safety.
+    Normalize entry id or title.
     """
-    if hasattr(entry, 'id'):
+    if hasattr(entry, 'title'):
+        value = entry.title    
+    elif hasattr(entry, 'id'):
         value = entry.id
     elif hasattr(entry, 'link'):
         value = entry.link
     else:
         return None
-    sig = md5(value)
-    return sig.hexdigest()
+    #sig = md5(value)
+    #return sig.hexdigest()
 
+    # Need to perform manual normalization for id,
+    # as we don't have title available during the creation time
+    normalizer = getUtility(IIDNormalizer)
+    new_id = normalizer.normalize(value)
+    return new_id
+                    
 
 class FeedConsumer:
     """
@@ -305,7 +310,8 @@ class FeedConsumer:
                 except UnicodeDecodeError:
                     logger.warn("UnicodeDecodeError: %s" %
                                 obj.getPhysicalPath())
-
+                
+                
     def isHTMLEnclosure(self, enclosure):
         return enclosure.type == u'text/html'
 
