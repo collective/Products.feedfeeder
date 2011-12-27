@@ -219,18 +219,30 @@ class FeedConsumer:
                     content = entry.summary_detail
             if content:
                 if ctype in ('text/xhtml', 'application/xhtml+xml'):
+                    # Archetypes doesn't make a difference between
+                    # html and xhtml, so we set the type to text/html:
+                    ctype = 'text/html'
                     # Warning: minidom.parseString needs a byte
                     # string, not a unicode one, so we need to
-                    # encode it first.
+                    # encode it first, but only for this parsing.
                     # http://evanjones.ca/python-utf8.html
+                    encoded_content = content['value'].encode('utf-8')
                     try:
-                        doc = minidom.parseString(
-                            content['value'].encode('utf-8'))
+                        doc = minidom.parseString(encoded_content)
                     except:
                         # Might be an ExpatError, but that is
                         # somewhere in a .so file, so we cannot
-                        # specifically catch only that error.
-                        continue
+                        # specifically catch only that error.  One
+                        # reason for an ExpatError, is that if there
+                        # is no encapsulated tag, minidom parse fails,
+                        # so we can try again in that case.
+                        encoded_content = "<div>" + encoded_content + "</div>"
+                        try:
+                            doc = minidom.parseString(encoded_content)
+                        except:
+                            # Might be that ExpatError again.
+                            logger.warn("Error parsing content for %s", id)
+                            continue
                     if len(doc.childNodes) > 0 and \
                             doc.firstChild.hasAttributes():
                         handler = None

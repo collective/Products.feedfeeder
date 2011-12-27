@@ -4,6 +4,10 @@ History of feedfeeder
 2.0.7 (unreleased)
 ------------------
 
+- Try to avoid possible ExpatError for some feeds.
+  Fixes http://plone.org/products/feedfeeder/issues/40
+  [maurits]
+
 - Cleaned up our type info, removing some cruft from Plone 2.5.
   Added upgrade step for this.
   [maurits]
