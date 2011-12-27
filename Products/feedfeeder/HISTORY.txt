@@ -4,6 +4,11 @@ History of feedfeeder
 2.0.7 (unreleased)
 ------------------
 
+- Avoid BadRequest error when an entry has two enclosures with the
+  same href; we ignore all subsequent ones.
+  Fixes http://plone.org/products/feedfeeder/issues/41
+  [maurits]
+
 - Try to avoid possible ExpatError for some feeds.
   Fixes http://plone.org/products/feedfeeder/issues/40
   [maurits]

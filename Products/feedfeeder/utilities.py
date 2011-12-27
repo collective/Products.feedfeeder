@@ -302,6 +302,10 @@ class FeedConsumer:
                 for link in real_enclosures:
                     enclosureSig = md5(link.href)
                     enclosureId = enclosureSig.hexdigest()
+                    if enclosureId in obj.objectIds():
+                        # Two enclosures with the same href in this
+                        # entry...
+                        continue
                     enclosure = obj.addEnclosure(enclosureId)
                     enclosure.update(title=enclosureId)
                     updateWithRemoteFile(enclosure, link)
