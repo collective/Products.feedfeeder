@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2010-11-26 18:29+0000\n"
+"POT-Creation-Date: 2011-12-27 22:06+0000\n"
 "PO-Revision-Date: Jul 11 09:13:40 2007\n"
 "Last-Translator: Thomas Desvenain <thomas.desvenain@ingeniweb.com>\n"
 "Language-Team: Ingeniweb <thomas.desvenain@ingeniweb.com>\n"
@@ -21,7 +21,7 @@ msgid "Feed items updated"
 msgstr ""
 
 #. Default: "last modified"
-#: ./browser/feed-item.pt:38
+#: ./browser/feed-item3.pt:39
 msgid "box_last_modified"
 msgstr ""
 
@@ -61,12 +61,14 @@ msgid "label_default_transition"
 msgstr "Transition par défaut"
 
 #. Default: "This item does not have any body text, click the edit tab to change it."
-#: ./browser/feed-item.pt:85
+#: ./browser/feed-item.pt:13
+#: ./browser/feed-item3.pt:87
 msgid "no_body_text"
 msgstr ""
 
 #. Default: "Source available here."
-#: ./browser/feed-item.pt:109
+#: ./browser/feed-item.pt:37
+#: ./browser/feed-item3.pt:111
 msgid "source_available_here"
 msgstr ""
 
@@ -77,12 +79,12 @@ msgid "test_view_title"
 msgstr "Vue affichant les derniers items du flux"
 
 #. Default: "Contributors: ${name}"
-#: ./browser/feed-item.pt:62
+#: ./browser/feed-item3.pt:63
 msgid "text_contributors"
 msgstr ""
 
 #. Default: "— expired"
-#: ./browser/feed-item.pt:45
+#: ./browser/feed-item3.pt:46
 msgid "time_expired"
 msgstr ""
 
