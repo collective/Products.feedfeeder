@@ -8,6 +8,13 @@ except ImportError:
 else:
     PLONE30 = 1
 
+# The default profile id of your package:
+PROFILE_ID = 'profile-Products.feedfeeder:default'
+
+
+def update_types(context):
+    context.runImportStepFromProfile(PROFILE_ID, 'typeinfo')
+
 
 def add_indexes(site, logger):
     """Add indexes.

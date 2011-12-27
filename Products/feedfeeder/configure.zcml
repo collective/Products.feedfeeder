@@ -44,4 +44,12 @@
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       />
 
+  <genericsetup:upgradeStep
+      title="Update the portal types"
+      description=""
+      source="100"
+      destination="101"
+      handler="Products.feedfeeder.setuphandlers.update_types"
+      profile="Products.feedfeeder:default" />
+
 </configure>
