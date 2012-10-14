@@ -1,13 +1,11 @@
 from setuptools import setup, find_packages
 import os
 
-version = open(os.path.join("Products", "feedfeeder", "version.txt")).read().strip()
-version = version.strip()
 readme = open("README.txt").read().strip()
 history = open(os.path.join("Products", "feedfeeder", "HISTORY.txt")).read().strip()
 
 setup(name='Products.feedfeeder',
-      version=version,
+      version='2.0.8.dev0',
       description="Turn external feed entries into content items",
       long_description= readme + "\n\n" + history,
       # Get more strings from
