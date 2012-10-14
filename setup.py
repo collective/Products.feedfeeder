@@ -3,7 +3,7 @@ import os
 
 version = open(os.path.join("Products", "feedfeeder", "version.txt")).read().strip()
 version = version.strip()
-readme = open(os.path.join("Products", "feedfeeder", "README.txt")).read().strip()
+readme = open("README.txt").read().strip()
 history = open(os.path.join("Products", "feedfeeder", "HISTORY.txt")).read().strip()
 
 setup(name='Products.feedfeeder',
