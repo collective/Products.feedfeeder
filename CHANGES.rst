@@ -1,7 +1,7 @@
 History of feedfeeder
 =====================
 
-2.0.8 (unreleased)
+2.0.8 (2012-10-14)
 ------------------
 
 - Moved to https://github.com/collective/Products.feedfeeder
