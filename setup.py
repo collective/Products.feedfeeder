@@ -1,8 +1,7 @@
 from setuptools import setup, find_packages
-import os
 
 readme = open("README.txt").read().strip()
-history = open(os.path.join("Products", "feedfeeder", "HISTORY.txt")).read().strip()
+history = open("CHANGES.rst").read().strip()
 
 setup(name='Products.feedfeeder',
       version='2.0.8.dev0',
