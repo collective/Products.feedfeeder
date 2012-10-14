@@ -4,7 +4,8 @@ History of feedfeeder
 2.0.8 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Moved to https://github.com/collective/Products.feedfeeder
+  [maurits]
 
 
 2.0.7 (2011-12-27)
