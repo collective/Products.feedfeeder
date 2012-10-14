@@ -1,10 +1,7 @@
+from Products.Five import BrowserView
+from zope.component import getMultiAdapter
 from zope.interface import Interface
 from zope.interface import implements
-from zope.component import getMultiAdapter
-
-from Products.Five import BrowserView
-
-from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 
 
 class IFeedItemView(Interface):
