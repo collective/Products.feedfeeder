@@ -1,0 +1,9 @@
+To do:
+
+- Fix tests when run with feedparser (FeedParser) 5.0.1, as is now
+  pinned in Plone 4.2 and 4.3 alpha.  We might just need to do either
+  less or more mocking in doc/feedconsuming.txt and make this use a
+  real Plone Site.  Currently the mocking of portal_transforms is
+  causing problems, but fixing that one simply leads to other
+  problems.  All seems fine when used in a normal website.  Also,
+  the tests work fine with the old feedparser 4.1.

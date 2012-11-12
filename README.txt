@@ -97,7 +97,9 @@ want update them all once you can do::
 Dependencies
 ------------
 
-- Targeted at Plone 3.3 or Plone 4 (might work on earlier Plone 3 versions, but this is not tested).
+- Targeted at Plone 3.3 or Plone 4 (might work on earlier Plone 3
+  versions, but this is not tested).  Compatibility with Plone 4.3 has
+  been checked. 
 
 
 Tests
