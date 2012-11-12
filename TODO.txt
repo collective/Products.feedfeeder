@@ -7,3 +7,5 @@ To do:
   causing problems, but fixing that one simply leads to other
   problems.  All seems fine when used in a normal website.  Also,
   the tests work fine with the old feedparser 4.1.
+
+- Use locales instead of an i18n directory.
