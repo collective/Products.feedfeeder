@@ -1,7 +1,7 @@
 History of feedfeeder
 =====================
 
-2.0.9 (unreleased)
+2.0.9 (2012-11-12)
 ------------------
 
 - Fixed possible TypeError when updating feed items.
