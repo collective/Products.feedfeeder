@@ -4,7 +4,9 @@ History of feedfeeder
 2.0.9 (unreleased)
 ------------------
 
-- Nothing changed yet.
+- Fixed possible TypeError when updating feed items.
+  Fixes https://plone.org/products/feedfeeder/issues/42
+  [maurits]
 
 
 2.0.8 (2012-10-14)

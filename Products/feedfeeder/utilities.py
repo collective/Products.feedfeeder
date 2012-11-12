@@ -321,7 +321,7 @@ class FeedConsumer:
                     event.notify(FeedItemConsumedEvent(obj))
                 except UnicodeDecodeError:
                     logger.warn("UnicodeDecodeError: %s" %
-                                obj.getPhysicalPath())
+                                '/'.join(obj.getPhysicalPath()))
 
     def isHTMLEnclosure(self, enclosure):
         if hasattr(enclosure, 'type'):
