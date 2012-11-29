@@ -3,9 +3,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2011-12-27 22:06+0000\n"
-"PO-Revision-Date: Jul 11 09:13:40 2007\n"
-"Last-Translator: Thomas Desvenain <thomas.desvenain@ingeniweb.com>\n"
+"POT-Creation-Date: 2012-11-28 13:41+0000\n"
+"PO-Revision-Date: 2012-11-28 14:46+0100\n"
+"Last-Translator: Cédric Messiant <cedricmessiant@ecreall.com>\n"
 "Language-Team: Ingeniweb <thomas.desvenain@ingeniweb.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
@@ -18,12 +18,12 @@ msgstr ""
 
 #: ./browser/feed.py:47
 msgid "Feed items updated"
-msgstr ""
+msgstr "Eléments du flux mis à jour"
 
 #. Default: "last modified"
 #: ./browser/feed-item3.pt:39
 msgid "box_last_modified"
-msgstr ""
+msgstr "Dernière modification"
 
 #. Default: "Feeditemauthor"
 #: content/FeedFeederItem.py
@@ -38,7 +38,7 @@ msgstr "Flux Rss rafraîchi"
 #. "Feed Title"
 #: content/folder.py
 msgid "feedfeeder_label_feedTitle"
-msgstr ""
+msgstr "Titre du flux"
 
 #. Default: "Feeds"
 #: content/FeedfeederFolder.py
@@ -64,13 +64,13 @@ msgstr "Transition par défaut"
 #: ./browser/feed-item.pt:13
 #: ./browser/feed-item3.pt:87
 msgid "no_body_text"
-msgstr ""
+msgstr "Pas de corps de texte"
 
 #. Default: "Source available here."
 #: ./browser/feed-item.pt:37
 #: ./browser/feed-item3.pt:111
 msgid "source_available_here"
-msgstr ""
+msgstr "Lien vers la source"
 
 #. Default: "Test view showing the latest items from the feeds"
 #: ./skins/feedfeeder/latest_items.pt:7
@@ -81,10 +81,10 @@ msgstr "Vue affichant les derniers items du flux"
 #. Default: "Contributors: ${name}"
 #: ./browser/feed-item3.pt:63
 msgid "text_contributors"
-msgstr ""
+msgstr "Contributeurs du texte"
 
 #. Default: "— expired"
 #: ./browser/feed-item3.pt:46
 msgid "time_expired"
-msgstr ""
+msgstr "Temps expiré"
 

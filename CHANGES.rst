@@ -4,7 +4,12 @@ History of feedfeeder
 2.0.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- French translations.
+  [cedricmessiant]
+  
+- Use png icons.
+  Use icon_expr instead of content_icon.
+  [thomasdesvenain]
 
 
 2.0.9 (2012-11-12)

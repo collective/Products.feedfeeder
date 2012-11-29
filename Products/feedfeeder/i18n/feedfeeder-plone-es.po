@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2011-12-27 22:06+0000\n"
+"POT-Creation-Date: 2012-11-28 13:41+0000\n"
 "PO-Revision-Date: 2009-08-11 17:21-0400\n"
 "Last-Translator: Leonardo Caballero <leonardocaballero@gmail.com>\n"
 "Language-Team: Plone Cono Sur <plone-conosur@lists.plone.org>\n"
