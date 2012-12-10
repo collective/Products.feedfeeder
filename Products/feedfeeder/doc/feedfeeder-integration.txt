@@ -10,7 +10,7 @@ Lets begin by creating our feeder.
 
   >>> id = folder.invokeFactory('FeedfeederFolder', 'feeder')
   >>> feeder = folder.feeder
-  
+
 Setup some feeds.
 
   >>> import os
@@ -41,7 +41,7 @@ the same for Files, as we use them for enclosures::
 See what transitions we have available::
 
   >>> feeder.getAvailableTransitions()
-  <DisplayList [('', 'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit...>
+  <DisplayList [('', u'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit...>
   >>> self.setRoles('Manager')
   >>> [trans for trans in feeder.getAvailableTransitions()]
   ['', 'hide', 'submit', 'publish']
@@ -92,7 +92,7 @@ For the FeedFeederItem:
   >>> status['review_state']
   'published'
   >>> status['comments']
-  'Automatic transition triggered by FeedFolder'
+  u'Automatic transition triggered by FeedFolder'
 
 For the enclosure:
 
@@ -101,7 +101,7 @@ For the enclosure:
   >>> status['review_state']
   'published'
   >>> status['comments']
-  'Automatic transition triggered by FeedFolder'
+  u'Automatic transition triggered by FeedFolder'
 
 
 
@@ -117,18 +117,18 @@ up with appropriate logic.
 
 The requirements for how things get linked is as follows:
 
-  1) feed item with no text and no enclosures: show feed item title and 
+  1) feed item with no text and no enclosures: show feed item title and
   link to feed item
   2) feed item with text: show feed item title and link to feed item
-  3) feed item with text and one enclosure: show feed item title and 
+  3) feed item with text and one enclosure: show feed item title and
   link to feed item
-  4) feed item with no text and one enclosure: show feed item title and 
+  4) feed item with no text and one enclosure: show feed item title and
   link to enclosure
-  5) feed item with no text and multiple enclosures: show feed item 
+  5) feed item with no text and multiple enclosures: show feed item
   title and link to feed item
 
-We have to satisfy each of these requirements.  Make sure that a feed 
-item with no text and no enclosures still have the feed item title and 
+We have to satisfy each of these requirements.  Make sure that a feed
+item with no text and no enclosures still have the feed item title and
 feed item url.
 
   >>> id = feeder.invokeFactory('FeedFeederItem', '1')
@@ -165,7 +165,7 @@ feed item title and url should be used.
   >>> items[0]['url']
   'http://nohost/plone/Members/test_user_1_/feeder2/1'
 
-If there is no text in the feed item and there is one and only one 
+If there is no text in the feed item and there is one and only one
 enclosure, then the feed item title and enclosure url should be used.
 
   >>> feeder[id].setText('')
@@ -181,7 +181,7 @@ enclosure, then the feed item title and enclosure url should be used.
   'http://nohost/plone/Members/test_user_1_/feeder2/1/1.1'
 
 If there is no text in the feed item and there is more than one
-enclosure, we should go back to simply using the title and url of the 
+enclosure, we should go back to simply using the title and url of the
 feed item.
 
   >>> feeder[id].setText('')
@@ -197,7 +197,7 @@ feed item.
   >>> items[0]['url']
   'http://nohost/plone/Members/test_user_1_/feeder2/1'
 
-Items with summaries should have summaries. Summaries come from 
+Items with summaries should have summaries. Summaries come from
 the description field on the content object.
 
   >>> feeder[id].setDescription('Test Summary')
@@ -223,7 +223,7 @@ values.  Lets make sure that works.
   ...                          adapts=(IFeedItem,),
   ...                          provides=IFeedItemContentHandler,
   ...                          name=u'definition-list-metadata')
-  
+
   >>> feeder.setFeeds(['file://'+os.path.join(samplesdir, 'samplefeed1.xml')])
   >>> self.setRoles('Manager')
   >>> view = feeder.restrictedTraverse('@@update_feed_items')
