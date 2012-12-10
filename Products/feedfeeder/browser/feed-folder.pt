@@ -6,7 +6,7 @@
       i18n:domain="feedfeeder">
 
    <body>
-   <div metal:fill-slot="body"
+   <div id="content" metal:fill-slot="body"
       tal:define="results view/item_list;
                   Batch python:modules['Products.CMFPlone'].Batch;
                   b_size request/b_size|python:20;b_start python:0;b_start request/b_start | b_start;
