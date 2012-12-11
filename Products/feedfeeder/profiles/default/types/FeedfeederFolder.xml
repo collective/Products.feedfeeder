@@ -37,9 +37,4 @@
     url_expr="string:${object_url}/edit" visible="True">
   <permission value="Modify portal content"/>
  </action>
- <action title="Update Feed Items" action_id="update_feed_items"
-    category="object_buttons" condition_expr="python:1"
-    url_expr="string:${object_url}/update_feed_items" visible="True" i18n:translate="">
-  <permission value="View"/>
- </action>
 </object>
