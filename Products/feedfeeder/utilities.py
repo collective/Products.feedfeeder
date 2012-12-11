@@ -377,3 +377,8 @@ def updateWithRemoteFile(obj, link):
         # well, if we cannot retrieve the data, the file object will
         # remain empty
         pass
+
+
+def feedfolder_created_handler(feedfolder, event):
+    """Update feed folder after its creation"""
+    feedfolder.restrictedTraverse("update_feed_items")()

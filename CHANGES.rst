@@ -4,7 +4,8 @@ History of feedfeeder
 2.1 (unreleased)
 ----------------
 
-- i18n for untranslated strings
+- Update feed folder after its creation
+  i18n for untranslated strings
   Added div#content in feed folder template
   Fixed tests
   Lots of cleanup (old content type definitions in content/folder.py and content/item.py)

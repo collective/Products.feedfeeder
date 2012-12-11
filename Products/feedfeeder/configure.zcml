@@ -33,6 +33,12 @@
       factory=".contenthandler.StandardContentHandler"
       />
 
+  <subscriber
+      for=".interfaces.container.IFeedsContainer
+           Products.Archetypes.interfaces.event.IObjectInitializedEvent"
+      handler=".utilities.feedfolder_created_handler"
+      />
+
   <include package=".browser" />
 
   <genericsetup:registerProfile
