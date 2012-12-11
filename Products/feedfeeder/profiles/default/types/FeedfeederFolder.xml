@@ -30,11 +30,16 @@
  <alias from="view" to="(selected layout)"/>
  <action title="view" action_id="view" category="object"
     condition_expr="python:1" url_expr="string:$object_url"
-    visible="True">
+    visible="True" i18n:domain="plone" i18n:translate="">
   <permission value="View"/>
  </action>
  <action title="Edit" action_id="edit" category="object" condition_expr=""
     url_expr="string:${object_url}/edit" visible="True">
   <permission value="Modify portal content"/>
+ </action>
+ <action title="Update Feed Items" action_id="update_feed_items"
+    category="object_buttons" condition_expr="python:1"
+    url_expr="string:${object_url}/update_feed_items" visible="True" i18n:translate="">
+  <permission value="View"/>
  </action>
 </object>
