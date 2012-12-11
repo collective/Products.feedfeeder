@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2006-10-19 12:46+0000\n"
+"POT-Creation-Date: 2012-12-11 10:02+0000\n"
 "PO-Revision-Date: 2007-02-16 15:13+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
@@ -13,10 +13,4 @@ msgstr ""
 "Language-Name: Basque\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: plone\n"
-
-msgid "Feed Folder"
-msgstr ""
-
-msgid "Feed Item"
-msgstr "Jario elementua"
 

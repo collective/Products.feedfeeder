@@ -11,6 +11,9 @@ from zope import interface
 from Products.feedfeeder.interfaces.item import IFeedItem
 from Products.feedfeeder.config import PROJECTNAME
 
+from Products.feedfeeder import _
+
+
 copied_fields = {}
 copied_fields['text'] = ATDocument.schema['text'].copy()
 copied_fields['text'].required = 0
@@ -19,9 +22,7 @@ schema = Schema((
     StringField(
         name='feedItemAuthor',
         widget=StringWidget(
-            label='Feeditemauthor',
-            label_msgid='feedfeeder_label_feedItemAuthor',
-            i18n_domain='feedfeeder',
+            label=_('feedfeeder_label_feedItemAuthor', default='Feeditemauthor'),
         )
     ),
 
@@ -29,9 +30,7 @@ schema = Schema((
         name='feedItemUpdated',
         default=DateTime('2000/01/01'),
         widget=CalendarWidget(
-            label='Feeditemupdated',
-            label_msgid='feedfeeder_label_feedItemUpdated',
-            i18n_domain='feedfeeder',
+            label=_('feedfeeder_label_feedItemUpdated', 'Feeditemupdated'),
         )
     ),
 
@@ -39,36 +38,28 @@ schema = Schema((
     StringField(
         name='link',
         widget=StringWidget(
-            label='Link',
-            label_msgid='feedfeeder_label_link',
-            i18n_domain='feedfeeder',
+            label=_('feedfeeder_label_link', default='Link'),
         )
     ),
 
     ComputedField(
         name='objectids',
         widget=ComputedWidget(
-            label='Object Ids',
-            label_msgid='feedfeeder_label_objectids',
-            i18n_domain='feedfeeder',
+            label=_('feedfeeder_label_objectids', default='Object Ids'),
         )
     ),
 
     ComputedField(
         name='hasBody',
         widget=ComputedWidget(
-            label='Has body text',
-            label_msgid='feedfeeder_label_hasbody',
-            i18n_domain='feedfeeder',
+            label=_('feedfeeder_label_hasbody', default='Has body text'),
         )
     ),
 
     StringField(
         name='feedTitle',
         widget=StringWidget(
-            label='Feed Title',
-            label_msgid='feedfeeder_label_feedTitle',
-            i18n_domain='feedfeeder',
+            label=_('feedfeeder_label_feedTitle', default='Feed Title'),
         )
     ),
     ObjectField(
@@ -76,7 +67,8 @@ schema = Schema((
 #        read_permission=ManagePortal,
 #        write_permission=ManagePortal,
         widget=StringWidget(
-            visible={'view':'invisible', 'edit':'invisible'},
+            visible={'view': 'invisible',
+                     'edit': 'invisible'},
         ),
         default={},
     ),
@@ -94,36 +86,6 @@ class FeedFeederItem(ATFolder):
     security = ClassSecurityInfo()
     # zope3 interfaces
     interface.implements(IFeedItem)
-
-    # This name appears in the 'add' box
-    archetype_name = 'Feed Item'
-
-    meta_type = 'FeedFeederItem'
-    portal_type = 'FeedFeederItem'
-    allowed_content_types = ['File']
-    filter_content_types = 1
-    global_allow = 0
-    #content_icon = 'FeedFeederItem.gif'
-    immediate_view = 'feed-item.html'
-    default_view = 'feed-item.html'
-    suppl_views = ()
-    typeDescription = "Feed Item"
-    typeDescMsgId = 'description_edit_feedfeederitem'
-
-
-    actions = (
-
-
-       {'action': "string:${object_url}/feed-item.html",
-        'category': "object",
-        'id': 'view',
-        'name': 'view',
-        'permissions': ("View", ),
-        'condition': 'python:1',
-       },
-
-
-    )
 
     _at_rename_after_creation = True
 
@@ -147,7 +109,7 @@ class FeedFeederItem(ATFolder):
             transition_ids = [trans['id'] for trans in transitions]
             if transition in transition_ids:
                 wf_tool.doActionFor(self[id], transition,
-                comment='Automatic transition triggered by FeedFolder')
+                comment=_('Automatic transition triggered by FeedFolder'))
         return self[id]
 
     security.declarePublic('remote_url')

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2012-11-28 13:41+0000\n"
+"POT-Creation-Date: 2012-12-11 10:26+0000\n"
 "PO-Revision-Date: 2007-02-16 15:17+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
@@ -16,8 +16,29 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: feedfeeder\n"
 
+#: ./content/folder.py:109
+#: ./content/item.py:112
+msgid "Automatic transition triggered by FeedFolder"
+msgstr ""
+
+#: ./profiles/default/types/FeedfeederFolder.xml
+msgid "Feed Folder"
+msgstr ""
+
+#: ./profiles/default/types/FeedFeederItem.xml
+msgid "Feed Item"
+msgstr ""
+
 #: ./browser/feed.py:47
 msgid "Feed items updated"
+msgstr ""
+
+#: ./content/folder.py:67
+msgid "Keep initial state"
+msgstr ""
+
+#: ./profiles/default/actions.xml
+msgid "Update Feed Items"
 msgstr ""
 
 #. Default: "last modified"
@@ -26,38 +47,62 @@ msgid "box_last_modified"
 msgstr ""
 
 #. Default: "Feeditemauthor"
-#: content/FeedFeederItem.py
+#: ./content/item.py:25
 msgid "feedfeeder_label_feedItemAuthor"
 msgstr "Egilea"
 
 #. Default: "Feeditemupdated"
-#: content/FeedFeederItem.py
+#: ./content/item.py:33
 msgid "feedfeeder_label_feedItemUpdated"
 msgstr "Eguneraketa data"
 
 #. "Feed Title"
-#: content/folder.py
+#. Default: "Feed Title"
+#: ./content/item.py:62
 msgid "feedfeeder_label_feedTitle"
 msgstr ""
 
 #. Default: "Feeds"
-#: content/FeedfeederFolder.py
+#: ./content/folder.py:17
 msgid "feedfeeder_label_feeds"
 msgstr "Jarioak"
 
-#. Default: "Links"
-#: content/FeedFeederItem.py
+#. Default: "Has body text"
+#: ./content/item.py:55
+msgid "feedfeeder_label_hasbody"
+msgstr ""
+
+#. Default: "Link"
+#: ./content/item.py:41
+#, fuzzy
 msgid "feedfeeder_label_link"
 msgstr "Loturak"
 
+#. Default: "Object Ids"
+#: ./content/item.py:48
+msgid "feedfeeder_label_objectids"
+msgstr ""
+
 #. "When updating this feed's item the transition selected below will be performed."
-#: content/folder.py
+#. Default: "When updating this feed's item the transition selected below will be performed."
+#: ./content/folder.py:34
 msgid "help_default_transition"
 msgstr ""
 
+#. Default: "If checked the feed item will be automatically redirected if you don't have the edit permission."
+#: ./content/folder.py:24
+msgid "help_redirect"
+msgstr ""
+
 #. 'Default transition'
-#: content/folder.py
+#. Default: "Default transition"
+#: ./content/folder.py:35
 msgid "label_default_transition"
+msgstr ""
+
+#. Default: "Automatic redirect of feed items"
+#: ./content/folder.py:25
+msgid "label_redirect"
 msgstr ""
 
 #. Default: "This item does not have any body text, click the edit tab to change it."

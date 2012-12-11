@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2006-10-19 12:46+0000\n"
+"POT-Creation-Date: 2012-12-11 10:02+0000\n"
 "PO-Revision-Date: 2006-10-19 12:46+0000\n"
 "Last-Translator: Luciano Pacheco <lucmult@gmail.com>\n"
 "Language-Team: Luciano Pacheco <lucmult@gmail.com>\n"
@@ -13,10 +13,4 @@ msgstr ""
 "Language-Name: Português do Brasil\n"
 "Preferred-Encodings: utf-8 latin1\n"
 "Domain: plone\n"
-
-msgid "Feed Folder"
-msgstr "Pasta de RSS externo"
-
-msgid "Feed Item"
-msgstr "Item do RSS"
 

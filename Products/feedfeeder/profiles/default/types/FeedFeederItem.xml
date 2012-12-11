@@ -1,8 +1,9 @@
 <?xml version="1.0"?>
 <object name="FeedFeederItem"
    meta_type="Factory-based Type Information with dynamic views"
-   xmlns:i18n="http://xml.zope.org/namespaces/i18n">
- <property name="title">Feed Item</property>
+   xmlns:i18n="http://xml.zope.org/namespaces/i18n"
+   i18n:domain="feedfeeder">
+ <property name="title" i18n:translate="">Feed Item</property>
  <property name="description">
       </property>
  <property name="icon_expr">string:$portal_url/folder_icon.png</property>

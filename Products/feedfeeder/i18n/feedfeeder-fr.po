@@ -3,8 +3,8 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2012-11-28 13:41+0000\n"
-"PO-Revision-Date: 2012-11-28 14:46+0100\n"
+"POT-Creation-Date: 2012-12-11 10:26+0000\n"
+"PO-Revision-Date: 2012-12-11 11:14+0100\n"
 "Last-Translator: Cédric Messiant <cedricmessiant@ecreall.com>\n"
 "Language-Team: Ingeniweb <thomas.desvenain@ingeniweb.com>\n"
 "MIME-Version: 1.0\n"
@@ -16,9 +16,30 @@ msgstr ""
 "Preferred-Encodings: utf-8\n"
 "Domain: feedfeeder\n"
 
+#: ./content/folder.py:109
+#: ./content/item.py:112
+msgid "Automatic transition triggered by FeedFolder"
+msgstr "Transition automatique provoquée par le dossier flux"
+
+#: ./profiles/default/types/FeedfeederFolder.xml
+msgid "Feed Folder"
+msgstr "Dossier flux"
+
+#: ./profiles/default/types/FeedFeederItem.xml
+msgid "Feed Item"
+msgstr "Elément de flux"
+
 #: ./browser/feed.py:47
 msgid "Feed items updated"
 msgstr "Eléments du flux mis à jour"
+
+#: ./content/folder.py:67
+msgid "Keep initial state"
+msgstr "Laisser dans l'état initial"
+
+#: ./profiles/default/actions.xml
+msgid "Update Feed Items"
+msgstr "Mettre à jour les éléments du flux"
 
 #. Default: "last modified"
 #: ./browser/feed-item3.pt:39
@@ -26,39 +47,62 @@ msgid "box_last_modified"
 msgstr "Dernière modification"
 
 #. Default: "Feeditemauthor"
-#: content/FeedFeederItem.py
+#: ./content/item.py:25
 msgid "feedfeeder_label_feedItemAuthor"
 msgstr "Auteur du flux"
 
 #. Default: "Feeditemupdated"
-#: content/FeedFeederItem.py
+#: ./content/item.py:33
 msgid "feedfeeder_label_feedItemUpdated"
-msgstr "Flux Rss rafraîchi"
+msgstr "Flux mis à jour"
 
 #. "Feed Title"
-#: content/folder.py
+#. Default: "Feed Title"
+#: ./content/item.py:62
 msgid "feedfeeder_label_feedTitle"
 msgstr "Titre du flux"
 
 #. Default: "Feeds"
-#: content/FeedfeederFolder.py
+#: ./content/folder.py:17
 msgid "feedfeeder_label_feeds"
 msgstr "Flux"
 
-#. Default: "Links"
-#: content/FeedFeederItem.py
+#. Default: "Has body text"
+#: ./content/item.py:55
+msgid "feedfeeder_label_hasbody"
+msgstr "A un corps de texte"
+
+#. Default: "Link"
+#: ./content/item.py:41
 msgid "feedfeeder_label_link"
-msgstr "Liens"
+msgstr "Lien"
+
+#. Default: "Object Ids"
+#: ./content/item.py:48
+msgid "feedfeeder_label_objectids"
+msgstr "Identifiants des objets"
 
 #. "When updating this feed's item the transition selected below will be performed."
-#: content/folder.py
+#. Default: "When updating this feed's item the transition selected below will be performed."
+#: ./content/folder.py:34
 msgid "help_default_transition"
 msgstr "La transition effectuée lorsque vous mettez à jour ce flux"
 
+#. Default: "If checked the feed item will be automatically redirected if you don't have the edit permission."
+#: ./content/folder.py:24
+msgid "help_redirect"
+msgstr "Si cette case est cochée, l'élément de flux sera automatiquement redirigé si vous n'avez pas la permission de modifier."
+
 #. 'Default transition'
-#: content/folder.py
+#. Default: "Default transition"
+#: ./content/folder.py:35
 msgid "label_default_transition"
 msgstr "Transition par défaut"
+
+#. Default: "Automatic redirect of feed items"
+#: ./content/folder.py:25
+msgid "label_redirect"
+msgstr "Redirection automatique des éléments de flux"
 
 #. Default: "This item does not have any body text, click the edit tab to change it."
 #: ./browser/feed-item.pt:13

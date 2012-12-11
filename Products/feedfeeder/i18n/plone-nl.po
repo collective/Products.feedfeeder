@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2006-10-19 12:46+0000\n"
+"POT-Creation-Date: 2012-12-11 10:02+0000\n"
 "PO-Revision-Date: 2009-11-05 23:24+0100\n"
 "Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl>\n"
 "Language-Team: Zest Software <info@zestsoftware.nl>\n"
@@ -13,10 +13,4 @@ msgstr ""
 "Language-Name: Nederlands\n"
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: plone\n"
-
-msgid "Feed Folder"
-msgstr "Feedfolder"
-
-msgid "Feed Item"
-msgstr "Feeditem"
 

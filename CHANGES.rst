@@ -1,12 +1,17 @@
 History of feedfeeder
 =====================
 
-2.0.10 (unreleased)
--------------------
+2.1 (unreleased)
+----------------
 
-- French translations.
+- i18n for untranslated strings
+  Added div#content in feed folder template
+  Fixed tests
+  Lots of cleanup (old content type definitions in content/folder.py and content/item.py)
+  Removed double for "update feed items" action
+  French translations
   [cedricmessiant]
-  
+
 - Use png icons.
   Use icon_expr instead of content_icon.
   [thomasdesvenain]
@@ -102,15 +107,15 @@ History of feedfeeder
 2.0.2 (2010-12-17)
 ------------------
 
-- Modified import RSS and added a new field on feed items named 
-  objectInfo. All feed data will be stored on this field, 
+- Modified import RSS and added a new field on feed items named
+  objectInfo. All feed data will be stored on this field,
   as a python dict.
-  Just changing the remote RSS template, you will able to memoize 
+  Just changing the remote RSS template, you will able to memoize
   additional info without having to modify the feed item schema.
   [dmoro]
 
-- Added an option on feed folder that let you choose to redirect 
-  automatically to remote resources. If you have modify permissions 
+- Added an option on feed folder that let you choose to redirect
+  automatically to remote resources. If you have modify permissions
   on feed items there will not be any redirect
   [dmoro]
 
@@ -167,8 +172,8 @@ History of feedfeeder
 - Improved the translations stuffs
   [lucmult]
 
-- Changed the way to translate xml/html entities from summary, now 
-  using BeautifulSoup. Old way was breaking with some non ascii 
+- Changed the way to translate xml/html entities from summary, now
+  using BeautifulSoup. Old way was breaking with some non ascii
   characters.
   [lucmult]
 
@@ -208,12 +213,12 @@ History of feedfeeder
   setter called feed_tags.   Idea: Robin Harms Oredsson.
   [maurits]
 
-- DateTime.SyntaxError is thrown with some very common US 
+- DateTime.SyntaxError is thrown with some very common US
   Daylight Saving zones, such as EDT. We now wrap the DateTime parsing
-  of feeds, to try to recognise those zones before politely giving up, using 
+  of feeds, to try to recognise those zones before politely giving up, using
   maurits' fix, below.
   [russf]
-  
+
 - Catch DateTime.SyntaxError when parsing the updated and published
   dates of an entry and continue with the next entry.
   Fixes http://plone.org/products/feedfeeder/issues/18

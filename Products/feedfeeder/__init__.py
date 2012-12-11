@@ -4,6 +4,8 @@ import logging
 logger = logging.getLogger("feedfeeder")
 logger.debug('Start initialization of feedfeeder product.')
 
+from zope.i18nmessageid import MessageFactory
+
 from Products.CMFCore import utils as cmfutils
 from Products.CMFCore import DirectoryView
 from Products.Archetypes.atapi import process_types
@@ -18,12 +20,15 @@ DirectoryView.registerDirectory('skins/feedfeeder',
                                     product_globals)
 
 
+_ = MessageFactory('feedfeeder')
+
+
 def initialize(context):
     # imports packages and types for registration
-    import content
-    import interfaces
-    import utilities
-    import contenthandler
+    from Products.feedfeeder import content
+    from Products.feedfeeder import interfaces
+    from Products.feedfeeder import utilities
+    from Products.feedfeeder import contenthandler
 
     # Make pyflakes happy
     content
@@ -38,8 +43,8 @@ def initialize(context):
 
     cmfutils.ContentInit(
         PROJECTNAME + ' Content',
-        content_types = content_types,
-        permission = DEFAULT_ADD_CONTENT_PERMISSION,
-        extra_constructors = constructors,
-        fti = ftis,
+        content_types=content_types,
+        permission=DEFAULT_ADD_CONTENT_PERMISSION,
+        extra_constructors=constructors,
+        fti=ftis,
         ).initialize(context)

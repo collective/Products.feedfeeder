@@ -7,26 +7,22 @@ from Products.CMFCore.utils import getToolByName
 
 from Products.feedfeeder.interfaces.container import IFeedsContainer
 from Products.feedfeeder.config import PROJECTNAME
+from Products.feedfeeder import _
 
 schema = Schema((
 
     LinesField(
         name='feeds',
         widget=LinesWidget(
-            label='Feeds',
-            label_msgid='feedfeeder_label_feeds',
-            i18n_domain='feedfeeder',
+            label=_('feedfeeder_label_feeds', default='Feeds')
         )
     ),
 
     BooleanField(
         name='redirect',
         widget=BooleanWidget(
-            description="If checked the feed item will be automatically redirected if you don't have the edit permission.",
-            description_msgid="help_redirect",
-            label='Automatic redirect of feed items',
-            label_msgid='label_redirect',
-            i18n_domain='feedfeeder',
+            description=_("help_redirect", default="If checked the feed item will be automatically redirected if you don't have the edit permission."),
+            label=_('label_redirect', default='Automatic redirect of feed items')
         )
     ),
 
@@ -35,11 +31,8 @@ schema = Schema((
         vocabulary='getAvailableTransitions',
         widget=SelectionWidget(
             format='select',
-            description="When updating this feed's item the transition selected below will be performed.",
-            description_msgid="help_default_transition",
-            label='Default transition',
-            label_msgid='label_default_transition',
-            i18n_domain='feedfeeder',
+            description=_('help_default_transition', default="When updating this feed's item the transition selected below will be performed."),
+            label=_('label_default_transition', default='Default transition'),
         )
     ),
 ),
@@ -60,42 +53,6 @@ class FeedfeederFolder(ATBTreeFolder):
     # zope3 interfaces
     interface.implements(IFeedsContainer)
 
-    # This name appears in the 'add' box
-    archetype_name = 'Feed Folder'
-
-    meta_type = 'FeedfeederFolder'
-    portal_type = 'FeedfeederFolder'
-    allowed_content_types = ['FeedFeederItem']
-    filter_content_types = 1
-    global_allow = 1
-    #content_icon = 'feed_icon.gif'
-    immediate_view = 'feed-folder.html'
-    default_view = 'feed-folder.html'
-    suppl_views = ()
-    typeDescription = "Feed Folder"
-    typeDescMsgId = 'description_edit_feedfeederfolder'
-
-
-    actions = (
-
-       {'action': "string:${object_url}/update_feed_items",
-        'category': "object_buttons",
-        'id': 'update_feed_items',
-        'name': 'Update Feed Items',
-        'permissions': ("View", ),
-        'condition': 'python:1',
-       },
-
-       {'action': "string:$object_url/feed-folder.html",
-        'category': "object",
-        'id': 'view',
-        'name': 'view',
-        'permissions': ("View", ),
-        'condition': 'python:1',
-       },
-
-    )
-
     _at_rename_after_creation = True
 
     schema = FeedfeederFolder_schema
@@ -107,7 +64,7 @@ class FeedfeederFolder(ATBTreeFolder):
         self.invokeFactory('FeedFeederItem', id)
         wf_tool = getToolByName(self, 'portal_workflow')
         transitions = wf_tool.getTransitionsFor(self[id])
-        display_trans = [('', 'Keep initial state'), ]
+        display_trans = [('', _('Keep initial state')), ]
         for trans in transitions:
             display_trans.append((trans['id'], trans['name']))
         # Unindex and remove the temporary object
@@ -149,10 +106,11 @@ class FeedfeederFolder(ATBTreeFolder):
         if transition != '':
             wf_tool = getToolByName(self, 'portal_workflow')
             wf_tool.doActionFor(self[id], transition,
-                comment='Automatic transition triggered by FeedFolder')
+                comment=_('Automatic transition triggered by FeedFolder'))
         return self[id]
 
     security.declarePublic('getFeedFolder')
+
     def getFeedFolder(self):
         return self
 
