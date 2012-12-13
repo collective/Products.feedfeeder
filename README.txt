@@ -107,10 +107,11 @@ Tests
 
 The look-here-first test is the doctest at 'doc/feedfeeder-integration.txt'.
 
-Assuming you have a buildout, testing is best done something like this::
-
-  bin/instance test -s Products.feedfeeder
- 
-or if you have a ``bin/test`` command properly set up::
+Assuming you have a buildout, testing is best done with a propely set up ``bin/test`` command::
 
   bin/test -s Products.feedfeeder
+
+We are now testing with Travis:
+
+.. image:: https://secure.travis-ci.org/collective/Products.feedfeeder.png
+    :target: http://travis-ci.org/collective/Products.feedfeeder
