@@ -23,11 +23,11 @@ msgstr ""
 
 #: ./profiles/default/types/FeedfeederFolder.xml
 msgid "Feed Folder"
-msgstr ""
+msgstr "Feedfolder"
 
 #: ./profiles/default/types/FeedFeederItem.xml
 msgid "Feed Item"
-msgstr ""
+msgstr "Feeditem"
 
 #: ./browser/feed.py:47
 msgid "Feed items updated"
