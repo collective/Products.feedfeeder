@@ -13,6 +13,9 @@ History of feedfeeder
   French translations
   [cedricmessiant]
 
+- Source is open in a new page.
+  [thomasdesvenain]
+
 - Use png icons.
   Use icon_expr instead of content_icon.
   [thomasdesvenain]

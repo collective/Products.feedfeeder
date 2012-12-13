@@ -34,7 +34,7 @@
       </tal:enclosures>
 
       <div class="feed-source-link">
-        <a href="#"
+        <a href="#" target="_new"
            tal:attributes="href context/remote_url"
            i18n:translate="source_available_here">Source available here.</a>
       </div>
