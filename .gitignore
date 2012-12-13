@@ -10,5 +10,6 @@ dist
 download
 eggs
 fake-eggs
+local.cfg
 parts
 var
