@@ -1,5 +1,9 @@
 language: python
 python: "2.7"
+notifications:
+  irc:
+    channels: "irc.freenode.org#vanrees"
+    on_success: change
 install:
   - mkdir -p buildout-cache/eggs
   - mkdir -p buildout-cache/downloads
