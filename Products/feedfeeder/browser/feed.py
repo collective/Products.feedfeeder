@@ -6,8 +6,9 @@ from zope import component
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.interfaces.container import IFeedsContainer
 
-from Products.CMFPlone import PloneMessageFactory as _
 from Products.statusmessages.interfaces import IStatusMessage
+
+from Products.feedfeeder import _
 
 logger = logging.getLogger("feedfeeder")
 
