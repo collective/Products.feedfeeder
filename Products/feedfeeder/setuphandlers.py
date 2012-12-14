@@ -20,6 +20,15 @@ def update_actions(context):
     context.runImportStepFromProfile(PROFILE_ID, 'actions')
 
 
+def update_registry(context):
+    try:
+        context.runImportStepFromProfile(PROFILE_ID, 'plone.app.registry')
+    except ValueError:
+        # Probably Plone 3, which has no registry, and needs no
+        # registry in this case.
+        pass
+
+
 def add_indexes(site, logger):
     """Add indexes.
 

@@ -4,6 +4,9 @@ History of feedfeeder
 2.1 (unreleased)
 ----------------
 
+- Support our criterion in new style collections.
+  [maurits]
+
 - Update feed folder after its creation
   i18n for untranslated strings
   Added div#content in feed folder template

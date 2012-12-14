@@ -11,8 +11,5 @@ To do:
 - Use locales instead of an i18n directory.
 
 - Check if feedfeeder still works on Plone 3, for example the recent
-  changes to the types and actions, and if we still want to support
-  that.
-
-- Check why 'Feeditem updated' is not available for selecting/sorting
-  in new style collections.
+  changes to the types and actions and registry, and if we still want
+  to support that.  This may be a good time to say goodbye.

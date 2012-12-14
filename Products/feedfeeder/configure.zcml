@@ -70,6 +70,10 @@
         title="Update the actions"
         description=""
         handler="Products.feedfeeder.setuphandlers.update_actions" />
+    <genericsetup:upgradeStep
+        title="Update the registry"
+        description=""
+        handler="Products.feedfeeder.setuphandlers.update_registry" />
   </genericsetup:upgradeSteps>
 
 </configure>
