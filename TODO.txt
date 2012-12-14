@@ -10,6 +10,9 @@ To do:
 
 - Use locales instead of an i18n directory.
 
-- Commit 1a159a3138e8af7b349cc9959f4fc951a4d707f4 needs an upgrade
-  step.  Also, check if this works on Plone 3 and if we still want to
-  support that.
+- Check if feedfeeder still works on Plone 3, for example the recent
+  changes to the types and actions, and if we still want to support
+  that.
+
+- Check why 'Feeditem updated' is not available for selecting/sorting
+  in new style collections.
