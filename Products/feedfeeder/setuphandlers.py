@@ -16,6 +16,10 @@ def update_types(context):
     context.runImportStepFromProfile(PROFILE_ID, 'typeinfo')
 
 
+def update_actions(context):
+    context.runImportStepFromProfile(PROFILE_ID, 'actions')
+
+
 def add_indexes(site, logger):
     """Add indexes.
 
