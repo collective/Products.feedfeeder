@@ -1,7 +1,5 @@
 <configure
-    xmlns="http://namespaces.zope.org/browser"
-    xmlns:zcml="http://namespaces.zope.org/zcml"
-    >
+    xmlns="http://namespaces.zope.org/browser">
 
   <page
       name="update_feed_items"
@@ -43,16 +41,6 @@
       class=".feeditem.FeedItemView"
       permission="zope2.View"
       template="feed-item.pt"
-      zcml:condition="have plone-4"
-      />
-
-  <page
-      name="feed-item.html"
-      for="Products.feedfeeder.interfaces.item.IFeedItem"
-      class=".feeditem.FeedItemView"
-      permission="zope2.View"
-      template="feed-item3.pt"
-      zcml:condition="not-have plone-4"
       />
 
   <page
