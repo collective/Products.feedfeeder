@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
-"POT-Creation-Date: 2012-12-14 00:03+0000\n"
+"POT-Creation-Date: 2012-12-21 22:39+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI +ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,7 +18,12 @@ msgstr ""
 "Domain: plone\n"
 
 #: profiles/default/portal_atct.xml
+#: profiles/registry/registry.xml
 msgid "Date that the FeedItem was last updated."
+msgstr ""
+
+#: profiles/registry/registry.xml
+msgid "Dates"
 msgstr ""
 
 #: profiles/default/types/FeedfeederFolder.xml
@@ -26,6 +31,7 @@ msgid "Edit"
 msgstr ""
 
 #: profiles/default/portal_atct.xml
+#: profiles/registry/registry.xml
 msgid "FeedItem Updated"
 msgstr ""
 

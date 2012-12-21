@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2012-12-14 00:08+0000\n"
+"POT-Creation-Date: 2012-12-21 22:39+0000\n"
 "PO-Revision-Date: 2009-08-11 17:21-0400\n"
 "Last-Translator: Leonardo Caballero <leonardocaballero@gmail.com>\n"
 "Language-Team: Plone Cono Sur <plone-conosur@lists.plone.org>\n"
@@ -19,7 +19,12 @@ msgstr ""
 "X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
 #: profiles/default/portal_atct.xml
+#: profiles/registry/registry.xml
 msgid "Date that the FeedItem was last updated."
+msgstr ""
+
+#: profiles/registry/registry.xml
+msgid "Dates"
 msgstr ""
 
 #: profiles/default/types/FeedfeederFolder.xml
@@ -27,6 +32,7 @@ msgid "Edit"
 msgstr ""
 
 #: profiles/default/portal_atct.xml
+#: profiles/registry/registry.xml
 msgid "FeedItem Updated"
 msgstr ""
 
