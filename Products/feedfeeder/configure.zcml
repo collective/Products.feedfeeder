@@ -7,6 +7,7 @@
     i18n_domain="feedfeeder">
 
   <include package="Products.CMFCore" file="permissions.zcml" />
+  <i18n:registerTranslations directory="locales" />
 
   <utility
       factory=".utilities.FeedConsumer"

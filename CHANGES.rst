@@ -4,6 +4,9 @@ History of feedfeeder
 2.1 (unreleased)
 ----------------
 
+- Use locales instead of an i18n directory.
+  [maurits]
+
 - Support our criterion in new style collections.  Add new profile for
   this.  Make sure not to fail on Plone 4.0 or 4.1 where this is not
   needed at all.
