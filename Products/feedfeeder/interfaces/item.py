@@ -1,11 +1,5 @@
-# -*- coding: utf-8 -*-
-
 from zope import interface
-try:
-    from zope.lifecycleevent import IObjectModifiedEvent
-except ImportError:
-    # BBB for Zope 2.9
-    from zope.app.event.interfaces import IObjectModifiedEvent
+from zope.lifecycleevent import IObjectModifiedEvent
 
 
 class IFeedItem(interface.Interface):

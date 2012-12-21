@@ -1,12 +1,7 @@
 # -*- coding: utf-8 -*-
 import logging
 from xml.dom import minidom
-try:
-    from hashlib import md5
-    md5  # pyflakes
-except ImportError:
-    # BBB python2.4
-    from md5 import md5
+from hashlib import md5
 import os
 import re
 import tempfile

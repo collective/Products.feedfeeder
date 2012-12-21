@@ -1,6 +1,4 @@
 <?xml version="1.0"?>
-<!-- For Plone 2.5 compatibility this is also done in
-     setuphandlers.py:createFeedUpdatedCriterion  -->
 <atcttool
     xmlns:i18n="http://xml.zope.org/namespaces/i18n">
   <topic_indexes i18n:domain="plone">

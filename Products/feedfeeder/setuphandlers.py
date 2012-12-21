@@ -1,12 +1,4 @@
 from Products.CMFCore.utils import getToolByName
-# Check for Plone 3.0 or above
-try:
-    from Products.CMFPlone.migrations import v3_0
-    v3_0 # pyflakes
-except ImportError:
-    PLONE30 = 0
-else:
-    PLONE30 = 1
 
 # The default profile id of your package:
 PROFILE_ID = 'profile-Products.feedfeeder:default'
@@ -50,29 +42,6 @@ def add_indexes(site, logger):
         logger.info('Added DateIndex for %s.' % idx)
 
 
-def createFeedUpdatedCriterion(site, logger):
-    """Make getFeedItemUpdated field a criterion for Smart Folders.
-
-    This is for backwards compatibility with Plone 2.5 as in 3.0 this
-    can be done with profiles/default/portal_atct.xml
-    """
-    if PLONE30:
-        # Plone 3 does this in portal_atct.xml
-        return
-    logger.info('Adding smart folder metadata and index.')
-    fieldname = 'getFeedItemUpdated'
-    friendlyName = 'FeedItem Updated'
-    description = 'Date that the FeedItem was last updated.'
-    enabled = True
-    criteria = ('ATFriendlyDateCriteria', 'ATDateRangeCriterion')
-
-    smart_folder_tool = getToolByName(site, 'portal_atct')
-    smart_folder_tool.addIndex(fieldname, friendlyName, description,
-                               enabled, criteria)
-    smart_folder_tool.addMetadata(fieldname, friendlyName, description,
-                                  enabled)
-
-
 def importVarious(context):
     # Only run step if a flag file is present
     if context.readDataFile('feedfeeder_various.txt') is None:
@@ -80,5 +49,4 @@ def importVarious(context):
     logger = context.getLogger('feedfeeder')
     site = context.getSite()
     add_indexes(site, logger)
-    createFeedUpdatedCriterion(site, logger)
     logger.info('feedfeeder_various step imported')
