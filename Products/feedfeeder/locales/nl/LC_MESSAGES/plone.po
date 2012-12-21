@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2012-12-21 22:39+0000\n"
+"POT-Creation-Date: 2012-12-21 22:53+0000\n"
 "PO-Revision-Date: 2009-11-05 23:24+0100\n"
 "Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl>\n"
 "Language-Team: Zest Software <info@zestsoftware.nl>\n"

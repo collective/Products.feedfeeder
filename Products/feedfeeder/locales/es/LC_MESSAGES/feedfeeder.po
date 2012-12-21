@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2012-12-21 22:39+0000\n"
+"POT-Creation-Date: 2012-12-21 22:53+0000\n"
 "PO-Revision-Date: 2009-08-11 17:21-0400\n"
 "Last-Translator: Leonardo Caballero <leonardocaballero@gmail.com>\n"
 "Language-Team: Spanish <plone-conosur@lists.plone.org>\n"
@@ -114,7 +114,6 @@ msgstr ""
 
 #. Default: "Test view showing the latest items from the feeds"
 #: ./skins/feedfeeder/latest_items.pt:7
-#: skins/feedfeeder/latest_items.pt:7
 msgid "test_view_title"
 msgstr "Vista de prueba mostrando los últimos elementos de los canales"
 
