@@ -8,8 +8,6 @@ To do:
   problems.  All seems fine when used in a normal website.  Also,
   the tests work fine with the old feedparser 4.1.
 
-- Use locales instead of an i18n directory.
-
 - Get rid of extendeddatetime.py hack; but this needs a very difficult
   fix in zope DateTime, so this could take a while.  See:
   http://new.plone.org/products/feedfeeder/issues/20 and
