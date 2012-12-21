@@ -2,8 +2,8 @@
 # Maurits van Rees <m.van.rees@zestsoftware.nl>, 2006-2012
 msgid ""
 msgstr ""
-"Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2012-12-21 22:53+0000\n"
+"Project-Id-Version: feedfeeder 2.1\n"
+"POT-Creation-Date: 2012-12-21 23:24+0000\n"
 "PO-Revision-Date: 2012-12-21 23:58+0100\n"
 "Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl>\n"
 "Language-Team: Zest Software <info@zestsoftware.nl>\n"
@@ -33,9 +33,22 @@ msgstr "Feeditem"
 msgid "Feed items updated"
 msgstr "Feed items geüpdatet"
 
+msgid "Feedfeeder"
+msgstr "Feedfeeder"
+
+#: configure.zcml
+msgid "Feedfeeder registry"
+msgstr "Feedfeeder register"
+
 #: ./content/folder.py:67
 msgid "Keep initial state"
 msgstr "Behoud de initiële status"
+
+msgid "Profile for registry settings of Feedfeeder"
+msgstr "Profiel voor registerinstellingen van Feedfeeder"
+
+msgid "Turn external feed entries into content items"
+msgstr "Maak van externe feeditems content items"
 
 #: ./profiles/default/actions.xml
 msgid "Update Feed Items"

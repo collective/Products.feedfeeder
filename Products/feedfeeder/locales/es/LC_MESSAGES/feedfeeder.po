@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2012-12-21 22:53+0000\n"
+"POT-Creation-Date: 2012-12-21 23:24+0000\n"
 "PO-Revision-Date: 2009-08-11 17:21-0400\n"
 "Last-Translator: Leonardo Caballero <leonardocaballero@gmail.com>\n"
 "Language-Team: Spanish <plone-conosur@lists.plone.org>\n"
@@ -35,8 +35,21 @@ msgstr ""
 msgid "Feed items updated"
 msgstr ""
 
+msgid "Feedfeeder"
+msgstr ""
+
+#: configure.zcml
+msgid "Feedfeeder registry"
+msgstr ""
+
 #: ./content/folder.py:67
 msgid "Keep initial state"
+msgstr ""
+
+msgid "Profile for registry settings of Feedfeeder"
+msgstr ""
+
+msgid "Turn external feed entries into content items"
 msgstr ""
 
 #: ./profiles/default/actions.xml

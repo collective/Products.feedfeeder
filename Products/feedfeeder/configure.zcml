@@ -33,7 +33,7 @@
       name="default"
       title="Feedfeeder"
       directory="profiles/default"
-      description="Profile for Feedfeeder"
+      description="Turn external feed entries into content items"
       provides="Products.GenericSetup.interfaces.EXTENSION"
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       />
