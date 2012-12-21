@@ -42,4 +42,6 @@
     url_expr="string:${object_url}/edit" visible="True">
   <permission value="Modify portal content"/>
  </action>
+ <action title="Update Feed Items" action_id="update_feed_items" remove="True"
+   category="object_buttons" />
 </object>
