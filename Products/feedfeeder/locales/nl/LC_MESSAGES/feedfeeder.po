@@ -1,10 +1,10 @@
 # Reinout van Rees <reinout@vanrees.org>, 2006.
-# Maurits van Rees <m.van.rees@zestsoftware.nl>, 2006-2010
+# Maurits van Rees <m.van.rees@zestsoftware.nl>, 2006-2012
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
 "POT-Creation-Date: 2012-12-21 22:53+0000\n"
-"PO-Revision-Date: 2010-11-26 19:32+0100\n"
+"PO-Revision-Date: 2012-12-21 23:58+0100\n"
 "Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl>\n"
 "Language-Team: Zest Software <info@zestsoftware.nl>\n"
 "MIME-Version: 1.0\n"
@@ -13,13 +13,13 @@ msgstr ""
 "Plural-Forms: nplurals=1; plural=0\n"
 "Language-Code: nl\n"
 "Language-Name: Dutch\n"
-"Preferred-Encodings: latin1 utf-8\n"
+"Preferred-Encodings: utf-8 latin1\n"
 "Domain: feedfeeder\n"
 
 #: ./content/folder.py:109
 #: ./content/item.py:112
 msgid "Automatic transition triggered by FeedFolder"
-msgstr ""
+msgstr "Automatische transitie door Feedfolder"
 
 #: ./profiles/default/types/FeedfeederFolder.xml
 msgid "Feed Folder"
@@ -35,11 +35,11 @@ msgstr "Feed items geüpdatet"
 
 #: ./content/folder.py:67
 msgid "Keep initial state"
-msgstr ""
+msgstr "Behoud de initiële status"
 
 #: ./profiles/default/actions.xml
 msgid "Update Feed Items"
-msgstr ""
+msgstr "Update Feeditems"
 
 #. Default: "Feeditemauthor"
 #: ./content/item.py:25
@@ -65,18 +65,17 @@ msgstr "URLs van de feeds"
 #. Default: "Has body text"
 #: ./content/item.py:55
 msgid "feedfeeder_label_hasbody"
-msgstr ""
+msgstr "Heeft tekst"
 
 #. Default: "Link"
 #: ./content/item.py:41
-#, fuzzy
 msgid "feedfeeder_label_link"
-msgstr "URL (van het oorspronkelijke item)"
+msgstr "URL"
 
 #. Default: "Object Ids"
 #: ./content/item.py:48
 msgid "feedfeeder_label_objectids"
-msgstr ""
+msgstr "Objectids"
 
 #. "When updating this feed's item the transition selected below will be performed."
 #. Default: "When updating this feed's item the transition selected below will be performed."
@@ -87,7 +86,7 @@ msgstr "Tijdens het updaten van een item uit deze feed wordt de transitie uitgev
 #. Default: "If checked the feed item will be automatically redirected if you don't have the edit permission."
 #: ./content/folder.py:24
 msgid "help_redirect"
-msgstr ""
+msgstr "Indien aangevinkt, zal het feeditem automatisch doorsturen naar de oorspronkelijke website als je geen permissie hebt om te bewerken."
 
 #. 'Default transition'
 #. Default: "Default transition"
@@ -98,7 +97,7 @@ msgstr "Standaardtransitie"
 #. Default: "Automatic redirect of feed items"
 #: ./content/folder.py:25
 msgid "label_redirect"
-msgstr ""
+msgstr "Automatische redirect van feeditems"
 
 #. Default: "This item does not have any body text, click the edit tab to change it."
 #: ./browser/feed-item.pt:13
