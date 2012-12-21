@@ -23,6 +23,9 @@ History of feedfeeder
   Use icon_expr instead of content_icon.
   [thomasdesvenain]
 
+- Support only Plone 4.
+  [maurits]
+
 
 2.0.9 (2012-11-12)
 ------------------

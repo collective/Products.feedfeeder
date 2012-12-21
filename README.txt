@@ -97,9 +97,10 @@ want update them all once you can do::
 Dependencies
 ------------
 
-- Targeted at Plone 3.3 or Plone 4 (might work on earlier Plone 3
-  versions, but this is not tested).  Compatibility with Plone 4.3 has
-  been checked. 
+We need Plone 4.x.  Compatibility with Plone 4.3 has been checked.
+
+If you use Plone 3, please use a Products.feedfeeder version from the
+2.0 line.  The current latest is 2.0.9.
 
 
 Tests
