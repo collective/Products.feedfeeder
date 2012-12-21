@@ -2,6 +2,10 @@ from Products.CMFCore.utils import getToolByName
 
 # The default profile id of your package:
 PROFILE_ID = 'profile-Products.feedfeeder:default'
+# The profile id for the registry.  Done because on Plone 4.1 you get
+# an ImportError when trying to store a value for
+# plone.app.querystring.
+REGISTRY_PROFILE_ID = 'profile-Products.feedfeeder:registry'
 
 
 def update_types(context):
@@ -13,11 +17,15 @@ def update_actions(context):
 
 
 def update_registry(context):
+    # context could be portal_setup or the Plone Site.
+    portal_setup = getToolByName(context, 'portal_setup')
     try:
-        context.runImportStepFromProfile(PROFILE_ID, 'plone.app.registry')
-    except ValueError:
-        # Probably Plone 3, which has no registry, and needs no
-        # registry in this case.
+        portal_setup.runImportStepFromProfile(
+            REGISTRY_PROFILE_ID, 'plone.app.registry')
+    except (ValueError, ImportError):
+        # Probably Plone 4.0, which has no plone.app.registry, or
+        # Plone 4.1, which has no plone.app.querystring.  None of
+        # these two actually needs the registry settings in that case.
         pass
 
 
@@ -49,4 +57,5 @@ def importVarious(context):
     logger = context.getLogger('feedfeeder')
     site = context.getSite()
     add_indexes(site, logger)
+    update_registry(site)
     logger.info('feedfeeder_various step imported')

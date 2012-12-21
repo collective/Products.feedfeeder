@@ -4,7 +4,9 @@ History of feedfeeder
 2.1 (unreleased)
 ----------------
 
-- Support our criterion in new style collections.
+- Support our criterion in new style collections.  Add new profile for
+  this.  Make sure not to fail on Plone 4.0 or 4.1 where this is not
+  needed at all.
   [maurits]
 
 - Update feed folder after its creation

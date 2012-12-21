@@ -94,6 +94,7 @@ want update them all once you can do::
      host localhost:8080
    </clock-server>
    
+
 Dependencies
 ------------
 
@@ -101,6 +102,17 @@ We need Plone 4.x.  Compatibility with Plone 4.3 has been checked.
 
 If you use Plone 3, please use a Products.feedfeeder version from the
 2.0 line.  The current latest is 2.0.9.
+
+
+Upgrade notes
+-------------
+
+If you have installed Products.feedfeeder 2.1.x in Plone 4.0 or 4.1
+and you upgrade to Plone 4.2 or higher, then you will be missing some
+functionality for listing or ordering feedfeeder items in new style
+collections.  To solve this, you should go to ``portal_setup`` in the
+Zope Management Interface, visit the Import tab, select the
+"Feedfeeder registry" profile and import all steps.
 
 
 Tests

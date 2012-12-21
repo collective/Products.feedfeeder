@@ -38,6 +38,15 @@
       for="Products.CMFPlone.interfaces.IPloneSiteRoot"
       />
 
+  <genericsetup:registerProfile
+      name="registry"
+      title="Feedfeeder registry"
+      directory="profiles/registry"
+      description="Profile for registry settings of Feedfeeder"
+      provides="Products.GenericSetup.interfaces.EXTENSION"
+      for="Products.CMFPlone.interfaces.IPloneSiteRoot"
+      />
+
   <genericsetup:upgradeStep
       title="Update the portal types"
       description=""
