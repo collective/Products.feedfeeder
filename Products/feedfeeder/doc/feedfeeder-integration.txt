@@ -30,30 +30,28 @@ Available Transitions
 Feed items that are added during an update can be automatically
 transitioned.
 
-Between Plone 2.5 and 3.0 there were some changes to the workflows
-which make it tricky to have tests here that pass in both cases.  We
-explicitly set the workflow chain for FeedFeederItems to
-plone_workflow, as that is what the default for Plone 2.5.  And we do
-the same for Files, as we use them for enclosures::
+We explicitly set the workflow chain for FeedFeederItems to a
+workflow.  And we do the same for Files, so we can test the automatic
+transition of enclosures::
 
-  >>> portal.portal_workflow.setChainForPortalTypes(['FeedFeederItem', 'File'], 'plone_workflow')
+  >>> portal.portal_workflow.setChainForPortalTypes(['FeedFeederItem', 'File'], 'simple_publication_workflow')
 
 See what transitions we have available::
 
   >>> feeder.getAvailableTransitions()
-  <DisplayList [('', u'Keep initial state'), ('hide', 'Make private'), ('submit', 'Submit...>
+  <DisplayList [('', u'Keep initial state'), ('submit', 'Submit...>
   >>> self.setRoles('Manager')
   >>> [trans for trans in feeder.getAvailableTransitions()]
-  ['', 'hide', 'submit', 'publish']
+  ['', 'submit', 'publish']
 
   >>> from Products.CMFCore.utils import getToolByName
   >>> wf_tool = getToolByName(folder,'portal_workflow')
   >>> wf_tool.doActionFor(feeder, 'publish')
   >>> [trans for trans in feeder.getAvailableTransitions()]
-  ['', 'hide', 'submit', 'publish']
+  ['', 'submit', 'publish']
   >>> self.setRoles('')
   >>> [trans for trans in feeder.getAvailableTransitions()]
-  ['', 'hide', 'submit']
+  ['', 'submit']
 
 
 Using Updating View
