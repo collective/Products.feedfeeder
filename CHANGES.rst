@@ -4,7 +4,10 @@ History of feedfeeder
 2.0.10 (unreleased)
 -------------------
 
-- Nothing changed yet.
+- This is now a maintenance branch that will keep compatibility with
+  Plone 3 (and Plone 4.0 till 4.3) but will see no new development.  If
+  you are using Plone 4, please use Products.feedfeeder 2.1 or higher.
+  [maurits]
 
 
 2.0.9 (2012-11-12)

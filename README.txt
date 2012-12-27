@@ -101,6 +101,11 @@ Dependencies
   versions, but this is not tested).  Compatibility with Plone 4.3 has
   been checked. 
 
+- Products.feedfeeder 2.0.x is now a maintenance branch that will keep
+  compatibility with Plone 3 (and Plone 4.0 till 4.3) but will see no
+  new development.  If you are using Plone 4, please use
+  Products.feedfeeder 2.1 or higher.
+
 
 Tests
 -----
