@@ -3,7 +3,10 @@ from AccessControl import ClassSecurityInfo
 from DateTime import DateTime
 from Products.ATContentTypes.content.document import ATDocument
 from Products.ATContentTypes.content.folder import ATFolder
-from Products.Archetypes.atapi import *
+from Products.Archetypes.atapi import (
+    CalendarWidget, ComputedField, ComputedWidget, DateTimeField,
+    ObjectField, Schema, StringField, StringWidget, registerType)
+
 from Products.CMFCore.utils import getToolByName
 from Products.CMFPlone.utils import base_hasattr
 from zope import interface
@@ -90,7 +93,6 @@ class FeedFeederItem(ATFolder):
     _at_rename_after_creation = True
 
     schema = FeedFeederItem_schema
-
 
     security.declarePublic('addEnclosure')
 

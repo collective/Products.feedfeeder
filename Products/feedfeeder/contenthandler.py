@@ -7,7 +7,7 @@ from zope import interface
 try:
     from zope.annotation.interfaces import IAttributeAnnotatable
     from zope.annotation.interfaces import IAnnotations
-    IAttributeAnnotatable, IAnnotations # pyflakes
+    IAttributeAnnotatable, IAnnotations  # pyflakes
 except ImportError:
     from zope.app.annotation.interfaces import IAttributeAnnotatable
     from zope.app.annotation.interfaces import IAnnotations
@@ -46,7 +46,7 @@ class AnnotationContentHandler(object):
         if not IAttributeAnnotatable.providedBy(self.context):
             directly = interface.directlyProvidedBy(self.context)
             interface.directlyProvides(self.context,
-                                            directly + IAttributeAnnotatable)
+                                       directly + IAttributeAnnotatable)
         annotations = IAnnotations(self.context)
         metadata = annotations.get(self.ANNO_KEY, None)
         if metadata is None:

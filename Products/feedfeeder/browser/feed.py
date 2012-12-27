@@ -91,7 +91,7 @@ class FeedFolderView(object):
             enclosures = x.getObjectids
 
             if (enclosures and enclosures is not None and
-                len(enclosures) == 1):
+                    len(enclosures) == 1):
                 # only one enclosure? return item title but return link
                 # to sole enclosure, unless there is some body text.
                 if not int(x.getHasBody):

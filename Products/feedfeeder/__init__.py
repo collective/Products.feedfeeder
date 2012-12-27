@@ -16,8 +16,7 @@ from Products.feedfeeder.config import PROJECTNAME
 from Products.feedfeeder.config import DEFAULT_ADD_CONTENT_PERMISSION
 
 DirectoryView.registerDirectory('skins', product_globals)
-DirectoryView.registerDirectory('skins/feedfeeder',
-                                    product_globals)
+DirectoryView.registerDirectory('skins/feedfeeder', product_globals)
 
 
 _ = MessageFactory('feedfeeder')
