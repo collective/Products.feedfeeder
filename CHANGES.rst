@@ -1,7 +1,7 @@
 History of feedfeeder
 =====================
 
-2.1 (unreleased)
+2.1 (2012-12-27)
 ----------------
 
 - Use locales instead of an i18n directory.

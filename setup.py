@@ -4,7 +4,7 @@ readme = open("README.txt").read().strip()
 history = open("CHANGES.rst").read().strip()
 
 setup(name='Products.feedfeeder',
-      version='2.1.dev0',
+      version='2.1',
       description="Turn external feed entries into content items",
       long_description= readme + "\n\n" + history,
       # Get more strings from
