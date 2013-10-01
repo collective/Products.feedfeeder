@@ -4,7 +4,12 @@ History of feedfeeder
 2.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Update permissions.  Protect updating a feed with the "feedfeeder:
+  Update feed" permission.  Protect updating all feeds in a mega
+  update with the "feedfeeder: Update all feeds" permission.  We give
+  these to the Manager and Site Administrator roles in an upgrade step.
+  Fixes https://github.com/collective/Products.feedfeeder/issues/4
+  [maurits]
 
 
 2.1 (2012-12-27)

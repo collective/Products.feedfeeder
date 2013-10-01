@@ -6,7 +6,7 @@
       class=".feed.UpdateFeedItems"
       for="Products.feedfeeder.interfaces.container.IFeedsContainer"
       allowed_interface=".feed.IUpdateFeedItems"
-      permission="cmf.ManagePortal"
+      permission="feedfeeder.UpdateFeed"
       />
 
   <page
@@ -46,7 +46,7 @@
   <page
       name="feed-mega-update"
       for="Products.CMFCore.interfaces.ISiteRoot"
-      permission="cmf.ManagePortal"
+      permission="feedfeeder.UpdateAllFeeds"
       class=".feed.MegaUpdate"
       />
 

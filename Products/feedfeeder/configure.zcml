@@ -9,6 +9,20 @@
   <include package="Products.CMFCore" file="permissions.zcml" />
   <i18n:registerTranslations directory="locales" />
 
+  <!-- Define permissions. See also permissions.py -->
+  <permission
+    id="feedfeeder.AddContent"
+    title="feedfeeder: Add"
+    />
+  <permission
+    id="feedfeeder.UpdateFeed"
+    title="feedfeeder: Update feed"
+    />
+  <permission
+    id="feedfeeder.UpdateAllFeeds"
+    title="feedfeeder: Update all feeds"
+    />
+
   <utility
       factory=".utilities.FeedConsumer"
       permission="cmf.ModifyPortalContent"
@@ -71,6 +85,20 @@
         title="Update the registry"
         description=""
         handler="Products.feedfeeder.setuphandlers.update_registry" />
+  </genericsetup:upgradeSteps>
+
+  <genericsetup:upgradeSteps
+      source="102"
+      destination="103"
+      profile="Products.feedfeeder:default">
+    <genericsetup:upgradeStep
+        title="Update the permissions"
+        description="Apply our rolemap step."
+        handler="Products.feedfeeder.setuphandlers.update_rolemap" />
+    <genericsetup:upgradeStep
+        title="Update the actions"
+        description=""
+        handler="Products.feedfeeder.setuphandlers.update_actions" />
   </genericsetup:upgradeSteps>
 
 </configure>

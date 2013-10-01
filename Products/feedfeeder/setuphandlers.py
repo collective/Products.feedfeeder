@@ -16,6 +16,10 @@ def update_actions(context):
     context.runImportStepFromProfile(PROFILE_ID, 'actions')
 
 
+def update_rolemap(context):
+    context.runImportStepFromProfile(PROFILE_ID, 'rolemap')
+
+
 def update_registry(context):
     # context could be portal_setup or the Plone Site.
     portal_setup = getToolByName(context, 'portal_setup')

@@ -9,8 +9,11 @@ from Products.CMFCore.permissions import setDefaultRoles
 
 
 PROJECTNAME = "feedfeeder"
+AddContent = "feedfeeder: Add"
+UpdateFeed = "feedfeeder: Update feed"
+UpdateAllFeeds = "feedfeeder: Update all feeds"
 
-DEFAULT_ADD_CONTENT_PERMISSION = "%s: Add" % PROJECTNAME
+DEFAULT_ADD_CONTENT_PERMISSION = AddContent
 setDefaultRoles(DEFAULT_ADD_CONTENT_PERMISSION, ('Manager', 'Owner'))
 
 product_globals = globals()
