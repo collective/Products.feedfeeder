@@ -1,7 +1,7 @@
 History of feedfeeder
 =====================
 
-2.2 (unreleased)
+2.2 (2013-10-01)
 ----------------
 
 - Take the title as basis for the uid of an item if both guid and link
