@@ -66,15 +66,17 @@ def get_uid_from_entry(entry):
 
     We return an md5 digest.  Usually that should be from the id of
     the entry, but sometimes, rss providers send items without guid
-    element; we take the link then.  If even that is missing, then we
-    cannot get a unique id so we cannot know if this is a new item
-    that should be added or an existing that should be updated.  So we
-    return nothing for safety.
+    element; we take the link then.
+
+    Surprisingly, these are optional, at least in rss, so we take the
+    title then.
     """
     if hasattr(entry, 'id'):
         value = entry.id
     elif hasattr(entry, 'link'):
         value = entry.link
+    elif hasattr(entry, 'title'):
+        value = entry.title
     else:
         return None
     sig = md5(value.encode('ascii', 'ignore'))

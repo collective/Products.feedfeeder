@@ -4,6 +4,10 @@ History of feedfeeder
 2.2 (unreleased)
 ----------------
 
+- Take the title as basis for the uid of an item if both guid and link
+  are not found.  They are optional in rss.
+  [maurits]
+
 - Update permissions.  Protect updating a feed with the "feedfeeder:
   Update feed" permission.  Protect updating all feeds in a mega
   update with the "feedfeeder: Update all feeds" permission.  We give
