@@ -41,6 +41,8 @@ unifiable = {
     'ugrave': 'u', 'uacute': 'u', 'ucirc': 'u', 'uuml': 'u',
     }
 
+maxsizeUnits = 1000. # kb
+maxsizeUnitsName = "kb"
 
 def convert_summary(input):
     try:
@@ -297,6 +299,10 @@ class FeedConsumer:
                                    not self.isHTMLEnclosure(x)]
 
                 for link in real_enclosures:
+                    maxsize = feedContainer.getMaxsize()
+                    if int(link.get('length', 0)) >  maxsize * maxsizeUnits :
+                        logger.warn("Ignored enclosure {0} size {1} {3} exceeds maximum {2} {3}".format(link.get('href', ''),  int(link.get('length', 0))/maxsizeUnits, maxsize), maxsizeUnitsName)
+                        continue
                     enclosureSig = md5(link.href)
                     enclosureId = enclosureSig.hexdigest()
                     if enclosureId in obj.objectIds():
@@ -305,7 +311,7 @@ class FeedConsumer:
                         continue
                     enclosure = obj.addEnclosure(enclosureId)
                     enclosure.update(title=enclosureId)
-                    updateWithRemoteFile(enclosure, link)
+                    updateWithRemoteFile(enclosure, link,  maxsize)
                     if enclosure.Title() != enclosure.getId():
                         self.tryRenamingEnclosure(enclosure, obj)
                     # At this moment in time, the
@@ -326,7 +332,7 @@ class FeedConsumer:
         return False
 
 
-def updateWithRemoteFile(obj, link):
+def updateWithRemoteFile(obj, link,  maxsize):
     file = tempfile.TemporaryFile('w+b')
     try:
         remote = urllib2.urlopen(link.href.encode('utf-8'))
@@ -345,27 +351,30 @@ def updateWithRemoteFile(obj, link):
             if m is not None:
                 filename = m.group(1).strip()
 
-        if filename is not None:
-            obj.update(title=filename)
+        if int(info.get('content-length', 0)) > maxsize * maxsizeUnits:
+                logger.warn("Ignored enclosure {0}, size {1} {3} exceeds maximum {2} {3}".format(link.get('href', ''),  int(info.get('content-length', 0))/maxsizeUnits, maxsize,  maxsizeUnitsName))
+        else:
+            if filename is not None:
+                obj.update(title=filename)
 
-        max = 2048
-        sz = max
-        while sz == max:
-            buffer = remote.read(max)
-            sz = len(buffer)
-            if sz > 0:
-                file.write(buffer)
+            max = 2048
+            sz = max
+            while sz == max:
+                buffer = remote.read(max)
+                sz = len(buffer)
+                if sz > 0:
+                    file.write(buffer)
 
-        file.flush()
-        file.seek(0)
-        try:
-            link_type = link.type
-        except AttributeError:
-            # Some links do not have a type.
-            # http://plone.org/products/feedfeeder/issues/39
-            link_type = 'application/octet-stream'
-        obj.update_data(file, link_type)
-        file.close()
+            file.flush()
+            file.seek(0)
+            try:
+                link_type = link.type
+            except AttributeError:
+                # Some links do not have a type.
+                # http://plone.org/products/feedfeeder/issues/39
+                link_type = 'application/octet-stream'
+            obj.update_data(file, link_type)
+            file.close()
     except urllib2.URLError:
         # well, if we cannot retrieve the data, the file object will
         # remain empty
