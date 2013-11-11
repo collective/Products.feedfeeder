@@ -35,7 +35,7 @@ schema = Schema((
             label=_('label_default_transition', default='Default transition'),
         )
     ),
-    
+
 ),
 )
 

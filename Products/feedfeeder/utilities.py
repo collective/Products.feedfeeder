@@ -295,9 +295,10 @@ class FeedConsumer:
                 enclosures = [x for x in entry.links if x.rel == 'enclosure']
                 real_enclosures = [x for x in enclosures if
                                    not self.isHTMLEnclosure(x)]
-                for link in real_enclosures: 
-                    if maxsize >0 and int(link.get('length', 0)) >  maxsize * 1000 :
-                        logger.warn("Ignored enclosure {0} size {1} kb exceeds maximum {2} kb".format(link.get('href', ''),  int(link.get('length', 0))/1000, maxsize))
+                for link in real_enclosures:
+                    if maxsize > 0 and int(link.get('length', 0)) > maxsize * 1000:
+                        logger.warn("Ignored enclosure {0} size {1} kb exceeds maximum {2} kb".format(
+                            link.get('href', ''), int(link.get('length', 0))/1000, maxsize))
                         continue
                     enclosureSig = md5(link.href)
                     enclosureId = enclosureSig.hexdigest()
@@ -348,7 +349,8 @@ def updateWithRemoteFile(obj, link):
                 filename = m.group(1).strip()
 
         if int(info.get('content-length', 0)) > maxsize * 1000:
-            logger.warn("Ignored enclosure {0}, size {1} kb exceeds maximum {2} kb".format(link.get('href', ''),  int(info.get('content-length', 0))/1000, maxsize))
+            logger.warn("Ignored enclosure {0}, size {1} kb exceeds maximum {2} kb".format(
+                link.get('href', ''), int(info.get('content-length', 0))/1000, maxsize))
             return
         if filename is not None:
             obj.update(title=filename)
