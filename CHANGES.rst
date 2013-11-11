@@ -4,7 +4,9 @@ History of feedfeeder
 2.3 (2013-11-11)
 ----------------
 
-- Nothing changed yet.
+- Add maximum size to 10 MB for enclosures.  This avoids downloading
+  gigabytes of iso files, for example.
+  [jbofill]
 
 
 2.2 (2013-10-01)
