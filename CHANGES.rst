@@ -4,7 +4,8 @@ History of feedfeeder
 2.4 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Depend on ``feedparser`` instead of ``FeedParser``.  Issue #6.
+  [maurits]
 
 
 2.3 (2013-11-11)

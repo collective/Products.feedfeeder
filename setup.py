@@ -31,7 +31,7 @@ setup(name='Products.feedfeeder',
       zip_safe=False,
       install_requires=[
           'setuptools',
-          'FeedParser',
+          'feedparser',
           'BeautifulSoup',
       ],
       entry_points="""
