@@ -6,9 +6,6 @@ notifications:
     recipients:
     - maurits@vanrees.org
     on_success: change
-  irc:
-    channels: "irc.freenode.org#vanrees"
-    on_success: change
 install:
   - mkdir -p buildout-cache/eggs
   - mkdir -p buildout-cache/downloads
