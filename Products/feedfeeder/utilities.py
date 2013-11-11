@@ -20,7 +20,7 @@ from Products.feedfeeder.events import FeedItemConsumedEvent
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.extendeddatetime import extendedDateTime
 from Products.CMFCore.utils import getToolByName
-
+from Products.feedfeeder.config import maxsize
 
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
@@ -41,8 +41,6 @@ unifiable = {
     'ugrave': 'u', 'uacute': 'u', 'ucirc': 'u', 'uuml': 'u',
     }
 
-maxsizeUnits = 1000. # kb
-maxsizeUnitsName = "kb"
 
 def convert_summary(input):
     try:
@@ -297,11 +295,9 @@ class FeedConsumer:
                 enclosures = [x for x in entry.links if x.rel == 'enclosure']
                 real_enclosures = [x for x in enclosures if
                                    not self.isHTMLEnclosure(x)]
-
-                for link in real_enclosures:
-                    maxsize = feedContainer.getMaxsize()
-                    if int(link.get('length', 0)) >  maxsize * maxsizeUnits :
-                        logger.warn("Ignored enclosure {0} size {1} {3} exceeds maximum {2} {3}".format(link.get('href', ''),  int(link.get('length', 0))/maxsizeUnits, maxsize), maxsizeUnitsName)
+                for link in real_enclosures: 
+                    if maxsize >0 and int(link.get('length', 0)) >  maxsize * 1000 :
+                        logger.warn("Ignored enclosure {0} size {1} kb exceeds maximum {2} kb".format(link.get('href', ''),  int(link.get('length', 0))/1000, maxsize))
                         continue
                     enclosureSig = md5(link.href)
                     enclosureId = enclosureSig.hexdigest()
@@ -311,7 +307,7 @@ class FeedConsumer:
                         continue
                     enclosure = obj.addEnclosure(enclosureId)
                     enclosure.update(title=enclosureId)
-                    updateWithRemoteFile(enclosure, link,  maxsize)
+                    updateWithRemoteFile(enclosure, link)
                     if enclosure.Title() != enclosure.getId():
                         self.tryRenamingEnclosure(enclosure, obj)
                     # At this moment in time, the
@@ -332,7 +328,7 @@ class FeedConsumer:
         return False
 
 
-def updateWithRemoteFile(obj, link,  maxsize):
+def updateWithRemoteFile(obj, link):
     file = tempfile.TemporaryFile('w+b')
     try:
         remote = urllib2.urlopen(link.href.encode('utf-8'))
@@ -351,30 +347,30 @@ def updateWithRemoteFile(obj, link,  maxsize):
             if m is not None:
                 filename = m.group(1).strip()
 
-        if int(info.get('content-length', 0)) > maxsize * maxsizeUnits:
-                logger.warn("Ignored enclosure {0}, size {1} {3} exceeds maximum {2} {3}".format(link.get('href', ''),  int(info.get('content-length', 0))/maxsizeUnits, maxsize,  maxsizeUnitsName))
-        else:
-            if filename is not None:
-                obj.update(title=filename)
+        if int(info.get('content-length', 0)) > maxsize * 1000:
+            logger.warn("Ignored enclosure {0}, size {1} kb exceeds maximum {2} kb".format(link.get('href', ''),  int(info.get('content-length', 0))/1000, maxsize))
+            return
+        if filename is not None:
+            obj.update(title=filename)
 
-            max = 2048
-            sz = max
-            while sz == max:
-                buffer = remote.read(max)
-                sz = len(buffer)
-                if sz > 0:
-                    file.write(buffer)
+        max = 2048
+        sz = max
+        while sz == max:
+            buffer = remote.read(max)
+            sz = len(buffer)
+            if sz > 0:
+                file.write(buffer)
 
-            file.flush()
-            file.seek(0)
-            try:
-                link_type = link.type
-            except AttributeError:
-                # Some links do not have a type.
-                # http://plone.org/products/feedfeeder/issues/39
-                link_type = 'application/octet-stream'
-            obj.update_data(file, link_type)
-            file.close()
+        file.flush()
+        file.seek(0)
+        try:
+            link_type = link.type
+        except AttributeError:
+            # Some links do not have a type.
+            # http://plone.org/products/feedfeeder/issues/39
+            link_type = 'application/octet-stream'
+        obj.update_data(file, link_type)
+        file.close()
     except urllib2.URLError:
         # well, if we cannot retrieve the data, the file object will
         # remain empty

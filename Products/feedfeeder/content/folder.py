@@ -36,16 +36,6 @@ schema = Schema((
         )
     ),
     
-    IntegerField(
-         name ='maxsize',
-         widget=IntegerWidget(
-             description=_(u"Ignore files that exceed this size in kb. Leave 0 to accept all"),
-             label=_(u"maximum_size", default='Maximum file size (0 accept any size)'),
-         ),
-         default=_(u"1000"),
-         validators=('isInt'),
-     ),
-    
 ),
 )
 
@@ -98,13 +88,6 @@ class FeedfeederFolder(ATBTreeFolder):
         """
         """
         return self.feeds
-
-    security.declarePublic('getMaxsize')
-
-    def getMaxsize(self):
-        """
-        """
-        return self.maxsize
 
     security.declarePublic('replaceItem')
 

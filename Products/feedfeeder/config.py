@@ -16,4 +16,6 @@ UpdateAllFeeds = "feedfeeder: Update all feeds"
 DEFAULT_ADD_CONTENT_PERMISSION = AddContent
 setDefaultRoles(DEFAULT_ADD_CONTENT_PERMISSION, ('Manager', 'Owner'))
 
+maxsize = 10000 # in kb
+
 product_globals = globals()
