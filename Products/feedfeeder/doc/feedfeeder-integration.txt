@@ -236,7 +236,7 @@ is present.
   ... except ImportError:
   ...     from zope.app.annotation import IAnnotations
   >>> annotations = IAnnotations(feeder['649c8553c458001dbbb9b15957d58a92'])
-  >>> metadata = annotations[AnnotationContentHandler.ANNO_KEY]
+  >>> metadata = annotations.get(AnnotationContentHandler.ANNO_KEY, {})
   >>> dict(metadata)
   {u'date': u'2006-03-23'}
 

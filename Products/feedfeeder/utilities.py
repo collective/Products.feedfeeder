@@ -274,8 +274,9 @@ class FeedConsumer:
                     # the summary.  The transform can stumble over
                     # unicode, so we convert to a utf-8 string.
                     summary = summary.encode('utf-8')
-                    data = portal_transforms.convert('html_to_text', summary)
-                    summary = data.getData()
+                    if portal_transforms is not None:
+                        data = portal_transforms.convert('html_to_text', summary)
+                        summary = data.getData()
                     words = summary.split()[:72]
                     summarywords = words[:45]
                     if len(words) > 70:
