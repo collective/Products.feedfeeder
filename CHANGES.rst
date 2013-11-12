@@ -1,6 +1,12 @@
 History of feedfeeder
 =====================
 
+2.5 (unreleased)
+----------------
+
+- Nothing changed yet.
+
+
 2.4 (2013-11-12)
 ----------------
 
