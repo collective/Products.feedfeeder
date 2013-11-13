@@ -25,7 +25,7 @@ from Products.feedfeeder.config import MAXSIZE
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
 
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from HTMLParser import HTMLParseError
 
 # Unifiable list taken from http://www.aaronsw.com/2002/html2text.py
@@ -44,8 +44,7 @@ unifiable = {
 
 def convert_summary(input):
     try:
-        value = unicode(BeautifulSoup(
-                input, convertEntities=BeautifulSoup.HTML_ENTITIES))
+        value = BeautifulSoup(input).prettify(formatter="html")
     except HTMLParseError:
         return input
     return value

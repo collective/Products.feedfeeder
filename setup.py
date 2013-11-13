@@ -32,7 +32,7 @@ setup(name='Products.feedfeeder',
       install_requires=[
           'setuptools',
           'feedparser',
-          'BeautifulSoup',
+          'beautifulsoup4',
       ],
       entry_points="""
       # -*- Entry points: -*-
