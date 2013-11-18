@@ -44,7 +44,8 @@ unifiable = {
 
 def convert_summary(input):
     try:
-        value = BeautifulSoup(input).prettify(formatter="html")
+        soup = BeautifulSoup(input, "html.parser")
+        value = soup.decode(formatter="minimal")
     except HTMLParseError:
         return input
     return value
