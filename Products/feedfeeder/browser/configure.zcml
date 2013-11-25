@@ -50,6 +50,13 @@
       class=".feed.MegaUpdate"
       />
 
+  <page
+      name="feed-mega-cleanup"
+      for="Products.CMFCore.interfaces.ISiteRoot"
+      permission="feedfeeder.UpdateAllFeeds"
+      class=".feed.MegaClean"
+      />
+      
   <!-- Render the document byline -->
   <viewlet
       name="plone.belowcontenttitle.documentbyline"
