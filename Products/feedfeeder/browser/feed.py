@@ -180,59 +180,47 @@ class MegaClean(object):
         @param packdays:  pack the Zope database, removing previous revisions of objects that are older than packdays
         
         """
-
-        logger.info("Beginning feed clean up process")
-
         context = self.context.aq_inner
         count = 0
-
         # DateTime deltas are days as floating points
         end = DateTime.DateTime() - days
         start = DateTime.DateTime(2000, 1,1)
-
         date_range_query = { 'query':(start,end), 'range': 'min:max'}
-
+        logger.info("Beginning feed clean up for items older than {0} ({1} days)".format(end, days))
         items = context.portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
-                                             "created" : date_range_query,
-                                             "sort_on" : "created"
+                                             "getFeedItemUpdated" : date_range_query,
+                                             "sort_on" : "getFeedItemUpdated"
                                             })
-
         items = list(items)
-
-        logger.info("Found %d items to be purged" % len(items))
-
         for b in items:
             count += 1
             obj = b.getObject()
-            logger.info("Deleting:" + obj.absolute_url() + " " + str(obj.created()))
+            logger.info("Deleting:" + obj.absolute_url() + " " + str(obj.getFeedItemUpdated()))
             obj.aq_parent.manage_delObjects([obj.getId()])
-
             if count % transaction_threshold == 0:
                 # Prevent transaction becoming too large (memory buffer)
                 # by committing now and then
                 logger.info("Committing transaction")
                 transaction.commit()
-
         cp = self.context.restrictedTraverse('/Control_Panel')
-        inidbsize = cp.db_size()
-        if packdays == None:
-            logger.info("Not packing db, current size: ".format(inidbsize))
+        if packdays == None or count == 0:
+            msg = "Found no items to be purged. Current db size: {0}".format(cp.db_size())
+        elif packdays and count>0:
+            inidbsize = cp.db_size()
+            cp.Database.manage_pack(days=packdays)                  
+            msg = "{0} items removed. Packing db, up to {1} days. From size {2} to {3}".format(count, packdays, inidbsize,cp.db_size())
         else:
-            cp.Database.manage_pack(days=packdays)
-            logger.info("Packing db, up to {0} day. From size {1} to {2}".format(packdays, inidbsize,cp.db_size()))
-        msg = "Total {0} items removed. Db size {1} -> {2}.".format(count, inidbsize,  cp.db_size())
+            msg = "{0} items removed. Not packing db. Current size: {1}".format(count, cp.db_size())
+
         logger.info(msg)
         return msg
 
     def __call__(self):
-
         days = self.request.form.get("days", None)
         packdays = self.request.form.get("packdays", None)
         if not days:
             raise zExceptions.InternalError("Bad input. Please give days=90 as HTTP GET query parameter")
-            
         if packdays: packdays = int(packdays)
         days = int(days)
-
         return self.clean(days, packdays = packdays)
         
