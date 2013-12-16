@@ -297,10 +297,11 @@ class FeedConsumer:
                 real_enclosures = [x for x in enclosures if
                                    not self.isHTMLEnclosure(x)]
                 for link in real_enclosures:
-                    if MAXSIZE > 0 and int(link.get('length', 0)) > MAXSIZE * 1000:
+                    if MAXSIZE > 0 and link.get('length', 0).isnumeric() and int(link.get('length', 0)) > MAXSIZE * 1000:
                         logger.warn("Ignored enclosure {0} size {1} kb exceeds maximum {2} kb".format(
                             link.get('href', ''), int(link.get('length', 0))/1000, MAXSIZE))
                         continue
+                    if not link.get('href', False): continue
                     enclosureSig = md5(link.href.encode('utf-8'))
                     enclosureId = enclosureSig.hexdigest()
                     if enclosureId in obj.objectIds():
