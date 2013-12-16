@@ -301,7 +301,7 @@ class FeedConsumer:
                         logger.warn("Ignored enclosure {0} size {1} kb exceeds maximum {2} kb".format(
                             link.get('href', ''), int(link.get('length', 0))/1000, MAXSIZE))
                         continue
-                    enclosureSig = md5(link.href)
+                    enclosureSig = md5(link.href.encode('utf-8'))
                     enclosureId = enclosureSig.hexdigest()
                     if enclosureId in obj.objectIds():
                         # Two enclosures with the same href in this
