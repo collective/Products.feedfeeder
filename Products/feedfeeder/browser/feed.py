@@ -10,6 +10,10 @@ from Products.statusmessages.interfaces import IStatusMessage
 
 from Products.feedfeeder import _
 
+import transaction
+import DateTime
+import zExceptions
+
 logger = logging.getLogger("feedfeeder")
 
 
@@ -153,3 +157,70 @@ class MegaUpdate(object):
 
     def __call__(self):
         return self.updateAll()
+
+class MegaClean(object):
+    """ Clean-up old feed items by deleting them on the site.
+    
+    This is intended to be called using HTTP command-line client
+    or a clock server.
+    """
+
+    def __init__(self, context, request):
+        self.context = context
+        self.request = request
+
+    def clean(self, days, transaction_threshold=100,  packdays=None):
+        """ Perform the clean-up by looking old objects and deleting them. Example: /planets/@@feed-mega-cleanup?days=30&packdays=4
+        Commit ZODB transaction for every N objects to that commit buffer does not grow
+        too long (timewise, memory wise).
+
+        @param days: if item has been created before than this many days ago it is deleted
+
+        @param transaction_threshold: How often we commit - for every nth item
+        @param packdays:  pack the Zope database, removing previous revisions of objects that are older than packdays
+        
+        """
+        context = self.context.aq_inner
+        count = 0
+        # DateTime deltas are days as floating points
+        end = DateTime.DateTime() - days
+        start = DateTime.DateTime(2000, 1,1)
+        date_range_query = { 'query':(start,end), 'range': 'min:max'}
+        logger.info("Beginning feed clean up for items older than {0} ({1} days)".format(end, days))
+        items = context.portal_catalog.queryCatalog({"portal_type":"FeedFeederItem",
+                                             "getFeedItemUpdated" : date_range_query,
+                                             "sort_on" : "getFeedItemUpdated"
+                                            })
+        items = list(items)
+        for b in items:
+            count += 1
+            obj = b.getObject()
+            logger.info("Deleting:" + obj.absolute_url() + " " + str(obj.getFeedItemUpdated()))
+            obj.aq_parent.manage_delObjects([obj.getId()])
+            if count % transaction_threshold == 0:
+                # Prevent transaction becoming too large (memory buffer)
+                # by committing now and then
+                logger.info("Committing transaction")
+                transaction.commit()
+        cp = self.context.restrictedTraverse('/Control_Panel')
+        if packdays == None or count == 0:
+            msg = "Found no items to be purged. Current db size: {0}".format(cp.db_size())
+        elif packdays and count>0:
+            inidbsize = cp.db_size()
+            cp.Database.manage_pack(days=packdays)                  
+            msg = "{0} items removed. Packing db, up to {1} days. From size {2} to {3}".format(count, packdays, inidbsize,cp.db_size())
+        else:
+            msg = "{0} items removed. Not packing db. Current size: {1}".format(count, cp.db_size())
+
+        logger.info(msg)
+        return msg
+
+    def __call__(self):
+        days = self.request.form.get("days", None)
+        packdays = self.request.form.get("packdays", None)
+        if not days:
+            raise zExceptions.InternalError("Bad input. Please give days=90 as HTTP GET query parameter")
+        if packdays: packdays = int(packdays)
+        days = int(days)
+        return self.clean(days, packdays = packdays)
+        
