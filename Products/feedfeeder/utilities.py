@@ -302,7 +302,11 @@ class FeedConsumer:
                             link.get('href', ''), int(link.get('length', 0))/1000, MAXSIZE))
                         continue
                     if not link.get('href', False): continue
-                    enclosureSig = md5(link.href.encode('utf-8'))
+                    # to maintain compatibility with previous versions of feedfeeder ( would create a new enclosure because the signature has changed if always using utf-8)
+                    try:
+                        enclosureSig = md5(link.href)
+                    except UnicodeEncodeError:
+                        enclosureSig = md5(link.href.encode('utf-8'))
                     enclosureId = enclosureSig.hexdigest()
                     if enclosureId in obj.objectIds():
                         # Two enclosures with the same href in this
