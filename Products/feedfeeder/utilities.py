@@ -145,7 +145,7 @@ class FeedConsumer:
                 addItem = feedContainer.addItem
             elif updated is None:
                 logger.warn("No updated or published date known. "
-                            "Not updating previously added entry.")
+                            "Not updating previously added entry: {0}".format(getattr(entry, 'title', '')))
                 continue
             elif updated > prev.getFeedItemUpdated():
                 # Refreshed item, replace it.
