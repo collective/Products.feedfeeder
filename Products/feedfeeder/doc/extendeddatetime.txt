@@ -28,3 +28,12 @@ and test our wrapper!
    2009/03/13 10:30:00 GMT-4
    
 Nice.
+
+In some feeds no primary time standard is especified, add and DateTime throws an error when zope unpickels it. We add GMT.
+
+   >>> a_time = 'Thu, 09 Jan 2014 09:19:20 +0000'
+   >>> from Products.feedfeeder.extendeddatetime import extendedDateTime
+   >>> better_time = extendedDateTime(a_time)
+   >>> print better_time
+   2014/01/09 09:19:20 GMT+0
+
