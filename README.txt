@@ -95,8 +95,8 @@ want update them all once you can do::
    </clock-server>
    
 
-Removing old feeds items
-++++++++++++++++++++++++
+Removing old feed items
++++++++++++++++++++++++
 
 You can periodically remove feed items older than a specific number of days. For example, to remove once a week feed items older than 90 days you can do::
 
