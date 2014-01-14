@@ -297,10 +297,17 @@ class FeedConsumer:
                 real_enclosures = [x for x in enclosures if
                                    not self.isHTMLEnclosure(x)]
                 for link in real_enclosures:
-                    if MAXSIZE > 0 and ((isinstance(link.get('length', 0), basestring) and link.get('length',0).isdigit()) or isinstance(link.get('length', 0), int)) and int(link.get('length', 0)) > MAXSIZE * 1000:
-                        logger.warn("Ignored enclosure {0} size {1} kb exceeds maximum {2} kb".format(
-                            link.get('href', ''), int(link.get('length', 0))/1000, MAXSIZE))
-                        continue
+                    if MAXSIZE > 0:
+                        length = link.get('length', 0)
+                        if isinstance(length, basestring):
+                            if link.isdigit():
+                                length = int(length)
+                            else:
+                                length = 0
+                        if length > MAXSIZE * 1000:
+                            logger.warn("Ignored enclosure {0} size {1} kb exceeds maximum {2} kb".format(
+                                link.get('href', ''), length/1000, MAXSIZE))
+                            continue
                     if not link.get('href', False): continue
                     # to maintain compatibility with previous versions of feedfeeder ( would create a new enclosure because the signature has changed if always using utf-8)
                     try:
