@@ -291,6 +291,7 @@ class FeedConsumer:
                         if not summary.endswith('.'):
                             summary = summary + ' ...'
                     obj.setDescription(summary)
+                    obj.reindexObject()
 
             if hasattr(entry, 'links'):
                 enclosures = [x for x in entry.links if x.rel == 'enclosure']
@@ -300,7 +301,7 @@ class FeedConsumer:
                     if MAXSIZE > 0:
                         length = link.get('length', 0)
                         if isinstance(length, basestring):
-                            if link.isdigit():
+                            if length.isdigit():
                                 length = int(length)
                             else:
                                 length = 0
