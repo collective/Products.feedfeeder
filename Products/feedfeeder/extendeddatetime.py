@@ -16,9 +16,9 @@ def extendedDateTime(dt):
 
     tz = dt.split()[-1]
     if tz.startswith('+'):
-        dt = dt.replace('+','GMT+')
+        dt = dt.replace('+', 'GMT+')
     elif tz.startswith('-'):
-        dt = dt.replace('-','GMT-')
+        dt = dt.replace('-', 'GMT-')
     try:
         return DateTime(dt)
     except DateTime.SyntaxError:

@@ -145,7 +145,8 @@ class FeedConsumer:
                 addItem = feedContainer.addItem
             elif updated is None:
                 logger.warn("No updated or published date known. "
-                            "Not updating previously added entry: {0}".format(getattr(entry, 'title', '')))
+                            "Not updating previously added entry: {0}".format(
+                                getattr(entry, 'title', '')))
                 continue
             elif updated > prev.getFeedItemUpdated():
                 # Refreshed item, replace it.
@@ -306,11 +307,17 @@ class FeedConsumer:
                             else:
                                 length = 0
                         if length > MAXSIZE * 1000:
-                            logger.warn("Ignored enclosure {0} size {1} kb exceeds maximum {2} kb".format(
-                                link.get('href', ''), length/1000, MAXSIZE))
+                            logger.warn(
+                                "Ignored enclosure {0} size {1} kb exceeds "
+                                "maximum {2} kb".format(link.get('href', ''),
+                                                        length/1000, MAXSIZE))
                             continue
-                    if not link.get('href', False): continue
-                    # to maintain compatibility with previous versions of feedfeeder ( would create a new enclosure because the signature has changed if always using utf-8)
+                    if not link.get('href', False):
+                        continue
+                    # to maintain compatibility with previous versions
+                    # of feedfeeder ( would create a new enclosure
+                    # because the signature has changed if always
+                    # using utf-8)
                     try:
                         enclosureSig = md5(link.href)
                     except UnicodeEncodeError:
