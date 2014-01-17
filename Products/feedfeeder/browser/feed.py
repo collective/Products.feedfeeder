@@ -160,7 +160,7 @@ class MegaUpdate(object):
 
 class MegaClean(object):
     """ Clean-up old feed items by deleting them on the site.
-    
+
     This is intended to be called using HTTP command-line client
     or a clock server.
     """
@@ -174,12 +174,12 @@ class MegaClean(object):
         Perform the clean-up by looking old objects and deleting them. Example: /planets/@@feed-mega-cleanup?days=30
         Commit ZODB transaction for every N objects to that commit buffer does not grow
         too long (timewise, memory wise).
-        Source: http://opensourcehacker.com/2011/08/28/automatically-removing-old-items-from-a-plone-site/ 
+        Source: http://opensourcehacker.com/2011/08/28/automatically-removing-old-items-from-a-plone-site/
 
         @param days: if item has been created before than this many days ago it is deleted
 
         @param transaction_threshold: How often we commit - for every nth item
-        
+
         """
         context = self.context.aq_inner
         count = 0
@@ -212,4 +212,4 @@ class MegaClean(object):
             raise zExceptions.InternalError("Bad input. Please give days=90 as HTTP GET query parameter")
         days = int(days)
         return self.clean(days)
-        
+
