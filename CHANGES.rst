@@ -1,10 +1,19 @@
 History of feedfeeder
 =====================
 
+
 2.5 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Reindex feed item when setting the description.
+  [jbofill]
+
+- Solve `KeyError u'+0000'` in some DateTime objects.  Related to
+  https://github.com/collective/Products.feedfeeder/issues/7
+  [jbofill]
+
+- Update to beautifulsoup4 and use python's built-in HTML parser.
+  [jbofill]
 
 
 2.4 (2013-11-12)
