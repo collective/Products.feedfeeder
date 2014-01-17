@@ -95,6 +95,20 @@ want update them all once you can do::
    </clock-server>
    
 
+Removing old feed items
++++++++++++++++++++++++
+
+You can periodically remove feed items older than a specific number of days. For example, to remove once a week feed items older than 90 days you can do::
+
+   <clock-server>
+     method /yoursiteid/feed-mega-cleanup?days=90
+     period 604800 # seconds
+     user admin
+     password 123
+     host localhost:8080
+   </clock-server>
+
+
 Dependencies
 ------------
 

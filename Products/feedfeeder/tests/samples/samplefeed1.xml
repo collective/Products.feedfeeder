@@ -42,6 +42,7 @@
   <id>http://myplace.com</id>
   <link type="application/pdf" href="file:test2.doc" rel="enclosure" length="737" />
   <link type="application/pdf" href="file:test3.xls" rel="enclosure" length="693" />
+  <link type="application/pdf" href="file:tèst4.odt" rel="enclosure" length="699" />
   <content type="xhtml">
 <div xmlns="http://www.w3.org/1999/xhtml">
 woo hoo, a party!

@@ -25,7 +25,7 @@ from Products.feedfeeder.config import MAXSIZE
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
 
-from BeautifulSoup import BeautifulSoup
+from bs4 import BeautifulSoup
 from HTMLParser import HTMLParseError
 
 # Unifiable list taken from http://www.aaronsw.com/2002/html2text.py
@@ -44,8 +44,8 @@ unifiable = {
 
 def convert_summary(input):
     try:
-        value = unicode(BeautifulSoup(
-                input, convertEntities=BeautifulSoup.HTML_ENTITIES))
+        soup = BeautifulSoup(input, "html.parser")
+        value = soup.decode(formatter="minimal")
     except HTMLParseError:
         return input
     return value
@@ -145,7 +145,7 @@ class FeedConsumer:
                 addItem = feedContainer.addItem
             elif updated is None:
                 logger.warn("No updated or published date known. "
-                            "Not updating previously added entry.")
+                            "Not updating previously added entry: {0}".format(getattr(entry, 'title', '')))
                 continue
             elif updated > prev.getFeedItemUpdated():
                 # Refreshed item, replace it.
@@ -291,17 +291,30 @@ class FeedConsumer:
                         if not summary.endswith('.'):
                             summary = summary + ' ...'
                     obj.setDescription(summary)
+                    obj.reindexObject()
 
             if hasattr(entry, 'links'):
                 enclosures = [x for x in entry.links if x.rel == 'enclosure']
                 real_enclosures = [x for x in enclosures if
                                    not self.isHTMLEnclosure(x)]
                 for link in real_enclosures:
-                    if MAXSIZE > 0 and int(link.get('length', 0)) > MAXSIZE * 1000:
-                        logger.warn("Ignored enclosure {0} size {1} kb exceeds maximum {2} kb".format(
-                            link.get('href', ''), int(link.get('length', 0))/1000, MAXSIZE))
-                        continue
-                    enclosureSig = md5(link.href)
+                    if MAXSIZE > 0:
+                        length = link.get('length', 0)
+                        if isinstance(length, basestring):
+                            if length.isdigit():
+                                length = int(length)
+                            else:
+                                length = 0
+                        if length > MAXSIZE * 1000:
+                            logger.warn("Ignored enclosure {0} size {1} kb exceeds maximum {2} kb".format(
+                                link.get('href', ''), length/1000, MAXSIZE))
+                            continue
+                    if not link.get('href', False): continue
+                    # to maintain compatibility with previous versions of feedfeeder ( would create a new enclosure because the signature has changed if always using utf-8)
+                    try:
+                        enclosureSig = md5(link.href)
+                    except UnicodeEncodeError:
+                        enclosureSig = md5(link.href.encode('utf-8'))
                     enclosureId = enclosureSig.hexdigest()
                     if enclosureId in obj.objectIds():
                         # Two enclosures with the same href in this

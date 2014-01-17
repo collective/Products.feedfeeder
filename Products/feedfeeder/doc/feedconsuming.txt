@@ -171,9 +171,9 @@ kept.
   >>> duplicate2.text
   u'<div>\nwoo hoo, a party!\n</div>'
   >>> len(duplicate2.enclosures)
-  2
+  3
   >>> sorted([x.id for x in duplicate2.enclosures.values()])
-  [u'test2.doc', u'test3.xls']
+  [u'test2.doc', u'test3.xls', u't\xe8st4.odt']
 
 Get our item that talks about the thesis defence of Reinout.
 
