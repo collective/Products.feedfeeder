@@ -1,4 +1,5 @@
 from DateTime import DateTime
+from DateTime.interfaces import SyntaxError as DateTimeSyntaxError
 
 #http://www.timeanddate.com/library/abbreviations/timezones/na/
 alttzmap= dict(ndt=u'GMT-0230',
@@ -21,7 +22,7 @@ def extendedDateTime(dt):
         dt = dt.replace('-','GMT-')
     try:
         return DateTime(dt)
-    except DateTime.SyntaxError:
+    except DateTimeSyntaxError:
         frags = dt.split()
         newtz = alttzmap.get(frags[-1].lower(), None)
         if newtz is None:
