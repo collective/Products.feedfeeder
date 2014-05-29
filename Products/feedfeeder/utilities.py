@@ -9,6 +9,7 @@ import urllib2
 
 import feedparser
 from DateTime import DateTime
+from DateTime.interfaces import SyntaxError as DateTimeSyntaxError
 from zope import component
 from zope import event
 from zope import interface
@@ -40,7 +41,6 @@ unifiable = {
     'ograve': 'o', 'oacute': 'o', 'ocirc': 'o', 'otilde': 'o', 'ouml': 'o',
     'ugrave': 'u', 'uacute': 'u', 'ucirc': 'u', 'uuml': 'u',
     }
-
 
 def convert_summary(input):
     try:
@@ -133,7 +133,7 @@ class FeedConsumer:
             if updated:
                 try:
                     updated = extendedDateTime(updated)
-                except DateTime.SyntaxError:
+                except DateTimeSyntaxError:
                     logger.warn("SyntaxError while parsing %r as DateTime for "
                                 "the 'updated' field of entry %s",
                                 updated, getattr(entry, 'title', ''))
@@ -178,7 +178,7 @@ class FeedConsumer:
             if published is not None:
                 try:
                     published = extendedDateTime(published)
-                except DateTime.SyntaxError:
+                except DateTimeSyntaxError:
                     logger.warn("SyntaxError while parsing %r as DateTime for "
                                 "the 'published' field of entry %s",
                                 published, getattr(entry, 'title', ''))
