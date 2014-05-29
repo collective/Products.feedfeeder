@@ -171,7 +171,11 @@ class FeedConsumer:
                 link = linkDict
             else:
                 linkDict = getattr(entry, 'links', [{'href': ''}])[0]
-                link = linkDict['href']
+                if 'href' in linkDict:
+                    link = linkDict['href']
+                else:
+                    logger.warn("No href in linkDict: {0} for entry: {1}".format(linkDict,getattr(entry, 'title', '')))
+                    continue
 
             if not updated:
                 updated = DateTime()
