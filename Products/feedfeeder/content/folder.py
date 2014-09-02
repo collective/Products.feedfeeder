@@ -14,7 +14,7 @@ schema = Schema((
     LinesField(
         name='feeds',
         widget=LinesWidget(
-            description=_("help_feeds", default="List of rss feeds. You can prefix feed link titles using a | separator ('My place: |http://myplace.com//feed')"),
+            description=_("help_feeds", default="List of rss feeds. You can prefix feed link titles using | separator ('My place: |http://myplace/feed')"),
             label=_('feedfeeder_label_feeds', default='Feeds')
         )
     ),
