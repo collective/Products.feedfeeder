@@ -107,6 +107,13 @@ class FeedConsumer:
             newId = '%i_%s' % (x, enclosure.Title())
 
     def _retrieveSingleFeed(self, feedContainer, url):
+        # check if user whats to add a prefix to link title
+        urlinfo = url.split('|')
+        if len(urlinfo) > 1:
+            prefix = urlinfo[0]
+            url = urlinfo[1]
+        else:
+            prefix = ''
         # feedparser doesn't understand proper file: url's
         if url.startswith('file://'):
             url = url[7:]
@@ -195,7 +202,7 @@ class FeedConsumer:
             logger.debug("2 summary: %r" % summary)
 
             obj.update(id=id,
-                       title=getattr(entry, 'title', ''),
+                       title=u"{0}{1}".format(prefix, getattr(entry, 'title', '')),
                        description=summary,
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
