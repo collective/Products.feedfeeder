@@ -34,6 +34,11 @@ setup(name='Products.feedfeeder',
           'feedparser',
           'beautifulsoup4',
       ],
+      extras_require = {
+          'test': [
+              'Products.PloneTestCase',
+              ],
+      },
       entry_points="""
       # -*- Entry points: -*-
       [z3c.autoinclude.plugin]
