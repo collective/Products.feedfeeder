@@ -56,7 +56,7 @@
       permission="feedfeeder.UpdateAllFeeds"
       class=".feed.MegaClean"
       />
-      
+
   <!-- Render the document byline -->
   <viewlet
       name="plone.belowcontenttitle.documentbyline"
