@@ -42,6 +42,7 @@ unifiable = {
     'ugrave': 'u', 'uacute': 'u', 'ucirc': 'u', 'uuml': 'u',
     }
 
+
 def convert_summary(input):
     try:
         soup = BeautifulSoup(input, "html.parser")
@@ -182,7 +183,8 @@ class FeedConsumer:
                 if 'href' in linkDict:
                     link = linkDict['href']
                 else:
-                    logger.warn("No href in linkDict: {0} for entry: {1}".format(linkDict,getattr(entry, 'title', '')))
+                    logger.warn("No href in linkDict: {0} for entry: {1}"
+                                .format(linkDict,getattr(entry, 'title', '')))
                     continue
 
             if not updated:
