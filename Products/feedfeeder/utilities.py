@@ -112,6 +112,8 @@ class FeedConsumer:
         urlinfo = url.split('|')
         if len(urlinfo) > 1:
             prefix = urlinfo[0]
+            if prefix[-1] != ' ':
+                prefix += u' '
             url = urlinfo[1]
         else:
             prefix = ''
@@ -184,7 +186,7 @@ class FeedConsumer:
                     link = linkDict['href']
                 else:
                     logger.warn("No href in linkDict: {0} for entry: {1}"
-                                .format(linkDict,getattr(entry, 'title', '')))
+                                .format(linkDict, getattr(entry, 'title', '')))
                     continue
 
             if not updated:
@@ -411,7 +413,7 @@ def updateWithRemoteFile(obj, link):
         # well, if we cannot retrieve the data, the file object will
         # remain empty
         pass
-    except  OSError:
+    except OSError:
         # well, if we cannot retrieve the data, the file object will
         # remain empty
         pass
