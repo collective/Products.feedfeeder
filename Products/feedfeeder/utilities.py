@@ -9,6 +9,7 @@ import urllib2
 
 import feedparser
 from DateTime import DateTime
+from DateTime.interfaces import SyntaxError as DateTimeSyntaxError
 from zope import component
 from zope import event
 from zope import interface
@@ -107,6 +108,15 @@ class FeedConsumer:
             newId = '%i_%s' % (x, enclosure.Title())
 
     def _retrieveSingleFeed(self, feedContainer, url):
+        # check if user whats to add a prefix to link title
+        urlinfo = url.split('|')
+        if len(urlinfo) > 1:
+            prefix = urlinfo[0]
+            if prefix[-1] != ' ':
+                prefix += u' '
+            url = urlinfo[1]
+        else:
+            prefix = ''
         # feedparser doesn't understand proper file: url's
         if url.startswith('file://'):
             url = url[7:]
@@ -133,7 +143,7 @@ class FeedConsumer:
             if updated:
                 try:
                     updated = extendedDateTime(updated)
-                except DateTime.SyntaxError:
+                except DateTimeSyntaxError:
                     logger.warn("SyntaxError while parsing %r as DateTime for "
                                 "the 'updated' field of entry %s",
                                 updated, getattr(entry, 'title', ''))
@@ -172,14 +182,19 @@ class FeedConsumer:
                 link = linkDict
             else:
                 linkDict = getattr(entry, 'links', [{'href': ''}])[0]
-                link = linkDict['href']
+                if 'href' in linkDict:
+                    link = linkDict['href']
+                else:
+                    logger.warn("No href in linkDict: {0} for entry: {1}"
+                                .format(linkDict, getattr(entry, 'title', '')))
+                    continue
 
             if not updated:
                 updated = DateTime()
             if published is not None:
                 try:
                     published = extendedDateTime(published)
-                except DateTime.SyntaxError:
+                except DateTimeSyntaxError:
                     logger.warn("SyntaxError while parsing %r as DateTime for "
                                 "the 'published' field of entry %s",
                                 published, getattr(entry, 'title', ''))
@@ -192,7 +207,7 @@ class FeedConsumer:
             logger.debug("2 summary: %r" % summary)
 
             obj.update(id=id,
-                       title=getattr(entry, 'title', ''),
+                       title=u"{0}{1}".format(prefix, getattr(entry, 'title', '')),
                        description=summary,
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
@@ -398,7 +413,7 @@ def updateWithRemoteFile(obj, link):
         # well, if we cannot retrieve the data, the file object will
         # remain empty
         pass
-    except  OSError:
+    except OSError:
         # well, if we cannot retrieve the data, the file object will
         # remain empty
         pass

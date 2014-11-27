@@ -14,6 +14,9 @@ schema = Schema((
     LinesField(
         name='feeds',
         widget=LinesWidget(
+            description=_("help_feeds",
+                          default="List of rss feeds. You can prefix feed link titles using | separator. "
+                          "It is probably a good idea to add a colon or dash at the end of the prefix ('My place: |http://myplace/feed')."),
             label=_('feedfeeder_label_feeds', default='Feeds')
         )
     ),
