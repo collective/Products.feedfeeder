@@ -39,7 +39,7 @@ class AnnotationContentHandler(object):
 
     def _extractText(self, node):
         s = node.toxml().strip()
-        s = s[len(node.nodeName)+2:-1*(len(node.nodeName)+3)]
+        s = s[len(node.nodeName) + 2:-1 * (len(node.nodeName) + 3)]
         return s
 
     def apply(self, contentNode):

@@ -40,7 +40,7 @@ unifiable = {
     'igrave': 'i', 'iacute': 'i', 'icirc': 'i', 'iuml': 'i',
     'ograve': 'o', 'oacute': 'o', 'ocirc': 'o', 'otilde': 'o', 'ouml': 'o',
     'ugrave': 'u', 'uacute': 'u', 'ucirc': 'u', 'uuml': 'u',
-    }
+}
 
 
 def convert_summary(input):
@@ -101,7 +101,7 @@ class FeedConsumer:
             if newId not in feeditem.objectIds():
                 try:
                     feeditem.manage_renameObject(enclosure.getId(),
-                                            newId)
+                                                 newId)
                     break
                 except:
                     pass
@@ -207,7 +207,12 @@ class FeedConsumer:
             logger.debug("2 summary: %r" % summary)
 
             obj.update(id=id,
-                       title=u"{0}{1}".format(prefix, getattr(entry, 'title', '')),
+                       title=u"{0}{1}".format(
+                           prefix,
+                           getattr(
+                               entry,
+                               'title',
+                               '')),
                        description=summary,
                        feedItemAuthor=getattr(entry, 'author', ''),
                        feedItemUpdated=updated,
@@ -291,7 +296,9 @@ class FeedConsumer:
                     # unicode, so we convert to a utf-8 string.
                     summary = summary.encode('utf-8')
                     if portal_transforms is not None:
-                        data = portal_transforms.convert('html_to_text', summary)
+                        data = portal_transforms.convert(
+                            'html_to_text',
+                            summary)
                         summary = data.getData()
                     words = summary.split()[:72]
                     summarywords = words[:45]
@@ -325,7 +332,7 @@ class FeedConsumer:
                             logger.warn(
                                 "Ignored enclosure {0} size {1} kb exceeds "
                                 "maximum {2} kb".format(link.get('href', ''),
-                                                        length/1000, MAXSIZE))
+                                                        length / 1000, MAXSIZE))
                             continue
                     if not link.get('href', False):
                         continue
@@ -386,7 +393,7 @@ def updateWithRemoteFile(obj, link):
 
         if int(info.get('content-length', 0)) > MAXSIZE * 1000:
             logger.warn("Ignored enclosure {0}, size {1} kb exceeds maximum {2} kb".format(
-                link.get('href', ''), int(info.get('content-length', 0))/1000, MAXSIZE))
+                link.get('href', ''), int(info.get('content-length', 0)) / 1000, MAXSIZE))
             return
         if filename is not None:
             obj.update(title=filename)

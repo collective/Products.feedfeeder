@@ -25,7 +25,9 @@ schema = Schema((
     StringField(
         name='feedItemAuthor',
         widget=StringWidget(
-            label=_('feedfeeder_label_feedItemAuthor', default='Feeditemauthor'),
+            label=_(
+                'feedfeeder_label_feedItemAuthor',
+                default='Feeditemauthor'),
         )
     ),
 
@@ -67,8 +69,8 @@ schema = Schema((
     ),
     ObjectField(
         name='objectInfo',
-#        read_permission=ManagePortal,
-#        write_permission=ManagePortal,
+        #        read_permission=ManagePortal,
+        #        write_permission=ManagePortal,
         widget=StringWidget(
             visible={'view': 'invisible',
                      'edit': 'invisible'},
@@ -111,7 +113,7 @@ class FeedFeederItem(ATFolder):
             transition_ids = [trans['id'] for trans in transitions]
             if transition in transition_ids:
                 wf_tool.doActionFor(self[id], transition,
-                comment=_('Automatic transition triggered by FeedFolder'))
+                                    comment=_('Automatic transition triggered by FeedFolder'))
         return self[id]
 
     security.declarePublic('remote_url')

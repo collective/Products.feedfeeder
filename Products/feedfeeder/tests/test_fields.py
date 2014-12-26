@@ -3,10 +3,13 @@ from Products.feedfeeder.tests.MainTestCase import MainTestCase
 
 class TestFields(MainTestCase):
     """ """
+
     def afterSetUp(self):
         self.loginAsPortalOwner()
 
-        feedfolder_id = self.folder.invokeFactory('FeedfeederFolder', 'feedfolder')
+        feedfolder_id = self.folder.invokeFactory(
+            'FeedfeederFolder',
+            'feedfolder')
 
         self.feedfolder = getattr(self.folder, feedfolder_id)
 

@@ -46,4 +46,4 @@ def initialize(context):
         permission=DEFAULT_ADD_CONTENT_PERMISSION,
         extra_constructors=constructors,
         fti=ftis,
-        ).initialize(context)
+    ).initialize(context)

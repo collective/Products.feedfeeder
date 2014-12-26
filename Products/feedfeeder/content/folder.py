@@ -24,8 +24,12 @@ schema = Schema((
     BooleanField(
         name='redirect',
         widget=BooleanWidget(
-            description=_("help_redirect", default="If checked the feed item will be automatically redirected if you don't have the edit permission."),
-            label=_('label_redirect', default='Automatic redirect of feed items')
+            description=_(
+                "help_redirect",
+                default="If checked the feed item will be automatically redirected if you don't have the edit permission."),
+            label=_(
+                'label_redirect',
+                default='Automatic redirect of feed items')
         )
     ),
 
@@ -34,7 +38,9 @@ schema = Schema((
         vocabulary='getAvailableTransitions',
         widget=SelectionWidget(
             format='select',
-            description=_('help_default_transition', default="When updating this feed's item the transition selected below will be performed."),
+            description=_(
+                'help_default_transition',
+                default="When updating this feed's item the transition selected below will be performed."),
             label=_('label_default_transition', default='Default transition'),
         )
     ),
@@ -110,7 +116,7 @@ class FeedfeederFolder(ATBTreeFolder):
         if transition != '':
             wf_tool = getToolByName(self, 'portal_workflow')
             wf_tool.doActionFor(self[id], transition,
-                comment=_('Automatic transition triggered by FeedFolder'))
+                                comment=_('Automatic transition triggered by FeedFolder'))
         return self[id]
 
     security.declarePublic('getFeedFolder')
@@ -122,5 +128,5 @@ class FeedfeederFolder(ATBTreeFolder):
 registerType(FeedfeederFolder, PROJECTNAME)
 # end of class FeedfeederFolder
 
-##code-section module-footer #fill in your manual code here
-##/code-section module-footer
+# code-section module-footer #fill in your manual code here
+# /code-section module-footer
