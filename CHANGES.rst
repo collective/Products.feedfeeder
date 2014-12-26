@@ -11,7 +11,9 @@ History of feedfeeder
 2.6 (2014-11-27)
 ----------------
 
-- Nothing changed yet.
+- Add option to prefix feed link titles using a pipe ``|`` as
+  separator (``My place: |http://myplace/feed``)
+  [jbofill]
 
 
 2.5 (2014-01-18)
