@@ -5,7 +5,8 @@ History of feedfeeder
 2.7 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Updated Spanish translations.
+  [Manuel Gualda Caballero]
 
 
 2.6 (2014-11-27)
