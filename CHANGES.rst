@@ -2,7 +2,7 @@ History of feedfeeder
 =====================
 
 
-2.7 (unreleased)
+2.7 (2014-12-26)
 ----------------
 
 - Updated Spanish translations.
