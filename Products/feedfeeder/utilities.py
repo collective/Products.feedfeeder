@@ -146,7 +146,7 @@ class FeedConsumer:
                 except DateTimeSyntaxError:
                     logger.warn("SyntaxError while parsing %r as DateTime for "
                                 "the 'updated' field of entry %s",
-                                updated, getattr(entry, 'title', ''))
+                                updated, getattr(entry, 'title', '').encode("utf-8"))
                     continue
 
             prev = feedContainer.getItem(id)
@@ -156,7 +156,7 @@ class FeedConsumer:
             elif updated is None:
                 logger.warn("No updated or published date known. "
                             "Not updating previously added entry: {0}".format(
-                                getattr(entry, 'title', '')))
+                                getattr(entry, 'title', '').encode("utf-8")))
                 continue
             elif updated > prev.getFeedItemUpdated():
                 # Refreshed item, replace it.
@@ -186,7 +186,7 @@ class FeedConsumer:
                     link = linkDict['href']
                 else:
                     logger.warn("No href in linkDict: {0} for entry: {1}"
-                                .format(linkDict, getattr(entry, 'title', '')))
+                                .format(linkDict, getattr(entry, 'title', '').encode("utf-8")))
                     continue
 
             if not updated:
@@ -197,14 +197,14 @@ class FeedConsumer:
                 except DateTimeSyntaxError:
                     logger.warn("SyntaxError while parsing %r as DateTime for "
                                 "the 'published' field of entry %s",
-                                published, getattr(entry, 'title', ''))
+                                published, getattr(entry, 'title', '').encode("utf-8"))
                     continue
                 obj.setEffectiveDate(published)
 
             summary = getattr(entry, 'summary', '')
-            logger.debug("1 summary: %r" % summary)
+            logger.debug("1 summary: %r" % summary.encode("utf-8"))
             summary = convert_summary(summary)
-            logger.debug("2 summary: %r" % summary)
+            logger.debug("2 summary: %r" % summary.encode("utf-8"))
 
             obj.update(id=id,
                        title=u"{0}{1}".format(
@@ -259,7 +259,7 @@ class FeedConsumer:
                             doc = minidom.parseString(encoded_content)
                         except:
                             # Might be that ExpatError again.
-                            logger.warn("Error parsing content for %s", id)
+                            logger.warn("Error parsing content for %s", id.encode("utf-8"))
                             continue
                     if len(doc.childNodes) > 0 and \
                             doc.firstChild.hasAttributes():
