@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-readme = open("README.txt").read().strip()
+readme = open("README.rst").read().strip()
 history = open("CHANGES.rst").read().strip()
 
 setup(name='Products.feedfeeder',
