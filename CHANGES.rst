@@ -2,7 +2,7 @@ History of feedfeeder
 =====================
 
 
-2.8 (unreleased)
+2.8 (2015-05-16)
 ----------------
 
 - Prevent UnicodeEncodeError in logging messages .
