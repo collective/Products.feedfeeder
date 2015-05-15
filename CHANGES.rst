@@ -5,7 +5,8 @@ History of feedfeeder
 2.8 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Prevent UnicodeEncodeError in logging messages .
+  [ulisdd]
 
 
 2.7 (2014-12-26)
