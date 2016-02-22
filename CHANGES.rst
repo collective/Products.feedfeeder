@@ -2,7 +2,7 @@ History of feedfeeder
 =====================
 
 
-3.0.0 (unreleased)
+3.0.0 (2016-02-22)
 ------------------
 
 - Compatible with Plone 4.3 and 5.0.  [maurits]
