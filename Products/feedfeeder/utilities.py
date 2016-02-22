@@ -259,7 +259,8 @@ class FeedConsumer:
                             doc = minidom.parseString(encoded_content)
                         except:
                             # Might be that ExpatError again.
-                            logger.warn("Error parsing content for %s", id.encode("utf-8"))
+                            logger.warn(
+                                "Error parsing content for %s", id.encode("utf-8"))
                             continue
                     if len(doc.childNodes) > 0 and \
                             doc.firstChild.hasAttributes():
