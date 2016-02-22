@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Plone\n"
-"POT-Creation-Date: 2012-12-21 23:24+0000\n"
+"POT-Creation-Date: 2016-02-22 08:47+0000\n"
 "PO-Revision-Date: 2006-10-19 12:46+0000\n"
 "Last-Translator: Luciano Pacheco <lucmult@gmail.com>\n"
 "Language-Team: Luciano Pacheco <lucmult@gmail.com>\n"
@@ -15,11 +15,11 @@ msgstr ""
 "Domain: plone\n"
 
 #: profiles/default/portal_atct.xml
-#: profiles/registry/registry.xml
+#: profiles/default/registry.xml
 msgid "Date that the FeedItem was last updated."
 msgstr ""
 
-#: profiles/registry/registry.xml
+#: profiles/default/registry.xml
 msgid "Dates"
 msgstr ""
 
@@ -28,11 +28,10 @@ msgid "Edit"
 msgstr ""
 
 #: profiles/default/portal_atct.xml
-#: profiles/registry/registry.xml
+#: profiles/default/registry.xml
 msgid "FeedItem Updated"
 msgstr ""
 
 #: profiles/default/types/FeedfeederFolder.xml
 msgid "View"
 msgstr ""
-

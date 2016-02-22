@@ -4,7 +4,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2012-12-21 23:24+0000\n"
+"POT-Creation-Date: 2016-02-22 08:47+0000\n"
 "PO-Revision-Date: 2014-12-06 16:15-0100\n"
 "Last-Translator: Manuel Gualda Caballero <manuel@minombre.es>\n"
 "Language-Team: Spanish <plone-usuarios-plone@lists.plone.org>\n"
@@ -19,11 +19,11 @@ msgstr ""
 "X-Is-Fallback-For: es-ar es-bo es-cl es-co es-cr es-do es-ec es-es es-sv es-gt es-hn es-mx es-ni es-pa es-py es-pe es-pr es-us es-uy es-ve\n"
 
 #: profiles/default/portal_atct.xml
-#: profiles/registry/registry.xml
+#: profiles/default/registry.xml
 msgid "Date that the FeedItem was last updated."
 msgstr "Fecha de última actualización del elemento de la fuente."
 
-#: profiles/registry/registry.xml
+#: profiles/default/registry.xml
 msgid "Dates"
 msgstr "Fechas"
 
@@ -32,11 +32,10 @@ msgid "Edit"
 msgstr "Editar"
 
 #: profiles/default/portal_atct.xml
-#: profiles/registry/registry.xml
+#: profiles/default/registry.xml
 msgid "FeedItem Updated"
 msgstr "Elemento de la fuente actualizado"
 
 #: profiles/default/types/FeedfeederFolder.xml
 msgid "View"
 msgstr "Ver"
-

@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2012-12-21 23:24+0000\n"
+"POT-Creation-Date: 2016-02-22 08:47+0000\n"
 "PO-Revision-Date: 2007-02-16 15:17+0100\n"
 "Last-Translator: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
 "Language-Team: Mikel Larreategi <mlarreategi@codesyntax.com>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Preferred-Encodings: latin1 utf-8\n"
 "Domain: feedfeeder\n"
 
-#: ./content/folder.py:109
-#: ./content/item.py:112
+#: ./content/folder.py:125
+#: ./content/item.py:117
 msgid "Automatic transition triggered by FeedFolder"
 msgstr ""
 
@@ -29,24 +29,27 @@ msgstr ""
 msgid "Feed Item"
 msgstr ""
 
-#: ./browser/feed.py:48
+#: ./browser/feed.py:58
 msgid "Feed items updated"
 msgstr ""
 
+#: ./configure.zcml:53
 msgid "Feedfeeder"
 msgstr ""
 
-#: configure.zcml
+#: ./configure.zcml:62
 msgid "Feedfeeder registry"
 msgstr ""
 
-#: ./content/folder.py:67
+#: ./content/folder.py:82
 msgid "Keep initial state"
 msgstr ""
 
+#: ./configure.zcml:62
 msgid "Profile for registry settings of Feedfeeder"
 msgstr ""
 
+#: ./configure.zcml:53
 msgid "Turn external feed entries into content items"
 msgstr ""
 
@@ -55,61 +58,66 @@ msgid "Update Feed Items"
 msgstr ""
 
 #. Default: "Feeditemauthor"
-#: ./content/item.py:25
+#: ./content/item.py:28
 msgid "feedfeeder_label_feedItemAuthor"
 msgstr "Egilea"
 
 #. Default: "Feeditemupdated"
-#: ./content/item.py:33
+#: ./content/item.py:38
 msgid "feedfeeder_label_feedItemUpdated"
 msgstr "Eguneraketa data"
 
 #. "Feed Title"
 #. Default: "Feed Title"
-#: ./content/item.py:62
+#: ./content/item.py:67
 msgid "feedfeeder_label_feedTitle"
 msgstr ""
 
 #. Default: "Feeds"
-#: ./content/folder.py:17
+#: ./content/folder.py:23
 msgid "feedfeeder_label_feeds"
 msgstr "Jarioak"
 
 #. Default: "Has body text"
-#: ./content/item.py:55
+#: ./content/item.py:60
 msgid "feedfeeder_label_hasbody"
 msgstr ""
 
 #. Default: "Link"
-#: ./content/item.py:41
+#: ./content/item.py:46
 #, fuzzy
 msgid "feedfeeder_label_link"
 msgstr "Loturak"
 
 #. Default: "Object Ids"
-#: ./content/item.py:48
+#: ./content/item.py:53
 msgid "feedfeeder_label_objectids"
 msgstr ""
 
 #. "When updating this feed's item the transition selected below will be performed."
 #. Default: "When updating this feed's item the transition selected below will be performed."
-#: ./content/folder.py:34
+#: ./content/folder.py:45
 msgid "help_default_transition"
 msgstr ""
 
+#. Default: "List of rss feeds. You can prefix feed link titles using | separator. It is probably a good idea to add a colon or dash at the end of the prefix ('My place: |http://myplace/feed')."
+#: ./content/folder.py:17
+msgid "help_feeds"
+msgstr ""
+
 #. Default: "If checked the feed item will be automatically redirected if you don't have the edit permission."
-#: ./content/folder.py:24
+#: ./content/folder.py:30
 msgid "help_redirect"
 msgstr ""
 
 #. 'Default transition'
 #. Default: "Default transition"
-#: ./content/folder.py:35
+#: ./content/folder.py:49
 msgid "label_default_transition"
 msgstr ""
 
 #. Default: "Automatic redirect of feed items"
-#: ./content/folder.py:25
+#: ./content/folder.py:34
 msgid "label_redirect"
 msgstr ""
 
@@ -127,4 +135,3 @@ msgstr ""
 #: ./skins/feedfeeder/latest_items.pt:7
 msgid "test_view_title"
 msgstr "Jarioetako azken elementuak erakusten dituen bista."
-

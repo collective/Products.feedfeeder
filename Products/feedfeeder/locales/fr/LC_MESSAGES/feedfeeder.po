@@ -3,7 +3,7 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: feedfeeder\n"
-"POT-Creation-Date: 2012-12-21 23:24+0000\n"
+"POT-Creation-Date: 2016-02-22 08:47+0000\n"
 "PO-Revision-Date: 2012-12-11 11:14+0100\n"
 "Last-Translator: Cédric Messiant <cedricmessiant@ecreall.com>\n"
 "Language-Team: Ingeniweb <thomas.desvenain@ingeniweb.com>\n"
@@ -16,8 +16,8 @@ msgstr ""
 "Preferred-Encodings: utf-8\n"
 "Domain: feedfeeder\n"
 
-#: ./content/folder.py:109
-#: ./content/item.py:112
+#: ./content/folder.py:125
+#: ./content/item.py:117
 msgid "Automatic transition triggered by FeedFolder"
 msgstr "Transition automatique provoquée par le dossier flux"
 
@@ -29,24 +29,27 @@ msgstr "Dossier flux"
 msgid "Feed Item"
 msgstr "Elément de flux"
 
-#: ./browser/feed.py:48
+#: ./browser/feed.py:58
 msgid "Feed items updated"
 msgstr "Eléments du flux mis à jour"
 
+#: ./configure.zcml:53
 msgid "Feedfeeder"
 msgstr ""
 
-#: configure.zcml
+#: ./configure.zcml:62
 msgid "Feedfeeder registry"
 msgstr ""
 
-#: ./content/folder.py:67
+#: ./content/folder.py:82
 msgid "Keep initial state"
 msgstr "Laisser dans l'état initial"
 
+#: ./configure.zcml:62
 msgid "Profile for registry settings of Feedfeeder"
 msgstr ""
 
+#: ./configure.zcml:53
 msgid "Turn external feed entries into content items"
 msgstr ""
 
@@ -55,60 +58,65 @@ msgid "Update Feed Items"
 msgstr "Mettre à jour les éléments du flux"
 
 #. Default: "Feeditemauthor"
-#: ./content/item.py:25
+#: ./content/item.py:28
 msgid "feedfeeder_label_feedItemAuthor"
 msgstr "Auteur du flux"
 
 #. Default: "Feeditemupdated"
-#: ./content/item.py:33
+#: ./content/item.py:38
 msgid "feedfeeder_label_feedItemUpdated"
 msgstr "Flux mis à jour"
 
 #. "Feed Title"
 #. Default: "Feed Title"
-#: ./content/item.py:62
+#: ./content/item.py:67
 msgid "feedfeeder_label_feedTitle"
 msgstr "Titre du flux"
 
 #. Default: "Feeds"
-#: ./content/folder.py:17
+#: ./content/folder.py:23
 msgid "feedfeeder_label_feeds"
 msgstr "Flux"
 
 #. Default: "Has body text"
-#: ./content/item.py:55
+#: ./content/item.py:60
 msgid "feedfeeder_label_hasbody"
 msgstr "A un corps de texte"
 
 #. Default: "Link"
-#: ./content/item.py:41
+#: ./content/item.py:46
 msgid "feedfeeder_label_link"
 msgstr "Lien"
 
 #. Default: "Object Ids"
-#: ./content/item.py:48
+#: ./content/item.py:53
 msgid "feedfeeder_label_objectids"
 msgstr "Identifiants des objets"
 
 #. "When updating this feed's item the transition selected below will be performed."
 #. Default: "When updating this feed's item the transition selected below will be performed."
-#: ./content/folder.py:34
+#: ./content/folder.py:45
 msgid "help_default_transition"
 msgstr "La transition effectuée lorsque vous mettez à jour ce flux"
 
+#. Default: "List of rss feeds. You can prefix feed link titles using | separator. It is probably a good idea to add a colon or dash at the end of the prefix ('My place: |http://myplace/feed')."
+#: ./content/folder.py:17
+msgid "help_feeds"
+msgstr ""
+
 #. Default: "If checked the feed item will be automatically redirected if you don't have the edit permission."
-#: ./content/folder.py:24
+#: ./content/folder.py:30
 msgid "help_redirect"
 msgstr "Si cette case est cochée, l'élément de flux sera automatiquement redirigé si vous n'avez pas la permission de modifier."
 
 #. 'Default transition'
 #. Default: "Default transition"
-#: ./content/folder.py:35
+#: ./content/folder.py:49
 msgid "label_default_transition"
 msgstr "Transition par défaut"
 
 #. Default: "Automatic redirect of feed items"
-#: ./content/folder.py:25
+#: ./content/folder.py:34
 msgid "label_redirect"
 msgstr "Redirection automatique des éléments de flux"
 
@@ -126,4 +134,3 @@ msgstr "Lien vers la source"
 #: ./skins/feedfeeder/latest_items.pt:7
 msgid "test_view_title"
 msgstr "Vue affichant les derniers items du flux"
-
