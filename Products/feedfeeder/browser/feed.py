@@ -1,23 +1,28 @@
-import logging
-
-from zope import interface
-from zope import component
-
+from Products.feedfeeder import _
 from Products.feedfeeder.interfaces.consumer import IFeedConsumer
 from Products.feedfeeder.interfaces.container import IFeedsContainer
-
 from Products.statusmessages.interfaces import IStatusMessage
+from zope.component import getUtility
+from zope.interface import alsoProvides
+from zope.interface import implements
+from zope.interface import Interface
 
-from Products.feedfeeder import _
-
-import transaction
 import DateTime
+import logging
+import transaction
 import zExceptions
+
+
+try:
+    from plone.protect.interfaces import IDisableCSRFProtection
+except ImportError:
+    IDisableCSRFProtection = Interface
+
 
 logger = logging.getLogger("feedfeeder")
 
 
-class IUpdateFeedItems(interface.Interface):
+class IUpdateFeedItems(Interface):
 
     def update():
         pass
@@ -37,15 +42,16 @@ class UpdateFeedItems(object):
     """A view for updating the feed items in a feed folder.
     """
 
-    interface.implements(IUpdateFeedItems)
+    implements(IUpdateFeedItems)
 
     def __init__(self, context, request):
         self.context = context
         self.request = request
 
     def update(self):
-        consumer = component.getUtility(IFeedConsumer)
+        consumer = getUtility(IFeedConsumer)
         consumer.retrieveFeedItems(self.context)
+        alsoProvides(self.request, IDisableCSRFProtection)
 
     def __call__(self):
         self.update()
@@ -189,6 +195,7 @@ class MegaClean(object):
         """
         context = self.context.aq_inner
         count = 0
+        alsoProvides(self.request, IDisableCSRFProtection)
         # DateTime deltas are days as floating points
         end = DateTime.DateTime() - days
         start = DateTime.DateTime(2000, 1, 1)

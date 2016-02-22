@@ -7,6 +7,13 @@ History of feedfeeder
 
 - Compatible with Plone 4.3 and 5.0.  [maurits]
 
+- Disabled CSRF protection on our update/clean feed views.  Otherwise
+  you would have to add
+  ``?_authenticator=user_specific_authentication_string`` to the urls
+  in your cronjobs.  Fixes issue
+  https://github.com/collective/Products.feedfeeder/issues/13
+  [maurits]
+
 - Use ``main_template/macros/master``, instead of strange old
   ``@@standard-macros/view`` which would show only the core content on
   Plone 5.  [maurits]
