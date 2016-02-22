@@ -1,10 +1,10 @@
 # Reinout van Rees <reinout@vanrees.org>, 2006.
-# Maurits van Rees <m.van.rees@zestsoftware.nl>, 2006-2012
+# Maurits van Rees <m.van.rees@zestsoftware.nl>, 2006-2016
 msgid ""
 msgstr ""
-"Project-Id-Version: feedfeeder 2.1\n"
+"Project-Id-Version: feedfeeder 3.0\n"
 "POT-Creation-Date: 2016-02-22 08:47+0000\n"
-"PO-Revision-Date: 2012-12-21 23:58+0100\n"
+"PO-Revision-Date: 2016-02-22 9:48+0100\n"
 "Last-Translator: Maurits van Rees <m.van.rees@zestsoftware.nl>\n"
 "Language-Team: Zest Software <info@zestsoftware.nl>\n"
 "MIME-Version: 1.0\n"
@@ -102,7 +102,7 @@ msgstr "Tijdens het updaten van een item uit deze feed wordt de transitie uitgev
 #. Default: "List of rss feeds. You can prefix feed link titles using | separator. It is probably a good idea to add a colon or dash at the end of the prefix ('My place: |http://myplace/feed')."
 #: ./content/folder.py:17
 msgid "help_feeds"
-msgstr ""
+msgstr "Lijst van RSS feeds. Je kan feed links een laten voorafgaan door een titel door | als scheidingsteken te gebruiken. Het is waarschijnlijk een goed idee om een dubbele punt of een streepje aan het eind van de titel te zetten ('Mijn plaats: |http://mijn.plaats/feed')."
 
 #. Default: "If checked the feed item will be automatically redirected if you don't have the edit permission."
 #: ./content/folder.py:30
