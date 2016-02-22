@@ -1,3 +1,3 @@
 # -*- coding: utf-8 -*-
-import folder
-import item
+import folder  # noqa
+import item  # noqa

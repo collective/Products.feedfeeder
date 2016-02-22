@@ -1,24 +1,21 @@
 # -*- coding: utf-8 -*-
 
-import logging
-logger = logging.getLogger("feedfeeder")
-logger.debug('Start initialization of feedfeeder product.')
-
-from zope.i18nmessageid import MessageFactory
-
-from Products.CMFCore import utils as cmfutils
-from Products.CMFCore import DirectoryView
-from Products.Archetypes.atapi import process_types
 from Products.Archetypes import listTypes
-
+from Products.Archetypes.atapi import process_types
+from Products.CMFCore import DirectoryView
+from Products.CMFCore import utils as cmfutils
+from Products.feedfeeder.config import DEFAULT_ADD_CONTENT_PERMISSION
 from Products.feedfeeder.config import product_globals
 from Products.feedfeeder.config import PROJECTNAME
-from Products.feedfeeder.config import DEFAULT_ADD_CONTENT_PERMISSION
+from zope.i18nmessageid import MessageFactory
 
+import logging
+
+
+logger = logging.getLogger("feedfeeder")
+logger.debug('Start initialization of feedfeeder product.')
 DirectoryView.registerDirectory('skins', product_globals)
 DirectoryView.registerDirectory('skins/feedfeeder', product_globals)
-
-
 _ = MessageFactory('feedfeeder')
 
 

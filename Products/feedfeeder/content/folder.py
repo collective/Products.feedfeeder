@@ -1,13 +1,13 @@
 # -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
 from Products.Archetypes.atapi import *
-from zope import interface
 from Products.ATContentTypes.content.folder import ATBTreeFolder
 from Products.CMFCore.utils import getToolByName
-
-from Products.feedfeeder.interfaces.container import IFeedsContainer
-from Products.feedfeeder.config import PROJECTNAME
 from Products.feedfeeder import _
+from Products.feedfeeder.config import PROJECTNAME
+from Products.feedfeeder.interfaces.container import IFeedsContainer
+from zope import interface
+
 
 schema = Schema((
 
