@@ -1,33 +1,32 @@
 # -*- coding: utf-8 -*-
-import logging
-from xml.dom import minidom
+from bs4 import BeautifulSoup
+from DateTime import DateTime
+from DateTime.interfaces import SyntaxError as DateTimeSyntaxError
 from hashlib import md5
+from HTMLParser import HTMLParseError
+from Products.CMFCore.utils import getToolByName
+from Products.feedfeeder.config import MAXSIZE
+from Products.feedfeeder.events import FeedItemConsumedEvent
+from Products.feedfeeder.extendeddatetime import extendedDateTime
+from Products.feedfeeder.interfaces.consumer import IFeedConsumer
+from Products.feedfeeder.interfaces.container import IFeedsContainer
+from Products.feedfeeder.interfaces.contenthandler import IFeedItemContentHandler  # noqa
+from xml.dom import minidom
+from zope import component
+from zope import event
+from zope import interface
+
+import feedparser
+import logging
 import os
 import re
 import tempfile
 import urllib2
 
-import feedparser
-from DateTime import DateTime
-from DateTime.interfaces import SyntaxError as DateTimeSyntaxError
-from zope import component
-from zope import event
-from zope import interface
-
-from Products.feedfeeder.interfaces.container import IFeedsContainer
-from Products.feedfeeder.interfaces.contenthandler import \
-    IFeedItemContentHandler
-from Products.feedfeeder.events import FeedItemConsumedEvent
-from Products.feedfeeder.interfaces.consumer import IFeedConsumer
-from Products.feedfeeder.extendeddatetime import extendedDateTime
-from Products.CMFCore.utils import getToolByName
-from Products.feedfeeder.config import MAXSIZE
 
 RE_FILENAME = re.compile('filename *= *(.*)')
 logger = logging.getLogger("feedfeeder")
 
-from bs4 import BeautifulSoup
-from HTMLParser import HTMLParseError
 
 # Unifiable list taken from http://www.aaronsw.com/2002/html2text.py
 unifiable = {
@@ -146,7 +145,8 @@ class FeedConsumer:
                 except DateTimeSyntaxError:
                     logger.warn("SyntaxError while parsing %r as DateTime for "
                                 "the 'updated' field of entry %s",
-                                updated, getattr(entry, 'title', '').encode("utf-8"))
+                                updated, getattr(entry, 'title', '').encode(
+                                    "utf-8"))
                     continue
 
             prev = feedContainer.getItem(id)
@@ -178,15 +178,17 @@ class FeedConsumer:
             linkDict = getattr(entry, 'link', None)
             if linkDict:
                 # Hey, that's not a dict at all; at least not in my test.
-                #link = linkDict['href']
+                # link = linkDict['href']
                 link = linkDict
             else:
                 linkDict = getattr(entry, 'links', [{'href': ''}])[0]
                 if 'href' in linkDict:
                     link = linkDict['href']
                 else:
-                    logger.warn("No href in linkDict: {0} for entry: {1}"
-                                .format(linkDict, getattr(entry, 'title', '').encode("utf-8")))
+                    logger.warn(
+                        "No href in linkDict: {0} for entry: {1}"
+                        .format(linkDict, getattr(entry, 'title', '').encode(
+                            "utf-8")))
                     continue
 
             if not updated:
@@ -195,9 +197,10 @@ class FeedConsumer:
                 try:
                     published = extendedDateTime(published)
                 except DateTimeSyntaxError:
-                    logger.warn("SyntaxError while parsing %r as DateTime for "
-                                "the 'published' field of entry %s",
-                                published, getattr(entry, 'title', '').encode("utf-8"))
+                    logger.warn(
+                        "SyntaxError while parsing %r as DateTime for "
+                        "the 'published' field of entry %s",
+                        published, getattr(entry, 'title', '').encode("utf-8"))
                     continue
                 obj.setEffectiveDate(published)
 
@@ -260,7 +263,8 @@ class FeedConsumer:
                         except:
                             # Might be that ExpatError again.
                             logger.warn(
-                                "Error parsing content for %s", id.encode("utf-8"))
+                                "Error parsing content for %s",
+                                id.encode("utf-8"))
                             continue
                     if len(doc.childNodes) > 0 and \
                             doc.firstChild.hasAttributes():
@@ -332,8 +336,9 @@ class FeedConsumer:
                         if length > MAXSIZE * 1000:
                             logger.warn(
                                 "Ignored enclosure {0} size {1} kb exceeds "
-                                "maximum {2} kb".format(link.get('href', ''),
-                                                        length / 1000, MAXSIZE))
+                                "maximum {2} kb".format(
+                                    link.get('href', ''),
+                                    length / 1000, MAXSIZE))
                             continue
                     if not link.get('href', False):
                         continue
@@ -393,8 +398,12 @@ def updateWithRemoteFile(obj, link):
                 filename = m.group(1).strip()
 
         if int(info.get('content-length', 0)) > MAXSIZE * 1000:
-            logger.warn("Ignored enclosure {0}, size {1} kb exceeds maximum {2} kb".format(
-                link.get('href', ''), int(info.get('content-length', 0)) / 1000, MAXSIZE))
+            logger.warn(
+                "Ignored enclosure {0}, size {1} kb exceeds maximum "
+                "{2} kb".format(
+                    link.get('href', ''),
+                    int(info.get('content-length', 0)) / 1000,
+                    MAXSIZE))
             return
         if filename is not None:
             obj.update(title=filename)

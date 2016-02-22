@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 from AccessControl import ClassSecurityInfo
-from Products.Archetypes.atapi import *
+from Products.Archetypes import atapi
 from Products.ATContentTypes.content.folder import ATBTreeFolder
 from Products.CMFCore.utils import getToolByName
 from Products.feedfeeder import _
@@ -9,38 +9,43 @@ from Products.feedfeeder.interfaces.container import IFeedsContainer
 from zope import interface
 
 
-schema = Schema((
+schema = atapi.Schema((
 
-    LinesField(
+    atapi.LinesField(
         name='feeds',
-        widget=LinesWidget(
-            description=_("help_feeds",
-                          default="List of rss feeds. You can prefix feed link titles using | separator. "
-                          "It is probably a good idea to add a colon or dash at the end of the prefix ('My place: |http://myplace/feed')."),
+        widget=atapi.LinesWidget(
+            description=_(
+                "help_feeds",
+                default="List of rss feeds. You can prefix feed link titles "
+                "using | separator. It is probably a good idea to add a colon "
+                "or dash at the end of the prefix "
+                "('My place: |http://myplace/feed')."),
             label=_('feedfeeder_label_feeds', default='Feeds')
         )
     ),
 
-    BooleanField(
+    atapi.BooleanField(
         name='redirect',
-        widget=BooleanWidget(
+        widget=atapi.BooleanWidget(
             description=_(
                 "help_redirect",
-                default="If checked the feed item will be automatically redirected if you don't have the edit permission."),
+                default="If checked the feed item will be automatically "
+                "redirected if you don't have the edit permission."),
             label=_(
                 'label_redirect',
                 default='Automatic redirect of feed items')
         )
     ),
 
-    StringField(
+    atapi.StringField(
         name='defaultTransition',
         vocabulary='getAvailableTransitions',
-        widget=SelectionWidget(
+        widget=atapi.SelectionWidget(
             format='select',
             description=_(
                 'help_default_transition',
-                default="When updating this feed's item the transition selected below will be performed."),
+                default="When updating this feed's item the transition "
+                "selected below will be performed."),
             label=_('label_default_transition', default='Default transition'),
         )
     ),
@@ -80,7 +85,7 @@ class FeedfeederFolder(ATBTreeFolder):
         # Unindex and remove the temporary object
         self[id].unindexObject()
         self._delOb(id)
-        return DisplayList(display_trans)
+        return atapi.DisplayList(display_trans)
 
     security.declarePublic('getItem')
 
@@ -115,8 +120,9 @@ class FeedfeederFolder(ATBTreeFolder):
         transition = self.getDefaultTransition()
         if transition != '':
             wf_tool = getToolByName(self, 'portal_workflow')
-            wf_tool.doActionFor(self[id], transition,
-                                comment=_('Automatic transition triggered by FeedFolder'))
+            wf_tool.doActionFor(
+                self[id], transition,
+                comment=_('Automatic transition triggered by FeedFolder'))
         return self[id]
 
     security.declarePublic('getFeedFolder')
@@ -125,8 +131,4 @@ class FeedfeederFolder(ATBTreeFolder):
         return self
 
 
-registerType(FeedfeederFolder, PROJECTNAME)
-# end of class FeedfeederFolder
-
-# code-section module-footer #fill in your manual code here
-# /code-section module-footer
+atapi.registerType(FeedfeederFolder, PROJECTNAME)

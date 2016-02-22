@@ -112,8 +112,9 @@ class FeedFeederItem(ATFolder):
             transitions = wf_tool.getTransitionsFor(self[id])
             transition_ids = [trans['id'] for trans in transitions]
             if transition in transition_ids:
-                wf_tool.doActionFor(self[id], transition,
-                                    comment=_('Automatic transition triggered by FeedFolder'))
+                wf_tool.doActionFor(
+                    self[id], transition,
+                    comment=_('Automatic transition triggered by FeedFolder'))
         return self[id]
 
     security.declarePublic('remote_url')
