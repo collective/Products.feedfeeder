@@ -46,7 +46,7 @@ I'm using archgenxml to generate the boiler plate stuff. There's a
 'generate.sh' shell script that'll call archgenxml for you. Nothing
 fancy.
 
-The feedfeeder's content types are: 
+The feedfeeder's content types are:
   - folder.FeedfeederFolder
   - item.FeedFeederItem
 
@@ -83,8 +83,8 @@ with the following data::
 Updating all feeds once
 +++++++++++++++++++++++
 
-If your site has several feed folders and you 
-want update them all once you can do:: 
+If your site has several feed folders and you
+want update them all once you can do::
 
    <clock-server>
      method /yoursiteid/feed-mega-update
@@ -93,7 +93,7 @@ want update them all once you can do::
      password 123
      host localhost:8080
    </clock-server>
-   
+
 
 Removing old feed items
 +++++++++++++++++++++++
@@ -112,10 +112,18 @@ You can periodically remove feed items older than a specific number of days. For
 Dependencies
 ------------
 
-We need Plone 4.x.  Compatibility with Plone 4.3 has been checked.
+Since version 3 we need Plone 4.3 or 5.0.
+
+Plone 5: in the add-ons control panel you also need to install
+'Archetypes Content Types for Plone'.  Otherwise, if you try to add a
+FeedfeederFolder, you will get a 404 Not Found error because the
+``createObject`` script is not found.
+
+For earlier Plone 4 versions, use version 2.x.  The current latest is 2.8.
 
 If you use Plone 3, please use a Products.feedfeeder version from the
 2.0 line.  The current latest is 2.0.9.
+
 
 
 Upgrade notes

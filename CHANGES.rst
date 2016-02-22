@@ -2,10 +2,14 @@ History of feedfeeder
 =====================
 
 
-2.9 (unreleased)
-----------------
+3.0.0 (unreleased)
+------------------
 
-- Nothing changed yet.
+- Compatible with Plone 4.3 and 5.0.  [maurits]
+
+- Use ``main_template/macros/master``, instead of strange old
+  ``@@standard-macros/view`` which would show only the core content on
+  Plone 5.  [maurits]
 
 
 2.8 (2015-05-16)

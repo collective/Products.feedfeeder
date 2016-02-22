@@ -5,17 +5,15 @@ history = open("CHANGES.rst").read().strip()
 
 setup(
     name='Products.feedfeeder',
-    version='2.9.dev0',
+    version='3.0.0.dev0',
     description="Turn external feed entries into content items",
     long_description=readme + "\n\n" + history,
     # Get more strings from
     # https://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
         "Framework :: Plone",
-        "Framework :: Plone :: 4.0",
-        "Framework :: Plone :: 4.1",
-        "Framework :: Plone :: 4.2",
         "Framework :: Plone :: 4.3",
+        "Framework :: Plone :: 5.0",
         "Programming Language :: Python",
         "Programming Language :: Python :: 2.6",
         "Programming Language :: Python :: 2.7",

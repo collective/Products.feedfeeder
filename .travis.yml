@@ -5,6 +5,10 @@ cache:
 language: python
 python:
   - "2.7"
+env:
+  matrix:
+    - PLONE=4
+    - PLONE=5
 notifications:
   email:
     recipients:
@@ -13,7 +17,12 @@ notifications:
 install:
   - mkdir -p buildout-cache/eggs
   - mkdir -p buildout-cache/downloads
-  - python bootstrap.py -c travis.cfg
+  - sed -ie "s#travis-5.x.cfg#travis-$PLONE.x.cfg#" buildout.cfg
+# Keep setuptools and zc.buildout synced with buildout.cfg,
+# otherwise the buildout fails due to the non newest ('-N') option
+# when it wants to downgrade one of them to the pinned version.
+  - python bootstrap.py -c travis.cfg --buildout-version=2.5.0 --setuptools-version=19.4
+  - bin/buildout -N -t 3 -c travis.cfg annotate
   - bin/buildout -N -t 3 -c travis.cfg install download install
   - bin/buildout -N -t 3 -c travis.cfg
 script: bin/test
