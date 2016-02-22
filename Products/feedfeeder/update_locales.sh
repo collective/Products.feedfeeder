@@ -1,5 +1,5 @@
 #! /bin/sh
-i18ndude rebuild-pot --pot locales/feedfeeder.pot --create feedfeeder --merge locales/manual.pot .
+i18ndude rebuild-pot --pot locales/feedfeeder.pot --create feedfeeder .
 
 for po in locales/*/LC_MESSAGES/feedfeeder.po; do
     i18ndude sync --pot locales/feedfeeder.pot $po
