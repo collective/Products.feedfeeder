@@ -2,6 +2,12 @@ History of feedfeeder
 =====================
 
 
+3.0.1 (unreleased)
+------------------
+
+- Nothing changed yet.
+
+
 3.0.0 (2016-02-22)
 ------------------
 
