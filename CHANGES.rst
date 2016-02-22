@@ -7,6 +7,10 @@ History of feedfeeder
 
 - Compatible with Plone 4.3 and 5.0.  [maurits]
 
+- Removed separate registry profile that was only needed for
+  compatibility with Plone 4.1 and lower.  Moved ``registry.xml`` to
+  the default profile.  [maurits]
+
 - Disabled CSRF protection on our update/clean feed views.  Otherwise
   you would have to add
   ``?_authenticator=user_specific_authentication_string`` to the urls
