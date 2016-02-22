@@ -150,7 +150,7 @@ class MegaUpdate(object):
             try:
                 update_view.update()
                 updated += 1
-            except Exception, e:
+            except Exception as e:
                 # Don't allow a single bad feed to crash us.
                 logger.error("Feed raised exception:" + str(folder))
                 logger.exception(e)
