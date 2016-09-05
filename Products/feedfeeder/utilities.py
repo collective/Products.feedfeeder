@@ -165,7 +165,7 @@ class FeedConsumer:
                 # Not new, not refreshed: let it be, laddy.  Still,
                 # the entry might have changed slightly, so we check
                 # this.
-                if prev.getObjectInfo != entry:
+                if prev.getObjectInfo() != entry:
                     # Note: no need for a reindexObject here, which
                     # would also update the modification date, which
                     # we do not want.  See
