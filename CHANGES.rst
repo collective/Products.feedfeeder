@@ -2,7 +2,7 @@ History of feedfeeder
 =====================
 
 
-3.0.1 (unreleased)
+3.0.1 (2016-09-05)
 ------------------
 
 - Bug fix: really call ``getObjectInfo()`` when checking if an entry was updated.
