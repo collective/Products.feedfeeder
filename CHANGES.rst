@@ -5,8 +5,8 @@ History of feedfeeder
 3.0.1 (unreleased)
 ------------------
 
-- Bug fix: really call getObjectInfo() when checking if an entry was updated.
-  This avoids unnecessary updates to FeedFeederItems
+- Bug fix: really call ``getObjectInfo()`` when checking if an entry was updated.
+  This avoids unnecessary updates to ``FeedFeederItems``.
   [tiberiuichim]
 
 
